@@ -1,51 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BasePro - The Base Construction App. Manage milestones, payments, and progress evidence efficiently.">
-    <title>BasePro - Construction Management Simplified</title>
+    <meta name="description"
+        content="BasePro - The Base Construction App. High-trust construction milestones and payment management.">
+    <title>BasePro | Construction Intelligence & Payments</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
 </head>
-<body class="page-landing">
-    <header>
-        <div class="container-width">
-            <h1>BasePro</h1>
+
+<body>
+    <header id="main-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">B</div>
+                BasePro
+            </a>
+            <div class="nav-actions">
+                <a href="#features" class="btn-secondary"
+                    style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Features</a>
+            </div>
         </div>
     </header>
 
     <main>
-        <div class="container">
-            <h1 class="hero-title">Construction Projects, Simplified.</h1>
-            <p class="hero-subtitle">BasePro helps builders and homeowners manage milestones, payments, and progress evidence with confidence and transparency.</p>
-            
-            <div class="cta-buttons" style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
-                <a href="#" class="btn">Download for iOS</a>
-                <a href="#" class="btn secondary-btn" style="margin-top: 0;">Download for Android</a>
+        <section class="hero">
+            <div class="hero-glow"></div>
+            <h1>The Future of <br><span class="gradient-text">Construction Finance.</span></h1>
+            <p>Empowering builders and homeowners with milestone-based payments, evidence tracking, and absolute
+                transparency.</p>
+
+            <div class="btn-group">
+                <a href="#" class="btn-primary">Download for iOS</a>
+                <a href="#" class="btn-secondary">Get it on Android</a>
             </div>
-            
-            <div class="features" style="margin-top: 4rem; text-align: left;">
-                <div class="feature-item" style="margin-bottom: 2rem;">
-                    <h3>Milestone Tracking</h3>
-                    <p>Clearly defined milestones ensure everyone knows what's next and when payments are due.</p>
+
+            <div class="hero-preview" style="margin-top: 5rem; width: 100%; max-width: 900px;">
+                <div class="glass-panel"
+                    style="height: 400px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                    <div
+                        style="position: absolute; width: 120%; height: 120%; background: radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);">
+                    </div>
+                    <div style="text-align: center; z-index: 1;">
+                        <div
+                            style="font-size: 0.8rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 1rem;">
+                            Platform Interface</div>
+                        <h2 style="font-size: 2rem;">Lattice Milestone System</h2>
+                        <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+                            <div class="glass-panel" style="width: 120px; height: 120px; padding: 1rem;">
+                                <div
+                                    style="height: 4px; background: var(--grad-primary); width: 60%; margin-bottom: 0.5rem;">
+                                </div>
+                                <div
+                                    style="height: 2px; background: rgba(255,255,255,0.1); width: 100%; margin-bottom: 0.5rem;">
+                                </div>
+                                <div style="height: 2px; background: rgba(255,255,255,0.1); width: 80%;"></div>
+                            </div>
+                            <div class="glass-panel"
+                                style="width: 120px; height: 120px; padding: 1rem; border-color: var(--accent-blue);">
+                                <div
+                                    style="height: 4px; background: var(--grad-primary); width: 100%; margin-bottom: 0.5rem;">
+                                </div>
+                                <div
+                                    style="height: 2px; background: rgba(255,255,255,0.1); width: 100%; margin-bottom: 0.5rem;">
+                                </div>
+                                <div style="height: 2px; background: rgba(255,255,255,0.1); width: 60%;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                 <div class="feature-item" style="margin-bottom: 2rem;">
+            </div>
+        </section>
+
+        <section id="features">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Built for <span class="gradient-text">Trust.</span>
+                </h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Everything you need to manage
+                    your construction project in one secure, high-performance app.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon">⛓️</div>
+                    <h3>Milestone Lattice</h3>
+                    <p>Break your project down into clear, manageable steps. Payments are locked to progress, ensuring
+                        fairness for both sides.</p>
+                </div>
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon">📸</div>
                     <h3>Evidence Carousel</h3>
-                    <p>Visual proof for every step. Upload photos and videos to keep the record straight.</p>
+                    <p>High-resolution proof for every phase. Upload photos and videos from site to trigger milestone
+                        approvals instantly.</p>
                 </div>
-                 <div class="feature-item">
-                    <h3>Secure Payments</h3>
-                    <p>Powered by Stripe, payments are released only when milestones are approved.</p>
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Secured Escrow</h3>
+                    <p>Payments are securely handled via Stripe and only released when both builder and homeowner are
+                        satisfied.</p>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 
     <footer>
-        <p>&copy; <script>document.write(new Date().getFullYear())</script> BasePro by Calibre Media.</p>
-        <p>
-            <a href="privacy.html">Privacy Policy</a>
-        </p>
+        <div class="nav-container" style="flex-direction: column; gap: 2rem;">
+            <div class="logo">
+                <div class="logo-icon">B</div>
+                BasePro
+            </div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy</a>
+                <a href="index.html">Terms</a>
+                <a href="mailto:support@calibremedia.com">Support</a>
+            </div>
+            <p>&copy;
+                <script>document.write(new Date().getFullYear())</script> BasePro by Calibre Media. All rights reserved.
+            </p>
+        </div>
     </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
+
 </html>
