@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmed - BasePro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <header>
+        <h1>BasePro</h1>
+    </header>
+
+    <main>
+        <div class="container" style="text-align: center;">
+            <div id="content">
+                <h2>Verifying Email...</h2>
+                <div class="spinner" style="border-top-color: var(--primary-color);"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy;
+            <script>document.write(new Date().getFullYear())</script> BasePro by Calibre Media.
+        </p>
+    </footer>
+
+    <script>
+        const supabaseUrl = 'https://erfvdiqeslllqqqebjat.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyZnZkaXFlc2xsbHFxcWViamF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA5ODg0NzYsImV4cCI6MjA4NjU2NDQ3Nn0.7GRtLZ2-ZVcSwcNxTC_F-2Y2qMqqA2YUJ9eZvapSTM4';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const contentDiv = document.getElementById('content');
+
+        async function checkSession() {
+            // Give Supabase a moment to process the hash
+            const { data: { session }, error } = await supabase.auth.getSession();
+
+            if (session) {
+                // Email confirmed successfully if we have a session (implicit flow)
+                showSuccess();
+            } else if (error) {
+                showError(error.message);
+            } else {
+                // Sometimes the hash is present but getSession hasn't fired or it was a different type of flow
+                // We can also check the URL hash for 'error_description'
+                const hash = window.location.hash;
+                if (hash && hash.includes('error_description')) {
+                    // Extract error
+                    const params = new URLSearchParams(hash.substring(1)); // remove #
+                    const errorDesc = params.get('error_description');
+                    showError(errorDesc || "Verification failed.");
+                } else {
+                    // If no session and no error in hash, maybe the user just navigated here directly?
+                    // Or maybe the token is invalid/expired.
+                    // But let's assume if they got here with a token, Supabase would have set the session.
+
+                    // Fallback check: look for access_token in hash
+                    if (hash && hash.includes('access_token')) {
+                        // It might just be taking a moment, but if we are here, getSession should have caught it.
+                        showSuccess(); // Optimistically show success if token is present
+                    } else {
+                        showError("Invalid or expired verification link.");
+                    }
+                }
+            }
+        }
+
+        function showSuccess() {
+            contentDiv.innerHTML = `
+                <h2 style="color: var(--success-color);">Email Verified!</h2>
+                <p>Thank you for confirming your email address. You can now access the full features of BasePro.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="clearbuild://" class="btn">Open App</a>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <a href="index.html" class="secondary-btn btn">Back to Website</a>
+                </div>
+            `;
+        }
+
+        function showError(msg) {
+            contentDiv.innerHTML = `
+                <h2 style="color: var(--error-color);">Verification Failed</h2>
+                <p>${msg}</p>
+                 <div style="margin-top: 2rem;">
+                    <a href="index.html" class="secondary-btn btn">Back to Home</a>
+                </div>
+            `;
+        }
+
+        // Run check
+        checkSession();
+
+        // Also listen for auth state changes just in case
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
+                showSuccess();
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password - BasePro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <header>
+        <h1>BasePro</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Reset Your Password</h2>
+
+            <div id="loading" class="message">
+                <span class="spinner"></span> Verifying session...
+            </div>
+
+            <div id="error-message" class="message error hidden"></div>
+            <div id="success-message" class="message success hidden">
+                Password updated successfully! You can now close this window and log in to the app.
+            </div>
+
+            <form id="reset-form" class="hidden">
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input type="password" id="password" name="password" required minlength="6"
+                        placeholder="Enter new password">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required minlength="6"
+                        placeholder="Confirm new password">
+                </div>
+
+                <button type="submit" class="btn">Update Password</button>
+            </form>
+
+            <div id="back-link" class="hidden" style="margin-top: 1rem;">
+                <a href="index.html" class="secondary-btn btn">Back to Home</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy;
+            <script>document.write(new Date().getFullYear())</script> BasePro by Calibre Media.
+        </p>
+    </footer>
+
+    <script>
+        // Initialize Supabase Client
+        // Note: These keys are safe to expose on the client side (Anon key)
+        const supabaseUrl = 'https://erfvdiqeslllqqqebjat.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyZnZkaXFlc2xsbHFxcWViamF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA5ODg0NzYsImV4cCI6MjA4NjU2NDQ3Nn0.7GRtLZ2-ZVcSwcNxTC_F-2Y2qMqqA2YUJ9eZvapSTM4';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const form = document.getElementById('reset-form');
+        const loading = document.getElementById('loading');
+        const errorMsg = document.getElementById('error-message');
+        const successMsg = document.getElementById('success-message');
+        const backLink = document.getElementById('back-link');
+
+        // Check for hash in URL (Supabase sends tokens in hash)
+        // Expected format: https://site.com/reset_pw.html#access_token=...&refresh_token=...&type=recovery
+
+        async function handleResetLoad() {
+            // Supabase client automatically handles session from URL hash
+            const { data: { session }, error } = await supabase.auth.getSession();
+
+            // Also check if we just arrived with a hash, as getSession might not have picked it up if the client initialized too late? 
+            // Actually supabase-js usually picks it up from window.location automatically.
+
+            // However, for password reset flow (type=recovery), we get signed in automatically.
+            // We just need to check if we are authenticated.
+
+            loading.classList.add('hidden');
+
+            if (error) {
+                showError(error.message);
+                return;
+            }
+
+            if (!session) {
+                // Try checking URL hash manually just in case
+                const hash = window.location.hash;
+                if (!hash || !hash.includes('type=recovery')) {
+                    showError('Invalid or expired password reset link. Please request a new one.');
+                    return;
+                }
+                // If hash exists but session is null, maybe wait a sec? or assume supabase is processing?
+                // Usually getSession() works.
+            }
+
+            // Show form
+            form.classList.remove('hidden');
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorMsg.classList.add('hidden');
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                showError("Passwords do not match.");
+                return;
+            }
+
+            loading.classList.remove('hidden');
+            loading.innerHTML = '<span class="spinner"></span> Updating password...';
+            form.classList.add('hidden');
+
+            const { data, error } = await supabase.auth.updateUser({
+                password: password
+            });
+
+            loading.classList.add('hidden');
+
+            if (error) {
+                form.classList.remove('hidden');
+                showError(error.message);
+            } else {
+                successMsg.classList.remove('hidden');
+                backLink.classList.remove('hidden');
+                // Optional: Sign out after password change if you don't want them logged in here
+                await supabase.auth.signOut();
+            }
+        });
+
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.classList.remove('hidden');
+            backLink.classList.remove('hidden');
+        }
+
+        handleResetLoad();
+
+    </script>
+</body>
+
+</html>
