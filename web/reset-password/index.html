@@ -10,11 +10,19 @@
 </head>
 
 <body>
+    <header>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <div class="logo-icon">B</div>
+                BasePro
+            </a>
+        </div>
+    </header>
+
     <main class="auth-container">
         <div class="hero-glow"></div>
         <div class="glass-panel auth-card">
-            <div class="logo-icon" style="margin: 0 auto 1.5rem;">B</div>
-            <h2 id="title">Reset Password</h2>
+            <h2 id="title" style="margin-bottom: 2rem;">Reset Password</h2>
 
             <div id="loading" class="form-group" style="text-align: center;">
                 <span class="spinner"></span> <span id="loading-text"
@@ -28,10 +36,6 @@
                     <label for="password">New Password</label>
                     <input type="password" id="password" placeholder="Min. 6 characters" required minlength="6">
                 </div>
-                <a href="../" class="logo">
-                    <div class="logo-icon">B</div>
-                    BasePro
-                </a>
                 <div class="form-group">
                     <label for="confirm-password">Confirm Password</label>
                     <input type="password" id="confirm-password" placeholder="Repeat password" required minlength="6">
@@ -39,9 +43,8 @@
                 <button type="submit" class="btn-primary" style="width: 100%;">Update Password</button>
             </form>
 
-            <div class="footer-links" style="margin-top: 2rem;">
-                <a href="../">Home</a>
-                <a href="../privacy/">Privacy</a>
+            <div id="footer-links" class="footer-links" style="margin-top: 2rem; display: none;">
+                <a href="../">Return to Home</a>
             </div>
         </div>
     </main>
@@ -54,7 +57,7 @@
         const form = document.getElementById('reset-form');
         const loading = document.getElementById('loading');
         const statusMsg = document.getElementById('status-message');
-        const backLink = document.getElementById('back-link');
+        const footerLinks = document.getElementById('footer-links');
 
         async function init() {
             const { data: { session }, error } = await supabase.auth.getSession();
@@ -64,7 +67,7 @@
                 const hash = window.location.hash;
                 if (!hash || !hash.includes('type=recovery')) {
                     showStatus('Link invalid or expired. Please request a new one.', 'error');
-                    backLink.style.display = 'block';
+                    footerLinks.style.display = 'flex';
                     return;
                 }
             }
@@ -93,7 +96,7 @@
                 form.style.display = 'block';
             } else {
                 showStatus('Password updated successfully! You can now sign in to the app.', 'success');
-                backLink.style.display = 'block';
+                footerLinks.style.display = 'flex';
                 await supabase.auth.signOut();
             }
         });

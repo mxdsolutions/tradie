@@ -10,26 +10,32 @@
 </head>
 
 <body>
+    <header>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <div class="logo-icon">B</div>
+                BasePro
+            </a>
+        </div>
+    </header>
+
     <main class="auth-container">
         <div class="hero-glow"></div>
         <div class="glass-panel auth-card" id="main-card">
-            <div id="verifying">
-                <div class="footer-links" style="margin-top: 2rem;">
-                    <a href="../">Home</a>
-                    <a href="../privacy/">Privacy</a>
-                </div>
+            <div id="verifying" style="text-align: center; padding: 2rem;">
+                <span class="spinner" style="width: 24px; height: 24px; margin-bottom: 1.5rem;"></span>
+                <h2>Verifying...</h2>
             </div>
 
-            <div id="result" style="display: none;">
-                <h2 id="result-title" class="gradient-text">Verification Success</h2>
+            <div id="result" style="display: none; text-align: center;">
+                <h2 id="result-title" class="gradient-text" style="font-size: 2rem;">Verification Success</h2>
                 <p id="result-text" style="margin: 1.5rem 0 2.5rem; color: var(--text-secondary);"></p>
                 <div id="actions">
                     <a href="clearbuild://" class="btn-primary" style="display: block; margin-bottom: 1rem;">Open
                         BasePro App</a>
-                    <a href="../" class="logo">
-                        <div class="logo-icon">B</div>
-                        BasePro
-                    </a>
+                    <div class="footer-links" style="margin-top: 2rem; justify-content: center;">
+                        <a href="../">Return to Home</a>
+                    </div>
                 </div>
             </div>
         </div>
