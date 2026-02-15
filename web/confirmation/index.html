@@ -22,20 +22,41 @@
     <main class="auth-container">
         <div class="hero-glow"></div>
         <div class="glass-panel auth-card" id="main-card">
+            <!-- Loading State -->
             <div id="verifying" style="text-align: center; padding: 2rem;">
                 <span class="spinner" style="width: 24px; height: 24px; margin-bottom: 1.5rem;"></span>
                 <h2>Verifying...</h2>
             </div>
 
-            <div id="result" style="display: none; text-align: center;">
-                <h2 id="result-title" class="gradient-text" style="font-size: 2rem;">Verification Success</h2>
-                <p id="result-text" style="margin: 1.5rem 0 2.5rem; color: var(--text-secondary);"></p>
+            <!-- Success State -->
+            <div id="result-success" style="display: none; text-align: center;">
+                <div class="feature-icon"
+                    style="margin: 0 auto 1.5rem; background: rgba(52, 211, 153, 0.1); color: #34d399;">✓</div>
+                <h2 class="gradient-text" style="font-size: 2rem;">Verified!</h2>
+                <p style="margin: 1.5rem 0 2.5rem; color: var(--text-secondary);">Your account is now activated. Tap
+                    below to launch the app and get started.</p>
                 <div id="actions">
                     <a href="clearbuild://" class="btn-primary" style="display: block; margin-bottom: 1rem;">Open
                         BasePro App</a>
                     <div class="footer-links" style="margin-top: 2rem; justify-content: center;">
                         <a href="../">Return to Home</a>
                     </div>
+                </div>
+            </div>
+
+            <!-- Failure State -->
+            <div id="result-error" style="display: none; text-align: center;">
+                <div class="feature-icon"
+                    style="margin: 0 auto 1.5rem; background: rgba(251, 113, 133, 0.1); color: #fb7185;">✕</div>
+                <h2 style="font-size: 2rem; color: #fb7185;">Verification Failed</h2>
+                <p id="error-text" style="margin: 1.5rem 0 2.5rem; color: var(--text-secondary);">This verification link
+                    is invalid, expired, or has already been used.</p>
+                <div id="error-actions">
+                    <a href="../" class="btn-secondary" style="display: block; margin-bottom: 1rem;">Return to
+                        Homepage</a>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Need help? Contact <a
+                            href="mailto:support@calibremedia.com"
+                            style="color: var(--accent-blue); text-decoration: none;">Support</a></p>
                 </div>
             </div>
         </div>
@@ -47,34 +68,41 @@
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         const verifying = document.getElementById('verifying');
-        const result = document.getElementById('result');
-        const resTitle = document.getElementById('result-title');
-        const resText = document.getElementById('result-text');
+        const successState = document.getElementById('result-success');
+        const errorState = document.getElementById('result-error');
+        const errorText = document.getElementById('error-text');
 
         async function check() {
-            const { data: { session }, error } = await supabase.auth.getSession();
-            verifying.style.display = 'none';
-            result.style.display = 'block';
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession();
+                
+                verifying.style.display = 'none';
 
-            if (session) {
-                resTitle.textContent = "Verified!";
-                resText.textContent = "Your account is now activated. Tap below to launch the app and get started.";
-            } else if (error) {
-                resTitle.textContent = "Error";
-                resTitle.style.background = 'none';
-                resTitle.style.color = '#fb7185';
-                resText.textContent = error.message;
-            } else {
-                resTitle.textContent = "Link Expired";
-                resTitle.style.background = 'none';
-                resTitle.style.color = '#fb7185';
-                resText.textContent = "This verification link is no longer valid. Please check your app to resend.";
+                if (session) {
+                    successState.style.display = 'block';
+                } else {
+                    errorState.style.display = 'block';
+                    if (error) {
+                        errorText.textContent = error.message;
+                    }
+                }
+            } catch (err) {
+                verifying.style.display = 'none';
+                errorState.style.display = 'block';
+                errorText.textContent = "An unexpected error occurred. Please try again from the app.";
             }
         }
 
+        // Run check on load
         check();
-        supabase.auth.onAuthStateChange((event) => {
-            if (event === 'SIGNED_IN') check();
+
+        // Listen for auth state changes (Supabase captures hash automatically)
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' || session) {
+                verifying.style.display = 'none';
+                errorState.style.display = 'none';
+                successState.style.display = 'block';
+            }
         });
     </script>
 </body>
