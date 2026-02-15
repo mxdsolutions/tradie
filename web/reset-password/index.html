@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password | BasePro</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Reset Password - BasePro</title>
+    <link rel="stylesheet" href="../style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
@@ -28,6 +28,10 @@
                     <label for="password">New Password</label>
                     <input type="password" id="password" placeholder="Min. 6 characters" required minlength="6">
                 </div>
+                <a href="../" class="logo">
+                    <div class="logo-icon">B</div>
+                    BasePro
+                </a>
                 <div class="form-group">
                     <label for="confirm-password">Confirm Password</label>
                     <input type="password" id="confirm-password" placeholder="Repeat password" required minlength="6">
@@ -35,9 +39,9 @@
                 <button type="submit" class="btn-primary" style="width: 100%;">Update Password</button>
             </form>
 
-            <div id="back-link" style="margin-top: 2rem; display: none;">
-                <a href="index.html" class="btn-secondary" style="font-size: 0.9rem; padding: 0.6rem 1.5rem;">Back to
-                    Home</a>
+            <div class="footer-links" style="margin-top: 2rem;">
+                <a href="../">Home</a>
+                <a href="../privacy/">Privacy</a>
             </div>
         </div>
     </main>

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Confirmed | BasePro</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Email Confirmed - BasePro</title>
+    <link rel="stylesheet" href="../style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
@@ -14,8 +14,10 @@
         <div class="hero-glow"></div>
         <div class="glass-panel auth-card" id="main-card">
             <div id="verifying">
-                <span class="spinner" style="width: 24px; height: 24px; margin-bottom: 1.5rem;"></span>
-                <h2>Verifying...</h2>
+                <div class="footer-links" style="margin-top: 2rem;">
+                    <a href="../">Home</a>
+                    <a href="../privacy/">Privacy</a>
+                </div>
             </div>
 
             <div id="result" style="display: none;">
@@ -24,7 +26,10 @@
                 <div id="actions">
                     <a href="clearbuild://" class="btn-primary" style="display: block; margin-bottom: 1rem;">Open
                         BasePro App</a>
-                    <a href="index.html" class="btn-secondary" style="display: block;">Back to Home</a>
+                    <a href="../" class="logo">
+                        <div class="logo-icon">B</div>
+                        BasePro
+                    </a>
                 </div>
             </div>
         </div>
