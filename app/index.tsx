@@ -1,18 +1,23 @@
-import { View, ImageBackground } from 'react-native';
+import { View, ImageBackground, Animated } from 'react-native';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Typography } from '../components/ui/Typography';
 import { Button } from '../components/ui/Button';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUser } from '../context/UserContext';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { MotiView } from 'moti';
 
 export default function LandingScreen() {
     const router = useRouter();
     const insets = useSafeAreaInsets();
     const { isAuthenticated, userMode } = useUser();
+
+    // Animation refs
+    const headerOpacity = useRef(new Animated.Value(0)).current;
+    const headerTranslateY = useRef(new Animated.Value(-20)).current;
+    const bottomOpacity = useRef(new Animated.Value(0)).current;
+    const bottomTranslateY = useRef(new Animated.Value(20)).current;
 
     // Auto-redirect if already logged in
     useEffect(() => {
@@ -20,6 +25,40 @@ export default function LandingScreen() {
             router.replace(userMode === 'homeowner' ? '/(homeowner)' : '/(tradie)');
         }
     }, [isAuthenticated, userMode]);
+
+    useEffect(() => {
+        // Header animation
+        Animated.parallel([
+            Animated.timing(headerOpacity, {
+                toValue: 1,
+                duration: 1000,
+                delay: 500,
+                useNativeDriver: true,
+            }),
+            Animated.timing(headerTranslateY, {
+                toValue: 0,
+                duration: 1000,
+                delay: 500,
+                useNativeDriver: true,
+            }),
+        ]).start();
+
+        // Bottom content animation
+        Animated.parallel([
+            Animated.timing(bottomOpacity, {
+                toValue: 1,
+                duration: 1000,
+                delay: 800,
+                useNativeDriver: true,
+            }),
+            Animated.timing(bottomTranslateY, {
+                toValue: 0,
+                duration: 1000,
+                delay: 800,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    }, []);
 
     return (
         <View className="flex-1">
@@ -36,26 +75,28 @@ export default function LandingScreen() {
                 >
                     {/* Header */}
                     <View className="items-center mt-12">
-                        <MotiView
-                            from={{ opacity: 0, translateY: -20 }}
-                            animate={{ opacity: 1, translateY: 0 }}
-                            transition={{ type: 'timing', duration: 1000, delay: 500 }}
-                            className="items-center"
+                        <Animated.View
+                            style={{
+                                opacity: headerOpacity,
+                                transform: [{ translateY: headerTranslateY }],
+                                alignItems: 'center',
+                            }}
                         >
                             <View className="w-20 h-20 bg-white/20 rounded-3xl items-center justify-center mb-6 backdrop-blur-md border border-white/30 transform rotate-3 shadow-lg shadow-black/20">
                                 <Typography variant="h1" className="text-4xl text-white font-black">B</Typography>
                             </View>
                             <Typography variant="h2" className="text-white text-4xl font-bold tracking-widest uppercase opacity-90 shadow-sm">BasePro</Typography>
-                        </MotiView>
+                        </Animated.View>
                     </View>
 
                     {/* Bottom Content */}
                     <View className="w-full mb-8">
-                        <MotiView
-                            from={{ opacity: 0, translateY: 20 }}
-                            animate={{ opacity: 1, translateY: 0 }}
-                            transition={{ type: 'timing', duration: 1000, delay: 800 }}
-                            className="w-full space-y-8"
+                        <Animated.View
+                            style={{
+                                opacity: bottomOpacity,
+                                transform: [{ translateY: bottomTranslateY }],
+                                width: '100%',
+                            }}
                         >
                             <View className="mb-4">
                                 <Typography variant="h1" className="text-white text-[52px] font-bold leading-[1.05] tracking-tight mb-4 shadow-sm">
@@ -83,7 +124,7 @@ export default function LandingScreen() {
                                     textClassName="text-white font-semibold text-base opacity-90 tracking-wide"
                                 />
                             </View>
-                        </MotiView>
+                        </Animated.View>
                     </View>
                 </LinearGradient>
             </ImageBackground>

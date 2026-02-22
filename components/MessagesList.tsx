@@ -19,6 +19,22 @@ export default function MessagesList() {
     useEffect(() => {
         if (user) {
             fetchChats();
+
+            // Subscribe to new messages to auto-refresh the chat list
+            const channel = supabase
+                .channel('messages-list-realtime')
+                .on('postgres_changes',
+                    { event: 'INSERT', schema: 'public', table: 'messages' },
+                    () => {
+                        // Re-fetch full chat list when any new message arrives
+                        fetchChats();
+                    }
+                )
+                .subscribe();
+
+            return () => {
+                supabase.removeChannel(channel);
+            };
         }
     }, [user]);
 
@@ -103,7 +119,7 @@ export default function MessagesList() {
 
     const onRefresh = async () => {
         setRefreshing(true);
-        await fetchConversations();
+        await fetchChats();
     };
 
     const filteredMessages = messages.filter(msg =>

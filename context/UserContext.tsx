@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useRouter, useRootNavigationState } from 'expo-router'; // Removed
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
+import { OneSignal } from 'react-native-onesignal';
 
 type UserMode = 'homeowner' | 'tradie';
 
@@ -41,6 +42,13 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
             setIsAuthenticated(!!session);
+
+            // Map OneSignal user to Supabase user
+            if (session?.user?.id) {
+                OneSignal.login(session.user.id);
+            } else {
+                OneSignal.logout();
+            }
         });
 
         return () => subscription.unsubscribe();
@@ -59,6 +67,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     };
 
     const signOut = async () => {
+        OneSignal.logout();
         await supabase.auth.signOut();
         setIsAuthenticated(false);
         // Navigation should be handled by the component or a layout effect

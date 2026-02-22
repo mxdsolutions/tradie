@@ -1,10 +1,9 @@
-import { View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, ScrollView, TouchableOpacity, ActivityIndicator, Animated } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Typography } from '../components/ui/Typography';
 import { ArrowLeftIcon, BellIcon, CheckCircleIcon, DocumentTextIcon, CurrencyDollarIcon } from 'react-native-heroicons/outline';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MotiView } from 'moti';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { useUser } from '../context/UserContext';
 
@@ -32,6 +31,67 @@ const IconBgColor = ({ type }: { type: string }) => {
         default:
             return 'bg-slate-50';
     }
+};
+
+const AnimatedNotificationItem = ({ notification, index, onPress }: { notification: any; index: number; onPress: () => void }) => {
+    const opacity = useRef(new Animated.Value(0)).current;
+    const translateY = useRef(new Animated.Value(20)).current;
+
+    useEffect(() => {
+        Animated.parallel([
+            Animated.timing(opacity, {
+                toValue: 1,
+                duration: 300,
+                delay: index * 100,
+                useNativeDriver: true,
+            }),
+            Animated.timing(translateY, {
+                toValue: 0,
+                duration: 300,
+                delay: index * 100,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    }, []);
+
+    return (
+        <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
+            <Animated.View
+                style={{
+                    opacity,
+                    transform: [{ translateY }],
+                    flexDirection: 'row',
+                    padding: 16,
+                    marginBottom: 16,
+                    borderRadius: 16,
+                    borderWidth: 1,
+                    borderColor: notification.read ? '#f1f5f9' : '#bfdbfe',
+                    backgroundColor: notification.read ? '#ffffff' : 'rgba(239, 246, 255, 0.5)',
+                }}
+            >
+                <View className={`w-12 h-12 rounded-full items-center justify-center mr-4 ${IconBgColor({ type: notification.type })}`}>
+                    {/* @ts-ignore */}
+                    <NotificationIcon type={notification.type} />
+                </View>
+                <View className="flex-1">
+                    <View className="flex-row justify-between items-start mb-1">
+                        <Typography variant="body" className={`text-base ${notification.read ? 'font-semibold text-slate-800' : 'font-bold text-slate-900'}`}>
+                            {notification.title}
+                        </Typography>
+                        <Typography variant="caption" className="text-slate-400 text-xs mt-0.5">
+                            {new Date(notification.created_at).toLocaleDateString()}
+                        </Typography>
+                    </View>
+                    <Typography variant="body" className="text-slate-600 text-sm leading-5">
+                        {notification.message}
+                    </Typography>
+                </View>
+                {!notification.read && (
+                    <View className="w-2 h-2 rounded-full bg-blue-500 mt-2 ml-2" />
+                )}
+            </Animated.View>
+        </TouchableOpacity>
+    );
 };
 
 export default function NotificationsScreen() {
@@ -101,39 +161,12 @@ export default function NotificationsScreen() {
                 ) : (
                     <>
                         {notifications.map((notification, index) => (
-                            <TouchableOpacity
+                            <AnimatedNotificationItem
                                 key={notification.id}
+                                notification={notification}
+                                index={index}
                                 onPress={() => !notification.read && markAsRead(notification.id)}
-                                activeOpacity={0.8}
-                            >
-                                <MotiView
-                                    from={{ opacity: 0, translateY: 20 }}
-                                    animate={{ opacity: 1, translateY: 0 }}
-                                    transition={{ type: 'timing', duration: 300, delay: index * 100 } as any}
-                                    className={`flex-row p-4 mb-4 rounded-2xl border ${notification.read ? 'bg-white border-slate-100' : 'bg-blue-50/50 border-blue-100'}`}
-                                >
-                                    <View className={`w-12 h-12 rounded-full items-center justify-center mr-4 ${IconBgColor({ type: notification.type })}`}>
-                                        {/* @ts-ignore */}
-                                        <NotificationIcon type={notification.type} />
-                                    </View>
-                                    <View className="flex-1">
-                                        <View className="flex-row justify-between items-start mb-1">
-                                            <Typography variant="body" className={`text-base ${notification.read ? 'font-semibold text-slate-800' : 'font-bold text-slate-900'}`}>
-                                                {notification.title}
-                                            </Typography>
-                                            <Typography variant="caption" className="text-slate-400 text-xs mt-0.5">
-                                                {new Date(notification.created_at).toLocaleDateString()}
-                                            </Typography>
-                                        </View>
-                                        <Typography variant="body" className="text-slate-600 text-sm leading-5">
-                                            {notification.message}
-                                        </Typography>
-                                    </View>
-                                    {!notification.read && (
-                                        <View className="w-2 h-2 rounded-full bg-blue-500 mt-2 ml-2" />
-                                    )}
-                                </MotiView>
-                            </TouchableOpacity>
+                            />
                         ))}
 
                         {notifications.length === 0 && (

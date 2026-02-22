@@ -15,6 +15,26 @@ export default function SignIn() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const resendConfirmationEmail = async () => {
+        try {
+            setLoading(true);
+            const { error } = await supabase.auth.resend({
+                type: 'signup',
+                email: email,
+                options: {
+                    emailRedirectTo: 'https://basepro.netlify.app/confirmation/'
+                }
+            });
+
+            if (error) throw error;
+            Alert.alert('Success', 'Confirmation email has been resent. Please check your inbox.');
+        } catch (error: any) {
+            Alert.alert('Error', error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleSignIn = async () => {
         if (!email || !password) {
             Alert.alert('Error', 'Please enter both email and password');
@@ -28,10 +48,26 @@ export default function SignIn() {
                 password,
             });
 
-            if (error) throw error;
+            if (error) {
+                if (error.message.includes('Email not confirmed')) {
+                    Alert.alert(
+                        'Email Not Confirmed',
+                        'Would you like to resend the confirmation email?',
+                        [
+                            { text: 'Cancel', style: 'cancel' },
+                            { text: 'Resend', onPress: resendConfirmationEmail }
+                        ]
+                    );
+                    return;
+                }
+                throw error;
+            }
             // Redirect is handled by UserContext auth state change listener
         } catch (error: any) {
-            Alert.alert('Error', error.message);
+            // Only show alert if it wasn't the email not confirmed error (which is handled above)
+            if (!error.message.includes('Email not confirmed')) {
+                Alert.alert('Error', error.message);
+            }
         } finally {
             setLoading(false);
         }

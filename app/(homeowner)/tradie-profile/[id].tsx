@@ -176,13 +176,13 @@ export default function TradieProfileScreen() {
                     <View className="flex-row gap-3 mb-8">
                         <TouchableOpacity
                             onPress={() => router.push(`/chat/${tradie.user_id}`)} // Initiating chat with user_id, simpler logic needed in chat screen to handle user_id vs chat_id or find existing chat
-                            className="flex-1 bg-primary py-3.5 rounded-2xl flex-row items-center justify-center shadow-lg active:scale-[0.98]"
+                            className="flex-1 bg-primary py-3.5 rounded-2xl flex-row items-center justify-center shadow-lg"
                         >
                             {/* @ts-ignore */}
                             <ChatBubbleLeftRightIcon size={20} color="white" style={{ marginRight: 8 }} />
                             <Typography variant="h3" className="text-white text-base font-bold">Message</Typography>
                         </TouchableOpacity>
-                        <TouchableOpacity className="flex-1 bg-white border border-slate-200 py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm active:scale-[0.98]">
+                        <TouchableOpacity className="flex-1 bg-white border border-slate-200 py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm">
                             {/* @ts-ignore */}
                             <PhoneIcon size={20} color="#0F172A" style={{ marginRight: 8 }} />
                             <Typography variant="h3" className="text-slate-900 text-base font-bold">Call</Typography>

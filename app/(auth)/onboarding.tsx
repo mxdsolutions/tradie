@@ -1,8 +1,7 @@
-import { View, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Animated } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useUser } from '../../context/UserContext';
-import { MotiView } from 'moti';
 import { ClipboardDocumentListIcon, WrenchScrewdriverIcon, ArrowRightIcon, CheckIcon } from 'react-native-heroicons/outline';
 import { Typography } from '../../components/ui/Typography';
 import { Button } from '../../components/ui/Button';
@@ -31,6 +30,38 @@ export default function Onboarding() {
     // Role Specific State
     const [trade, setTrade] = useState('');
     const [license, setLicense] = useState('');
+
+    // Animation refs
+    const progressAnim = useRef(new Animated.Value(33)).current;
+    const slideOpacity = useRef(new Animated.Value(0)).current;
+    const slideTranslateX = useRef(new Animated.Value(50)).current;
+
+    useEffect(() => {
+        const targetWidth = step === 1 ? 33 : step === 2 ? 66 : 100;
+        Animated.timing(progressAnim, {
+            toValue: targetWidth,
+            duration: 500,
+            useNativeDriver: false,
+        }).start();
+
+        // Animate slide in for steps 2 and 3
+        if (step > 1) {
+            slideOpacity.setValue(0);
+            slideTranslateX.setValue(50);
+            Animated.parallel([
+                Animated.timing(slideOpacity, {
+                    toValue: 1,
+                    duration: 300,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(slideTranslateX, {
+                    toValue: 0,
+                    duration: 300,
+                    useNativeDriver: true,
+                }),
+            ]).start();
+        }
+    }, [step]);
 
     const handleRoleSelect = (selectedRole: 'homeowner' | 'tradie') => {
         setRole(selectedRole);
@@ -86,8 +117,6 @@ export default function Onboarding() {
             }).eq('id', user.id);
 
             if (userError) {
-                // If user trigger exists, this might fail on duplicate, which is fine, but better to upsert or ignore if so. 
-                // For now assuming no trigger or manual handling.
                 console.error('User insert error:', userError);
             }
 
@@ -127,10 +156,16 @@ export default function Onboarding() {
             <StatusBar style="dark" />
             {/* Progress Bar */}
             <View className="flex-row h-1.5 bg-slate-100 rounded-full mb-10 overflow-hidden">
-                <MotiView
-                    animate={{ width: step === 1 ? '33%' : step === 2 ? '66%' : '100%' }}
-                    transition={{ type: 'timing', duration: 500 } as any}
-                    className="h-full bg-accent rounded-full"
+                <Animated.View
+                    style={{
+                        width: progressAnim.interpolate({
+                            inputRange: [0, 100],
+                            outputRange: ['0%', '100%'],
+                        }),
+                        height: '100%',
+                        borderRadius: 9999,
+                        backgroundColor: '#2563EB',
+                    }}
                 />
             </View>
 
@@ -149,7 +184,7 @@ export default function Onboarding() {
                 <View className="space-y-6">
                     <TouchableOpacity
                         onPress={() => handleRoleSelect('homeowner')}
-                        className="bg-white border border-slate-100 p-6 rounded-3xl shadow-soft active:border-accent active:bg-accent-light/10 ios:active:scale-[0.98] transition-all"
+                        className="bg-white border border-slate-100 p-6 rounded-3xl shadow-soft"
                     >
                         <View className="bg-accent-light w-14 h-14 rounded-2xl items-center justify-center mb-4">
                             {/* @ts-ignore */}
@@ -161,7 +196,7 @@ export default function Onboarding() {
 
                     <TouchableOpacity
                         onPress={() => handleRoleSelect('tradie')}
-                        className="bg-white border border-slate-100 p-6 rounded-3xl shadow-soft active:border-accent active:bg-accent-light/10 ios:active:scale-[0.98] transition-all"
+                        className="bg-white border border-slate-100 p-6 rounded-3xl shadow-soft"
                     >
                         <View className="bg-orange-50 w-14 h-14 rounded-2xl items-center justify-center mb-4">
                             {/* @ts-ignore */}
@@ -174,11 +209,8 @@ export default function Onboarding() {
             )}
 
             {step === 2 && (
-                <MotiView
-                    from={{ opacity: 0, translateX: 50 }}
-                    animate={{ opacity: 1, translateX: 0 }}
-                    transition={{ type: 'timing', duration: 300 } as any}
-                    className="flex-1"
+                <Animated.View
+                    style={{ opacity: slideOpacity, transform: [{ translateX: slideTranslateX }], flex: 1 }}
                 >
                     <View className="gap-6">
                         <Input
@@ -186,12 +218,14 @@ export default function Onboarding() {
                             placeholder="e.g. 12345678"
                             value={license}
                             onChangeText={setLicense}
+                            className="bg-slate-100"
                         />
                         <Input
                             label="Trade"
                             placeholder="e.g. Electrician"
                             value={trade}
                             onChangeText={setTrade}
+                            className="bg-slate-100"
                         />
                     </View>
 
@@ -203,15 +237,12 @@ export default function Onboarding() {
                             icon={<ArrowRightIcon size={20} color="white" />}
                         />
                     </View>
-                </MotiView>
+                </Animated.View>
             )}
 
             {step === 3 && (
-                <MotiView
-                    from={{ opacity: 0, translateX: 50 }}
-                    animate={{ opacity: 1, translateX: 0 }}
-                    transition={{ type: 'timing', duration: 300 } as any}
-                    className="flex-1"
+                <Animated.View
+                    style={{ opacity: slideOpacity, transform: [{ translateX: slideTranslateX }], flex: 1 }}
                 >
                     <KeyboardAvoidingView
                         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -232,6 +263,7 @@ export default function Onboarding() {
                                             value={firstName}
                                             onChangeText={setFirstName}
                                             autoCapitalize="words"
+                                            className="bg-slate-100"
                                         />
                                     </View>
                                     <View className="flex-1">
@@ -241,6 +273,7 @@ export default function Onboarding() {
                                             value={lastName}
                                             onChangeText={setLastName}
                                             autoCapitalize="words"
+                                            className="bg-slate-100"
                                         />
                                     </View>
                                 </View>
@@ -251,6 +284,7 @@ export default function Onboarding() {
                                     value={location}
                                     onChangeText={setLocation}
                                     autoCapitalize="words"
+                                    className="bg-slate-100"
                                 />
 
                                 <Input
@@ -260,6 +294,7 @@ export default function Onboarding() {
                                     onChangeText={setEmail}
                                     autoCapitalize="none"
                                     keyboardType="email-address"
+                                    className="bg-slate-100"
                                 />
                                 <Input
                                     label="Password"
@@ -267,6 +302,7 @@ export default function Onboarding() {
                                     value={password}
                                     onChangeText={setPassword}
                                     secureTextEntry
+                                    className="bg-slate-100"
                                 />
                             </View>
 
@@ -281,7 +317,7 @@ export default function Onboarding() {
                             </View>
                         </ScrollView>
                     </KeyboardAvoidingView>
-                </MotiView>
+                </Animated.View>
             )}
         </View>
     );

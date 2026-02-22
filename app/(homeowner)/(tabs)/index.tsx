@@ -165,7 +165,7 @@ export default function HomeownerDashboard() {
                         />
                     </View>
                     <TouchableOpacity
-                        className="bg-white px-5 py-3 rounded-xl flex-row items-center active:scale-95 transition-all"
+                        className="bg-white px-5 py-3 rounded-xl flex-row items-center"
                         onPress={() => router.push('/(homeowner)/find')}
                     >
                         <Typography variant="body" className="text-primary font-bold mr-1">Go</Typography>
@@ -251,7 +251,7 @@ export default function HomeownerDashboard() {
                             <Typography variant="h3" className="text-center mb-2">No projects yet</Typography>
                             <Typography variant="body" className="text-center text-slate-500 mb-6">Start your first renovation or build project today.</Typography>
                             <TouchableOpacity
-                                className="bg-primary px-6 py-3 rounded-xl flex-row items-center active:scale-95 transition-all"
+                                className="bg-primary px-6 py-3 rounded-xl flex-row items-center"
                                 onPress={() => router.push('/(homeowner)/create-project')}
                             >
                                 <PlusIcon size={20} color="white" />
@@ -277,7 +277,7 @@ export default function HomeownerDashboard() {
                                             </View>
                                             <Badge
                                                 label={project.status || 'Planning'}
-                                                variant={project.status === 'Completed' ? 'emerald' : project.status === 'In Progress' ? 'blue' : 'amber'}
+                                                variant={project.status === 'Completed' ? 'emerald' : project.status === 'In Progress' ? 'blue' : project.status === 'Open' ? 'success' : 'amber'}
                                                 className="scale-90 origin-top-right"
                                             />
                                         </View>

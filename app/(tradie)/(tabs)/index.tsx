@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { Card } from '../../../components/ui/Card';
 import { Badge } from '../../../components/ui/Badge';
 import { Typography } from '../../../components/ui/Typography';
-import { CalendarDaysIcon, MapPinIcon, CurrencyDollarIcon, BellIcon, BriefcaseIcon } from 'react-native-heroicons/outline';
+import { CalendarDaysIcon, MapPinIcon, CurrencyDollarIcon, BellIcon, BriefcaseIcon, PlusIcon } from 'react-native-heroicons/outline';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../lib/supabase';
@@ -39,8 +39,7 @@ export default function TradieDashboard() {
             const fetchedJobs = jobsData || [];
             setJobs(fetchedJobs);
 
-            // Calculate Metrics (Mocking 'This Month' logic by just taking all completed for now to keep it simple, or filtering)
-            // Realistically we'd filter by date.
+            // Calculate Metrics
             const completedJobs = fetchedJobs.filter(j => j.status === 'Completed');
             const totalRevenue = completedJobs.reduce((sum, job) => sum + (Number(job.amount) || 0), 0);
 
@@ -123,9 +122,14 @@ export default function TradieDashboard() {
             <View className="mt-8 px-6">
                 <View className="flex-row justify-between items-center mb-4">
                     <Typography variant="h3">Current Jobs</Typography>
-                    {/* <TouchableOpacity>
-                        <Typography variant="body" className="text-accent text-sm font-semibold">See All</Typography>
-                    </TouchableOpacity> */}
+                    <TouchableOpacity
+                        onPress={() => router.push('/(tradie)/create-job')}
+                        className="flex-row items-center bg-accent px-4 py-2 rounded-full"
+                    >
+                        {/* @ts-ignore */}
+                        <PlusIcon size={16} color="white" style={{ marginRight: 4 }} />
+                        <Typography variant="body" className="text-white text-sm font-bold">Create Job</Typography>
+                    </TouchableOpacity>
                 </View>
 
                 {loading ? (

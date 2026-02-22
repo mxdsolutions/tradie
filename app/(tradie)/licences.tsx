@@ -35,10 +35,10 @@ export default function LicencesScreen() {
             >
                 <TouchableOpacity
                     onPress={() => router.back()}
-                    className="w-8 h-8 items-center justify-center bg-white/10 rounded-full mr-4"
+                    className="mr-4 active:opacity-70"
                 >
                     {/* @ts-ignore */}
-                    <ArrowLeftIcon size={20} color="white" />
+                    <ArrowLeftIcon size={24} color="white" />
                 </TouchableOpacity>
                 <Typography variant="h2" className="text-xl font-bold text-white">My Licences</Typography>
             </View>

@@ -1,6 +1,6 @@
-import { View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, ScrollView, TouchableOpacity, ActivityIndicator, Animated } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'expo-router';
 import { Typography } from '../../components/ui/Typography';
 import { Card } from '../../components/ui/Card';
@@ -8,7 +8,6 @@ import { Badge } from '../../components/ui/Badge';
 import { CalendarDaysIcon, MapPinIcon, CurrencyDollarIcon, ClockIcon, ChevronDownIcon, XMarkIcon, ArrowLeftIcon } from 'react-native-heroicons/outline';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Modal } from 'react-native';
-import { MotiView, AnimatePresence } from 'moti';
 import { supabase } from '../../lib/supabase';
 import { useUser } from '../../context/UserContext';
 
@@ -40,11 +39,25 @@ export default function TradieCalendar() {
     const [jobs, setJobs] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
+    // Animation for month picker
+    const modalTranslateY = useRef(new Animated.Value(400)).current;
+
     useEffect(() => {
         if (user) {
             fetchJobs();
         }
     }, [user]);
+
+    useEffect(() => {
+        if (isMonthPickerVisible) {
+            modalTranslateY.setValue(400);
+            Animated.timing(modalTranslateY, {
+                toValue: 0,
+                duration: 300,
+                useNativeDriver: true,
+            }).start();
+        }
+    }, [isMonthPickerVisible]);
 
     const fetchJobs = async () => {
         try {
@@ -63,8 +76,7 @@ export default function TradieCalendar() {
         }
     };
 
-    // Filter jobs for selected date (mocking strict date matching for demo flexibility)
-    // Real implementation would match full date string
+    // Filter jobs for selected date
     const filteredJobs = jobs.filter(job => {
         if (!job.scheduled_date) return false;
         const jobDate = new Date(job.scheduled_date);
@@ -209,11 +221,15 @@ export default function TradieCalendar() {
                         onPress={() => setIsMonthPickerVisible(false)}
                         activeOpacity={1}
                     />
-                    <MotiView
-                        from={{ translateY: 400 }}
-                        animate={{ translateY: 0 }}
-                        transition={{ type: 'timing', duration: 300 } as any}
-                        className="bg-white rounded-t-[32px] p-8 pb-12"
+                    <Animated.View
+                        style={{
+                            transform: [{ translateY: modalTranslateY }],
+                            backgroundColor: 'white',
+                            borderTopLeftRadius: 32,
+                            borderTopRightRadius: 32,
+                            padding: 32,
+                            paddingBottom: 48,
+                        }}
                     >
                         <View className="flex-row justify-between items-center mb-8">
                             <Typography variant="h2" className="text-2xl">Select Month</Typography>
@@ -257,7 +273,7 @@ export default function TradieCalendar() {
                                 <ChevronDownIcon size={16} color="#0F172A" />
                             </View>
                         </View>
-                    </MotiView>
+                    </Animated.View>
                 </View>
             </Modal>
         </View>

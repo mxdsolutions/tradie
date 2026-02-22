@@ -186,7 +186,7 @@ export default function FindScreen() {
                 {filteredTradies.map((tradie) => (
                     <TouchableOpacity
                         key={tradie.id}
-                        className="mb-4 bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm active:scale-[0.99] transition-all flex-row max-h-[120px]"
+                        className="mb-4 bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm flex-row max-h-[120px]"
                         onPress={() => router.push(`/(homeowner)/tradie-profile/${tradie.id}`)}
                     >
                         {/* Image Section - Updated to grey with initials */}
@@ -311,7 +311,7 @@ export default function FindScreen() {
                         <View className="pt-4 border-t border-slate-100">
                             <TouchableOpacity
                                 onPress={closeFilter}
-                                className="bg-primary py-4 rounded-2xl items-center shadow-lg active:scale-[0.98]"
+                                className="bg-primary py-4 rounded-2xl items-center shadow-lg"
                             >
                                 <Typography variant="h3" className="text-white text-base font-bold">Show Results</Typography>
                             </TouchableOpacity>

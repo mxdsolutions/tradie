@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Image, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useUser } from '../context/UserContext';
-import { MotiView } from 'moti';
+
 import { ArrowLeftOnRectangleIcon, ArrowPathIcon, ChevronRightIcon, UserIcon, Cog6ToothIcon, QuestionMarkCircleIcon, BellIcon, CheckBadgeIcon } from 'react-native-heroicons/outline';
 import { Typography } from './ui/Typography';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -63,14 +63,14 @@ export default function AccountContent() {
     const MenuItem = ({ icon: Icon, label, color = "#0F172A", onPress, isDestructive = false }: any) => (
         <TouchableOpacity
             onPress={onPress}
-            className={`flex - row items - center justify - between p - 4 bg - white mb - [1px] active: bg - slate - 50 ${isDestructive ? 'bg-red-50/50' : ''} `}
+            className={`flex-row items-center justify-between p-4 bg-white mb-[1px] active:bg-slate-50 ${isDestructive ? 'bg-red-50/50' : ''}`}
         >
             <View className="flex-row items-center">
-                <View className={`w - 10 h - 10 rounded - full items - center justify - center mr - 4 ${isDestructive ? 'bg-red-50' : 'bg-slate-50'} `}>
+                <View className={`w-10 h-10 rounded-full items-center justify-center mr-4 ${isDestructive ? 'bg-red-50' : 'bg-slate-50'}`}>
                     {/* @ts-ignore */}
                     <Icon size={20} color={isDestructive ? "#EF4444" : "#64748B"} />
                 </View>
-                <Typography variant="body" className={`font - medium ${isDestructive ? 'text-red-600' : 'text-slate-900'} `}>{label}</Typography>
+                <Typography variant="body" className={`font-medium ${isDestructive ? 'text-red-600' : 'text-slate-900'}`}>{label}</Typography>
             </View>
             <ChevronRightIcon size={20} color="#CBD5E1" />
         </TouchableOpacity>
@@ -106,11 +106,7 @@ export default function AccountContent() {
 
             {/* Mode Switcher */}
             <View className="px-6 mb-8">
-                <MotiView
-                    from={{ scale: 1 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: 'timing', duration: 100 } as any}
-                >
+                <View>
                     <TouchableOpacity
                         onPress={handleSwitchMode}
                         className="flex-row items-center justify-between bg-primary p-5 rounded-2xl active:bg-slate-800 shadow-medium"
@@ -130,7 +126,7 @@ export default function AccountContent() {
                         </View>
                         <ChevronRightIcon size={20} color="white" />
                     </TouchableOpacity>
-                </MotiView>
+                </View>
             </View>
 
             {/* Menu */}
@@ -138,9 +134,9 @@ export default function AccountContent() {
                 <Typography variant="label" className="text-slate-400 mb-3 ml-2">Settings</Typography>
                 <View className="bg-white rounded-2xl overflow-hidden border border-slate-100">
                     {/* @ts-ignore */}
-                    <MenuItem icon={UserIcon} label="Edit Profile" onPress={() => router.push('/(homeowner)/edit-profile')} />
+                    <MenuItem icon={UserIcon} label="Edit Profile" onPress={() => router.push('/edit-profile')} />
                     {/* @ts-ignore */}
-                    <MenuItem icon={BellIcon} label="Notifications" onPress={() => router.push('/(homeowner)/notification-settings')} />
+                    <MenuItem icon={BellIcon} label="Notifications" onPress={() => router.push('/notification-settings')} />
                     {userMode === 'tradie' && (
                         /* @ts-ignore */
                         <MenuItem icon={CheckBadgeIcon} label="Licences" onPress={() => router.push('/(tradie)/licences')} />
@@ -150,7 +146,7 @@ export default function AccountContent() {
                 <Typography variant="label" className="text-slate-400 mb-3 ml-2 mt-6">Support</Typography>
                 <View className="bg-white rounded-2xl overflow-hidden border border-slate-100">
                     {/* @ts-ignore */}
-                    <MenuItem icon={QuestionMarkCircleIcon} label="Help & Support" />
+                    <MenuItem icon={QuestionMarkCircleIcon} label="Help & Support" onPress={() => router.push('/help')} />
                     {/* @ts-ignore */}
                     <MenuItem icon={ArrowLeftOnRectangleIcon} label="Sign Out" onPress={handleSignOut} isDestructive />
                 </View>

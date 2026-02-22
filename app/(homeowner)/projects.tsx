@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useUser } from '../../context/UserContext';
 
-const FILTERS = ['All', 'In Progress', 'Planning', 'Completed'];
+const FILTERS = ['All', 'Open', 'Planning', 'In Progress', 'Completed'];
 
 export default function MyProjectsScreen() {
     const router = useRouter();
@@ -122,7 +122,7 @@ export default function MyProjectsScreen() {
                                         </View>
                                         <Badge
                                             label={project.status}
-                                            variant={project.status === 'Completed' ? 'emerald' : project.status === 'In Progress' ? 'blue' : 'amber'}
+                                            variant={project.status === 'Completed' ? 'emerald' : project.status === 'In Progress' ? 'blue' : project.status === 'Open' ? 'success' : 'amber'}
                                         />
                                     </View>
 
