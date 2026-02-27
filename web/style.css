@@ -2152,6 +2152,7 @@ body.light-profile .mobile-close-btn {
         width: auto;
     }
 }
+
 /* Resources Page */
 .resources-page {
     max-width: var(--container-max);
@@ -2283,15 +2284,41 @@ body.light-profile .mobile-close-btn {
 }
 
 @media (max-width: 768px) {
+    .resources-page {
+        padding: 0 1rem;
+        /* 16px side padding */
+    }
+
+    .resources-page .page-header {
+        padding-top: 8rem !important;
+        /* Force space for fixed header */
+        padding-bottom: 2rem !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
     .resources-grid {
         grid-template-columns: 1fr;
+        margin-bottom: 2rem;
+        gap: 1rem;
     }
-    
+
     .articles-grid {
         grid-template-columns: 1fr;
+        margin-bottom: 3rem;
+        gap: 1.5rem;
     }
-    
+
     .article-thumb {
         height: 180px;
+    }
+
+    .article-content {
+        padding: 1.5rem;
+    }
+
+    /* Tighten search section */
+    .resources-page section[style*="padding-bottom: 4rem"] {
+        padding-bottom: 2rem !important;
     }
 }
