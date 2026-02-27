@@ -105,29 +105,33 @@ export default function AccountContent() {
             </View>
 
             {/* Mode Switcher */}
-            <View className="px-6 mb-8">
-                <View>
-                    <TouchableOpacity
-                        onPress={handleSwitchMode}
-                        className="flex-row items-center justify-between bg-primary p-5 rounded-2xl active:bg-slate-800 shadow-medium"
-                        activeOpacity={0.9}
-                    >
-                        <View className="flex-row items-center">
-                            <View className="w-10 h-10 rounded-full bg-white/10 items-center justify-center mr-4">
-                                {/* @ts-ignore */}
-                                <ArrowPathIcon size={20} color="white" />
+            {profile?.role === 'tradie' && (
+                <View className="px-6 mb-8">
+                    <View>
+                        <TouchableOpacity
+                            onPress={handleSwitchMode}
+                            className="flex-row items-center justify-between bg-primary p-5 rounded-2xl active:bg-slate-800 shadow-medium"
+                            activeOpacity={0.9}
+                        >
+                            <View className="flex-row items-center">
+                                <View className="w-10 h-10 rounded-full bg-white/10 items-center justify-center mr-4">
+                                    {/* @ts-ignore */}
+                                    <ArrowPathIcon size={20} color="white" />
+                                </View>
+                                <View>
+                                    <Typography variant="h3" className="text-white text-base mb-0.5">
+                                        {userMode === 'homeowner' ? 'Go to Tradie View' : 'Go to Homeowner View'}
+                                    </Typography>
+                                    <Typography variant="caption" className="text-slate-400">
+                                        Switch your workspace mode
+                                    </Typography>
+                                </View>
                             </View>
-                            <View>
-                                <Typography variant="h3" className="text-white text-base mb-0.5">Switch Mode</Typography>
-                                <Typography variant="caption" className="text-slate-400">
-                                    Switch to {userMode === 'homeowner' ? 'Tradie' : 'Homeowner'} view
-                                </Typography>
-                            </View>
-                        </View>
-                        <ChevronRightIcon size={20} color="white" />
-                    </TouchableOpacity>
+                            <ChevronRightIcon size={20} color="white" />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
+            )}
 
             {/* Menu */}
             <View className="px-6">

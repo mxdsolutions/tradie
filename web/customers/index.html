@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="BasePro - The Base Construction App. High-trust construction milestones and payment management.">
-    <title>TRADIE | Australia's #1 Tradie App</title>
+    <meta name="description" content="TRADIE - Connecting Homeowners with High-Quality Trade Experts.">
+    <title>TRADIE | For Homeowners</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="assets/logo_icon.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../assets/logo_icon.png">
 </head>
 
 <body>
@@ -29,13 +28,13 @@
             </a>
             <nav class="desktop-nav">
                 <a href="/">Home</a>
-                <a href="/customers/">Homeowners</a>
+                <a href="/customers/" class="text-orange font-bold">Homeowners</a>
                 <a href="/pricing/">Pricing</a>
                 <a href="/resources/">Resources</a>
             </nav>
             <div class="nav-actions">
                 <a href="/registration/" class="nav-link-subtle">Log In</a>
-                <a href="/registration/" class="btn-primary">Join Network <span class="arrow">→</span></a>
+                <a href="/registration/" class="btn-solid-white">Post a Project <span class="arrow">→</span></a>
             </div>
             <!-- Mobile Menu Button -->
             <button class="mobile-menu-btn" aria-label="Toggle Menu">
@@ -47,23 +46,26 @@
     </header>
 
     <main>
-        <section class="hero-tradie">
-            <div class="hero-container">
-                <div class="hero-text-side">
-                    <h1><span class="hero-line">Get <span class="highlight-box">Leads.</span></span> <span
-                            class="hero-line">Win <span class="highlight-box">Jobs.</span></span> <span
-                            class="hero-line">Get <span class="highlight-box">Paid.</span></span></h1>
+        <section class="hero-split">
+            <div class="hero-split-container">
+                <div class="hero-split-text">
+                    <h1>Build with <span class="highlight-box">Confidence</span>, <br>Hire Approved Experts.</h1>
+
                     <p class="hero-subtext">
-                        The only network built for the builders of Australia.
+                        Don't leave your biggest investment to chance. <span class="brand-name">TRADIE</span>
+                        connects you with fully-vetted
+                        tradespeople and protects your money until the job is done right.
                     </p>
+
                     <div class="email-capture-form">
                         <div class="input-wrapper">
-                            <input type="text" placeholder="Enter Postal Code">
+                            <input type="text" placeholder="Enter your postcode...">
                         </div>
-                        <button class="btn-solid-white">Grow My Business</button>
+                        <button class="btn-solid-white">Find Tradespeople</button>
                         <div class="drawn-arrow">⤴</div>
                     </div>
-                    <div class="trust-section">
+
+                    <div class="trust-section trust-section-left">
                         <div class="avatars-group">
                             <div class="avatar"><img src="https://i.pravatar.cc/100?img=11" alt="User" width="40"
                                     height="40"></div>
@@ -76,175 +78,154 @@
                             <div class="avatar"><img src="https://i.pravatar.cc/100?img=15" alt="User" width="40"
                                     height="40"></div>
                             <div class="avatar-text">
-                                <strong>15,000+ Trade Specialists</strong><br>
-                                Dedicated to Building Better
+                                <strong>Protecting $50M+ in project value</strong><br>
+                                With our secure milestone payments
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="ticker-wrapper">
-                <div class="ticker-inner">
-                    <!-- First Set -->
-                    <div class="ticker-track">
-                        <span class="ticker-item"><span class="text-orange">❖</span> Connect With Clients.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Build Your Business.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Get Discovered.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Get More Jobs.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Win More Quotes.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Get Paid Faster.</span>
-                    </div>
-                    <!-- Exact Duplicate Set for Seamless Transition -->
-                    <div class="ticker-track">
-                        <span class="ticker-item"><span class="text-orange">❖</span> Connect With Clients.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Build Your Business.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Get Discovered.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Get More Jobs.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Win More Quotes.</span>
-                        <span class="ticker-item"><span class="text-orange">❖</span> Get Paid Faster.</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="hero-image-side">
-                <div class="hero-gradient-mask"></div>
-                <!-- 1.5x increase in native element attributes -->
-                <img src="assets/hero_index.png" alt="Tradie Team" width="900" height="1200">
+            <div class="hero-split-image">
+                <img src="../assets/australian_tradie_handshake.png" alt="Happy Homeowner">
             </div>
         </section>
 
-        <!-- Ticker moved into hero -->
         <!-- How It Works Section -->
         <section id="how-it-works" class="how-it-works-section">
             <div class="how-it-works-header">
                 <h2 class="section-title-light">How it <span class="gradient-text">Works.</span></h2>
-                <p class="section-subtitle-light">Four simple steps to grow your business and build your reputation on
-                    <span class="brand-name">TRADIE</span>.
-                </p>
+                <p class="section-subtitle-light">Three simple steps to turning your dream project into reality,
+                    securely.</p>
             </div>
 
             <div class="steps-grid">
                 <!-- Step 1 -->
                 <div class="step-card">
                     <div class="step-number">1</div>
-                    <h3 class="step-title">Create a Profile</h3>
-                    <p class="step-desc">Showcase your skills, licenses, and past work to build trust before you even
-                        quote.</p>
+                    <h3 class="step-title">Post a Project</h3>
+                    <p class="step-desc">Describe what you need done, set your budget, and post your project for free in
+                        minutes.</p>
                 </div>
                 <!-- Step 2 -->
                 <div class="step-card">
                     <div class="step-number">2</div>
-                    <h3 class="step-title">Get Job Leads</h3>
-                    <p class="step-desc">High-quality, verified leads sent straight to your phone based on your trade
-                        and location.</p>
+                    <h3 class="step-title">Review & Accept</h3>
+                    <p class="step-desc">Receive quotes from fully vetted, trustworthy local tradies. Review their
+                        profiles and accept the best offer.</p>
                 </div>
                 <!-- Step 3 -->
                 <div class="step-card">
                     <div class="step-number">3</div>
-                    <h3 class="step-title">Accept & Manage</h3>
-                    <p class="step-desc">Review project details, submit quotes, and manage incoming work cleanly in one
-                        place.</p>
-                </div>
-                <!-- Step 4 -->
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3 class="step-title">Update Clients</h3>
-                    <p class="step-desc">Keep clients in the loop with photo updates and milestone tracking via the
-                        client portal.</p>
+                    <h3 class="step-title">Pay per Milestone</h3>
+                    <p class="step-desc">Your funds are held safely in escrow. Builders only get paid when you approve
+                        the completed photo evidence.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Logo Strip -->
-        <section class="logo-strip">
-            <div class="logo-strip-container">
-                <p>Trusted by major contractors</p>
-                <div class="logos">
-                    <!-- Placeholder logos similar to design -->
-                    <div class="trusted-logo">◈ BuildCorp</div>
-                    <div class="trusted-logo">⟡ TradeGroup</div>
-                    <div class="trusted-logo">❖ ElevateBuild</div>
-                    <div class="trusted-logo">⌖ ConstructPro</div>
+        <!-- Tradie Ticker Section -->
+        <section class="ticker-wrapper ticker-block">
+            <div class="ticker-inner">
+                <!-- First Set -->
+                <div class="ticker-track">
+                    <span class="ticker-item"><span class="text-orange">❖</span> Builders Near Me.</span>
+                    <span class="ticker-item"><span class="text-orange">❖</span> Electricians Near Me.</span>
+                    <span class="ticker-item"><span class="text-orange">❖</span> Plumbers Near Me.</span>
+                    <span class="ticker-item"><span class="text-orange">❖</span> Carpenters Near Me.</span>
+                    <span class="ticker-item"><span class="text-orange">❖</span> Landscapers Near Me.</span>
+                </div>
+                <!-- Exact Duplicate Set for Seamless Transition -->
+                <div class="ticker-track">
+                    <span class="ticker-item"><span class="text-orange">❖</span> Builders Near Me.</span>
+                    <span class="ticker-item"><span class="text-orange">❖</span> Electricians Near Me.</span>
+                    <span class="ticker-item"><span class="text-orange">❖</span> Plumbers Near Me.</span>
+                    <span class="ticker-item"><span class="text-orange">❖</span> Carpenters Near Me.</span>
+                    <span class="ticker-item"><span class="text-orange">❖</span> Landscapers Near Me.</span>
                 </div>
             </div>
         </section>
 
         <section id="features" class="features-dark">
             <div class="benefit-header">
-                <h2 class="benefit-heading">Built for <span class="gradient-text">Tradies.</span></h2>
-                <p class="benefit-subheading">Everything you need to secure more jobs and get paid on time, every time.
-                </p>
+                <h2 class="benefit-heading">Why Aussies choose <span class="gradient-text"><span
+                            class="brand-name">TRADIE</span></span></h2>
+                <p class="benefit-subheading">
+                    Everything you need to
+                    complete your project with zero stress and total transparency.</p>
             </div>
 
-            <!-- Benefit 1: Quality Leads (Black) -->
+            <!-- Benefit 1: Vetted Professionals (Black) -->
             <div class="benefit-section bg-black">
                 <div class="benefit-section-container">
                     <div class="benefit-content">
                         <div class="benefit-icon-wrapper">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        <h2>Quality Leads</h2>
-                        <p>Connect directly with homeowners who are ready to build or renovate. No tyre kickers, no time
-                            wasters — only verified project owners in your area.</p>
-                        <a href="/registration/" class="btn-solid-white">Join the Network</a>
+                        <h2>Vetted Professionals</h2>
+                        <p>Every tradesperson goes through our rigorous approval process, checking licenses and
+                            references. Only the top 5% of applicants make the cut.</p>
+                        <a href="/registration/" class="btn-solid-white">View Approved Experts</a>
                     </div>
                     <div class="benefit-visual">
                         <div class="premium-visual-mock">
-                            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800"
-                                alt="Quality Leads" class="premium-visual-mock-img">
+                            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=800"
+                                alt="Vetted Professional" class="premium-visual-mock-img">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Benefit 2: Guaranteed Payment (White) -->
+            <!-- Benefit 2: Protected Payments (White) -->
             <div class="benefit-section bg-white reverse">
                 <div class="benefit-section-container">
                     <div class="benefit-content">
                         <div class="benefit-icon-wrapper">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                             </svg>
                         </div>
-                        <h2>Guaranteed Payment</h2>
-                        <p>Funds are secured in escrow before you start. You get paid the moment each milestone is
-                            approved — automatically, every time.</p>
-                        <a href="/registration/" class="btn-primary btn-inverted">See How It Works</a>
+                        <h2>Protected Payments</h2>
+                        <p>Your money is held safely in escrow. Builders only get paid when you approve the milestone.
+                            Complete financial peace of mind from start to finish.</p>
+                        <a href="/registration/" class="btn-primary btn-inverted">How Payments Work</a>
                     </div>
                     <div class="benefit-visual">
                         <div class="premium-visual-mock">
-                            <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=800"
-                                alt="Guaranteed Payment" class="premium-visual-mock-img">
+                            <img src="https://images.unsplash.com/photo-1554224155-169746727638?auto=format&fit=crop&q=80&w=800"
+                                alt="Protected Payments" class="premium-visual-mock-img">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Benefit 3: Easy Management (Black) -->
+            <!-- Benefit 3: Evidence Tracking (Black) -->
             <div class="benefit-section bg-black">
                 <div class="benefit-section-container">
                     <div class="benefit-content">
                         <div class="benefit-icon-wrapper">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                                <path
+                                    d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                                </path>
+                                <circle cx="12" cy="13" r="4"></circle>
                             </svg>
                         </div>
-                        <h2>Easy Management</h2>
-                        <p>Manage projects, share photo evidence, and track your cash flow all from the <span
-                                class="brand-name">TRADIE</span> app. One dashboard, total control.</p>
-                        <a href="/registration/" class="btn-solid-white">Get Started Free</a>
+                        <h2>Evidence Tracking</h2>
+                        <p>Get high-resolution photo updates straight from the site so you always know what's happening.
+                            View progress markers in real-time from your dashboard.</p>
+                        <a href="/registration/" class="btn-solid-white">Post Your Project</a>
                     </div>
                     <div class="benefit-visual">
                         <div class="premium-visual-mock">
-                            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800"
-                                alt="Easy Management" class="premium-visual-mock-img">
+                            <img src="https://images.unsplash.com/photo-1590633857323-9261a86b971c?auto=format&fit=crop&q=80&w=800"
+                                alt="Evidence Tracking" class="premium-visual-mock-img">
                         </div>
                     </div>
                 </div>
@@ -263,8 +244,13 @@
                 <a href="/">Terms</a>
                 <a href="mailto:support@tradie.com">Support</a>
             </div>
-            <p>&copy; <span id="current-year"></span> <span class="brand-name">TRADIE</span>. All rights reserved.</p>
+            <p>&copy;
+                <script>document.write(new Date().getFullYear())</script> <span class="brand-name">TRADIE</span>.
+                All rights reserved.
+            </p>
         </div>
+    </footer>
+
     </footer>
 
     <!-- Mobile Nav Overlay -->
@@ -277,16 +263,14 @@
                 <a href="/pricing/">Pricing</a>
                 <a href="/resources/">Resources</a>
             </nav>
-            <div class="mobile-actions" style="display: flex; flex-direction: column; gap: 1rem;">
-                <a href="/registration/" class="btn-solid-white" style="justify-content: center;">Join Network</a>
-                <a href="/registration/" class="nav-link-subtle" style="text-align: center;">Log In</a>
+            <div class="mobile-actions flex-col-center">
+                <a href="/registration/" class="btn-solid-white flex-center">Post a Project</a>
+                <a href="/registration/" class="nav-link-subtle text-center">Log In</a>
             </div>
         </div>
     </div>
 
     <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             if (window.scrollY > 50) {

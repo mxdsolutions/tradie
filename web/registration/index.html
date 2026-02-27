@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TRADIE - Create an account.">
+    <title>TRADIE | Registration</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../assets/logo_icon.png">
+</head>
+
+<body style="background: linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-surface) 100%); min-height: 100vh;">
+    <!-- Preloader to prevent FOUT -->
+    <div id="preloader">
+        <img class="logo-icon preloader-logo" src="/assets/logo_icon.png" alt="TRADIE">
+    </div>
+    <header id="main-header" style="position: absolute;">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                TRADIE
+            </a>
+            <div class="nav-actions">
+                <a href="/" class="nav-link-subtle">← Back to home</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card" style="margin-top: 4rem;">
+            <h2 style="margin-bottom: 0.5rem;">Create Account</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Join Australia's fastest growing construction
+                network.</p>
+
+            <div class="pill-tabs">
+                <button class="pill-tab active" onclick="switchType('tradie')">Tradie</button>
+                <button class="pill-tab" onclick="switchType('homeowner')">Homeowner</button>
+            </div>
+
+            <form id="registration-form" onsubmit="event.preventDefault(); submitForm();">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <div id="tradie-fields">
+                    <div class="form-group">
+                        <label for="tradeType">Primary Trade</label>
+                        <select id="tradeType" style="appearance: none; -webkit-appearance: none;">
+                            <option value="builder" style="color: #000;">Builder</option>
+                            <option value="electrician" style="color: #000;">Electrician</option>
+                            <option value="plumber" style="color: #000;">Plumber</option>
+                            <option value="carpenter" style="color: #000;">Carpenter</option>
+                            <option value="roofer" style="color: #000;">Roofer</option>
+                            <option value="other" style="color: #000;">Other Trade</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="homeowner-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="intent">What are you planning?</label>
+                        <select id="intent" style="appearance: none; -webkit-appearance: none;">
+                            <option value="new_build" style="color: #000;">New Build</option>
+                            <option value="renovation" style="color: #000;">Renovation</option>
+                            <option value="maintenance" style="color: #000;">General Maintenance</option>
+                            <option value="emergency" style="color: #000;">Emergency Repair</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary"
+                    style="width: 100%; margin-top: 1.5rem; padding: 1rem; font-size: 1.05rem;" id="submit-btn">Create
+                    Account</button>
+            </form>
+
+            <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-secondary);">
+                Already have an account? <a href="#" style="color: var(--accent-orange); text-decoration: none;">Log
+                    In</a>
+            </p>
+        </div>
+    </main>
+
+    <script>
+        let currentType = 'tradie';
+
+        function switchType(type) {
+            currentType = type;
+            document.querySelectorAll('.pill-tab').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (type === 'tradie') {
+                document.getElementById('tradie-fields').style.display = 'block';
+                document.getElementById('homeowner-fields').style.display = 'none';
+            } else {
+                document.getElementById('tradie-fields').style.display = 'none';
+                document.getElementById('homeowner-fields').style.display = 'block';
+            }
+        }
+
+        function submitForm() {
+            const btn = document.getElementById('submit-btn');
+            btn.innerHTML = '<span class="spinner"></span> Creating...';
+            btn.style.opacity = '0.8';
+
+            // Simulate API logic
+            setTimeout(() => {
+                window.location.href = '../confirmation/';
+            }, 1500);
+        }
+    </script>
+    <script>
+        // Preloader Logic - minimum 1500ms display
+        const preloaderStart = Date.now();
+        const preloader = document.getElementById("preloader");
+        window.addEventListener("load", () => {
+            const elapsed = Date.now() - preloaderStart;
+            const remaining = Math.max(0, 1500 - elapsed);
+            setTimeout(() => {
+                if (preloader) preloader.classList.add("preloader-hidden");
+            }, remaining);
+        });
+    </script>
+</body>
+
+</html>

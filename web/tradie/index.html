@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tradie Profile - TRADIE">
+    <title>TRADIE | Tradie Profile</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../assets/logo_icon.png">
+</head>
+
+<body class="light-profile">
+    <!-- Preloader to prevent FOUT -->
+    <div id="preloader">
+        <img class="logo-icon preloader-logo" src="/assets/logo_icon.png" alt="TRADIE">
+    </div>
+    <header id="main-header" class="scrolled"> <!-- Always scrolled on subpages -->
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                TRADIE
+            </a>
+            <div class="nav-actions">
+                <a href="/registration/" class="btn-black-pill">Are you a Tradie?</a>
+            </div>
+        </div>
+    </header>
+
+
+
+    <div class="profile-main-wrapper" style="background: #f8fafc; min-height: 100vh; padding-top: 120px;">
+
+        <main style="max-width: var(--container-max); margin: 0 auto; position: relative; z-index: 10;">
+
+            <!-- Wrap all profile content inside a premium white card -->
+            <div
+                style="background: #ffffff; border-radius: 24px; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); margin: 0 1.5rem; overflow: hidden; position: relative;">
+
+                <!-- Profile Banner -->
+                <div class="profile-banner" style="height: 220px; position: relative; background: #000;">
+                    <img src="../assets/tradie_bg_smiling.png" alt="Profile Banner"
+                        style="position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.5;">
+                    <div class="banner-overlay"
+                        style="position: absolute; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4));">
+                    </div>
+                </div>
+
+                <section class="profile-header-section" style="padding-top: 0; padding-bottom: 2rem;">
+                    <div class="max-w-content"
+                        style="max-width: var(--container-max); margin: 0 auto; padding: 0 1.5rem; position: relative;">
+
+                        <!-- Main Header Content (Avatar + Info + Button) -->
+                        <div style="position: relative;">
+                            <!-- Request Quote CTA positioned under banner right -->
+                            <div style="position: absolute; right: 0; top: 1.5rem; z-index: 20;">
+                                <a href="/quote/" target="_blank" rel="noopener noreferrer" class="btn-primary"
+                                    style="padding: 0.75rem 2rem; box-shadow: 0 8px 25px rgba(249, 115, 22, 0.2);">Request
+                                    Quote</a>
+                            </div>
+
+                            <div class="profile-info-bar"
+                                style="display: flex; gap: 2rem; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; margin-top: -60px; position: relative; z-index: 10;">
+
+                                <!-- Left Stack: Avatar -> Name -> Stats -->
+                                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+
+                                    <div class="profile-avatar-square"
+                                        style="width: 140px; height: 140px; border-radius: 16px; border: 4px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08); background: #ffffff; position: relative;">
+                                        <img src="https://i.pravatar.cc/300?img=60" alt="Company Logo"
+                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                                    </div>
+
+                                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+
+                                        <!-- Name & Badge -->
+                                        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                                            <h1
+                                                style="font-size: 2.5rem; line-height: 1; letter-spacing: -0.02em; margin: 0;">
+                                                Apex Electricians
+                                            </h1>
+                                            <span class="verified-badge"
+                                                style="background: rgba(0, 123, 255, 0.1); color: #007bff; border-radius: 100px; padding: 0.25rem 0.75rem; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.25rem;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="currentColor" style="width: 14px; height: 14px;">
+                                                    <path fill-rule="evenodd"
+                                                        d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                                Verified Business
+                                            </span>
+                                        </div>
+
+                                        <!-- Location & Reviews -->
+                                        <div
+                                            style="display: flex; align-items: center; gap: 1.5rem; color: var(--text-secondary); font-size: 0.95rem;">
+                                            <span style="display: flex; align-items: center; gap: 0.5rem;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor"
+                                                    style="width: 16px; height: 16px;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                                </svg>
+                                                Sydney, NSW
+                                            </span>
+                                            <span style="display: flex; align-items: center; gap: 0.35rem;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="#ffd700" style="width: 16px; height: 16px;">
+                                                    <path fill-rule="evenodd"
+                                                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                                4.9/5 (124 Reviews)
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                </section>
+
+                <!-- Profile Tabs Section -->
+                <section style="padding-top: 0; padding-bottom: 6rem;">
+                    <div style="max-width: var(--container-max); margin: 0 auto; padding: 0 1.5rem;"
+                        class="profile-tabs-wrapper">
+
+                        <!-- Tab Navigation (Different style from pricing) -->
+                        <div class="profile-tabs-nav">
+                            <button class="profile-tab-btn active" onclick="switchProfileTab('info')">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                Info
+                            </button>
+                            <button class="profile-tab-btn" onclick="switchProfileTab('images')">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                </svg>
+                                Gallery
+                            </button>
+                            <button class="profile-tab-btn" onclick="switchProfileTab('licenses')">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75" />
+                                </svg>
+                                Licenses
+                            </button>
+                            <button class="profile-tab-btn" onclick="switchProfileTab('reviews')">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                                </svg>
+                                Reviews
+                            </button>
+                        </div>
+
+                        <div class="profile-content-container" style="margin-top: 1rem;">
+
+                            <!-- INFO TAB -->
+                            <div id="info" class="profile-tab-content active">
+                                <div style="display: flex; flex-direction: column; gap: 2rem; padding: 1rem 0;">
+
+                                    <!-- Stats Cards -->
+                                    <div class="stats-cards-grid" style="grid-template-columns: repeat(2, 1fr);">
+                                        <div class="stat-card">
+                                            <span class="stat-label">Response Rate</span>
+                                            <strong class="stat-value" style="color: var(--accent-green);">98%</strong>
+                                        </div>
+                                        <div class="stat-card">
+                                            <span class="stat-label">Years Active</span>
+                                            <strong class="stat-value">15 yrs</strong>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-top: 2rem;">
+                                        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">About Apex Electricians
+                                        </h2>
+                                        <p
+                                            style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.8;">
+                                            With over 15 years of experience servicing the greater Sydney area, Apex
+                                            Electricians specializes in both residential and light commercial electrical
+                                            work.
+                                            From full home rewiring and switchboard upgrades to modern lighting design
+                                            and
+                                            smart
+                                            home integrations, we pride ourselves on safety, reliability, and clean
+                                            finishes.
+                                        </p>
+                                        <p style="color: var(--text-secondary); line-height: 1.8;">
+                                            We are fully licensed and insured, ensuring that every project meets
+                                            compliance
+                                            standards. Our team of three dedicated sparks is ready to tackle projects of
+                                            any
+                                            size.
+                                        </p>
+
+                                        <h3 style="font-size: 1.2rem; margin-top: 2.5rem; margin-bottom: 1rem;">Services
+                                            Offered
+                                        </h3>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                            <span class="service-pill">Switchboard Upgrades</span>
+                                            <span class="service-pill">Smart Home Integration</span>
+                                            <span class="service-pill">Lighting Design</span>
+                                            <span class="service-pill">Rewiring</span>
+                                            <span class="service-pill">EV Charger Installation</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- IMAGES TAB -->
+                            <div id="images" class="profile-tab-content">
+                                <div style="padding: 1rem 0;">
+                                    <div class="masonry-gallery">
+                                        <!-- Masonry images with varied heights -->
+                                        <div class="masonry-item">
+                                            <img src="https://picsum.photos/seed/elec1/500/600" alt="Work 1">
+                                        </div>
+                                        <div class="masonry-item">
+                                            <img src="https://picsum.photos/seed/elec2/500/400" alt="Work 2">
+                                        </div>
+                                        <div class="masonry-item">
+                                            <img src="https://picsum.photos/seed/elec3/500/700" alt="Work 3">
+                                        </div>
+                                        <div class="masonry-item">
+                                            <img src="https://picsum.photos/seed/elec4/500/500" alt="Work 4">
+                                        </div>
+                                        <div class="masonry-item">
+                                            <img src="https://picsum.photos/seed/elec5/500/450" alt="Work 5">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- LICENSES TAB -->
+                            <div id="licenses" class="profile-tab-content">
+                                <div style="padding: 1rem 0; max-width: 800px; margin: 0 auto;">
+                                    <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Verified Credentials</h2>
+
+                                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                        <!-- License Item -->
+                                        <div
+                                            style="display: flex; align-items: flex-start; gap: 1.5rem; padding: 1.5rem; background: transparent; border-radius: 16px; border: 1px solid rgba(0,0,0,0.05);">
+                                            <div
+                                                style="width: 48px; height: 48px; border-radius: 50%; background: rgba(34, 197, 94, 0.1); color: var(--accent-green); display: flex; align-items: center; justify-content: center;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="2" stroke="currentColor"
+                                                    style="width: 24px; height: 24px;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h3 style="font-size: 1.1rem; margin-bottom: 0.25rem;">Electrical
+                                                    Contractor
+                                                    Licence</h3>
+                                                <div
+                                                    style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                                    NSW Fair Trading &bull; #304952C</div>
+                                                <span
+                                                    style="display: inline-block; padding: 0.2rem 0.6rem; background: rgba(34, 197, 94, 0.2); color: var(--accent-green); border-radius: 100px; font-size: 0.75rem; font-weight: 600;">ACTIVE
+                                                    AND VERIFIED</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Insurance Item -->
+                                        <div
+                                            style="display: flex; align-items: flex-start; gap: 1.5rem; padding: 1.5rem; background: transparent; border-radius: 16px; border: 1px solid rgba(0,0,0,0.05);">
+                                            <div
+                                                style="width: 48px; height: 48px; border-radius: 50%; background: rgba(34, 197, 94, 0.1); color: var(--accent-green); display: flex; align-items: center; justify-content: center;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="2" stroke="currentColor"
+                                                    style="width: 24px; height: 24px;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h3 style="font-size: 1.1rem; margin-bottom: 0.25rem;">Public Liability
+                                                    Insurance ($20M)</h3>
+                                                <div
+                                                    style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                                    QBE Insurance &bull; Policy #19203948</div>
+                                                <span
+                                                    style="display: inline-block; padding: 0.2rem 0.6rem; background: rgba(34, 197, 94, 0.2); color: var(--accent-green); border-radius: 100px; font-size: 0.75rem; font-weight: 600;">ACTIVE
+                                                    AND VERIFIED</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- REVIEWS TAB -->
+                            <div id="reviews" class="profile-tab-content">
+                                <div style="padding: 1rem 0; max-width: 800px; margin: 0 auto;">
+                                    <div
+                                        style="display: flex; align-items: flex-end; gap: 1rem; margin-bottom: 1.5rem;">
+                                        <h2 style="font-size: 1.5rem; margin-bottom: 0;">Customer Reviews</h2>
+                                        <span
+                                            style="color: var(--text-secondary); font-size: 1.1rem; padding-bottom: 0.1rem;">(124)</span>
+                                    </div>
+
+                                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                        <!-- Review Item -->
+                                        <div
+                                            style="display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; background: transparent; border-radius: 16px; border: 1px solid rgba(0,0,0,0.05);">
+                                            <div
+                                                style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                                    <div
+                                                        style="width: 48px; height: 48px; border-radius: 50%; background: var(--bg-surface); overflow: hidden;">
+                                                        <img src="https://i.pravatar.cc/150?img=11" alt="Reviewer"
+                                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                                    </div>
+                                                    <div>
+                                                        <h3 style="font-size: 1.05rem; margin-bottom: 0.2rem;">Sarah
+                                                            Jenkins
+                                                        </h3>
+                                                        <div style="color: var(--text-secondary); font-size: 0.85rem;">2
+                                                            days
+                                                            ago</div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex; color: #ffd700; gap: 0.1rem;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <p
+                                                style="color: var(--text-primary); line-height: 1.6; font-size: 0.95rem;">
+                                                "Apex Electricians were fantastic. They arrived on time, were very
+                                                polite,
+                                                and
+                                                managed to completely rewire our old kitchen extension without leaving a
+                                                mess.
+                                                The price was exactly as quoted. Highly recommended."
+                                            </p>
+                                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                                <span
+                                                    style="font-size: 0.75rem; padding: 0.2rem 0.6rem; background: rgba(0,0,0,0.05); border-radius: 4px; color: var(--text-secondary);">Kitchen
+                                                    Rewiring</span>
+                                                <span
+                                                    style="font-size: 0.75rem; padding: 0.2rem 0.6rem; background: rgba(0,0,0,0.05); border-radius: 4px; color: var(--text-secondary);">Lighting
+                                                    Install</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Review Item -->
+                                        <div
+                                            style="display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; background: transparent; border-radius: 16px; border: 1px solid rgba(0,0,0,0.05);">
+                                            <div
+                                                style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                                    <div
+                                                        style="width: 48px; height: 48px; border-radius: 50%; background: var(--bg-surface); overflow: hidden;">
+                                                        <img src="https://i.pravatar.cc/150?img=33" alt="Reviewer"
+                                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                                    </div>
+                                                    <div>
+                                                        <h3 style="font-size: 1.05rem; margin-bottom: 0.2rem;">Marcus T.
+                                                        </h3>
+                                                        <div style="color: var(--text-secondary); font-size: 0.85rem;">2
+                                                            weeks
+                                                            ago</div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex; color: #ffd700; gap: 0.1rem;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" style="width: 16px; height: 16px;">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <p
+                                                style="color: var(--text-primary); line-height: 1.6; font-size: 0.95rem;">
+                                                "Called them out for an emergency box failure on a Sunday. Extremely
+                                                fast
+                                                response time and the fix was robust. Will be using them for all future
+                                                work."
+                                            </p>
+                                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                                <span
+                                                    style="font-size: 0.75rem; padding: 0.2rem 0.6rem; background: rgba(0,0,0,0.05); border-radius: 4px; color: var(--text-secondary);">Emergency
+                                                    Callout</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+            </div> <!-- End Premium White Card -->
+        </main>
+
+        <footer>
+            <div class="nav-container footer-layout">
+                <div class="logo">
+                    <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                    TRADIE
+                </div>
+                <div class="footer-links">
+                    <a href="/privacy">Privacy</a>
+                    <a href="/">Terms</a>
+                    <a href="mailto:support@tradie.com">Support</a>
+                </div>
+                <p>&copy;
+                    <script>document.write(new Date().getFullYear())</script> TRADIE. All rights reserved.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+
+        // Profile Tab Logic
+        function switchProfileTab(tabId) {
+            // Update buttons
+            document.querySelectorAll('.profile-tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.profile-tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+    <script>
+        // Preloader Logic - minimum 1500ms display
+        const preloaderStart = Date.now();
+        const preloader = document.getElementById("preloader");
+        window.addEventListener("load", () => {
+            const elapsed = Date.now() - preloaderStart;
+            const remaining = Math.max(0, 1500 - elapsed);
+            setTimeout(() => {
+                if (preloader) preloader.classList.add("preloader-hidden");
+            }, remaining);
+        });
+    </script>
+</body>
+
+</html>

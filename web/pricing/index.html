@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TRADIE Pricing - Transparent costs for Trade Professionals and Homeowners.">
+    <title>TRADIE | Pricing</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../assets/logo_icon.png">
+</head>
+
+<body>
+    <!-- Preloader to prevent FOUT -->
+    <div id="preloader">
+        <img class="logo-icon preloader-logo" src="/assets/logo_icon.png" alt="TRADIE">
+    </div>
+    <header id="main-header" class="scrolled"> <!-- Always scrolled on subpages -->
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                TRADIE
+            </a>
+            <nav class="desktop-nav">
+                <a href="/">Home</a>
+                <a href="/customers/">Homeowners</a>
+                <a href="/pricing/" class="text-orange" style="font-weight: 700;">Pricing</a>
+                <a href="/resources/">Resources</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="/registration/" class="nav-link-subtle">Log In</a>
+                <a href="/registration/" class="btn-solid-white">Join Network <span class="arrow">→</span></a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <h1>Simple, <span class="text-orange">transparent</span> pricing.</h1>
+            <p>Whether you're looking to build something great or grow your trade business, we have a model that works
+                for you.</p>
+        </section>
+
+        <section style="padding-top: 2rem;">
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <button class="tab-btn active" onclick="switchTab('tradies')">For Tradies</button>
+                <button class="tab-btn" onclick="switchTab('homeowners')">For Homeowners</button>
+            </div>
+
+            <!-- Tradies Content -->
+            <div id="tradies" class="tab-content active" style="margin-top: 4rem;">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h2>Pay Per Lead Model.</h2>
+                    <p style="color: var(--text-secondary); max-width: 600px; margin: 1rem auto 0;">No joining fees, no
+                        hidden subscription costs. Only pay when you engage with a validated lead.</p>
+                </div>
+
+                <div class="pricing-grid" style="max-width: 900px; margin: 0 auto;">
+                    <div class="pricing-card">
+                        <h3>Starter Profile</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Join the network for free</p>
+                        <div class="pricing-price">$0<span> /mo</span></div>
+                        <ul class="pricing-features">
+                            <li>Business profile listing</li>
+                            <li>Receive job notifications</li>
+                            <li>Basic background checks</li>
+                            <li>Access to <span class="brand-name">TRADIE</span> app</li>
+                        </ul>
+                        <a href="/registration/" class="btn-secondary" style="width: 100%; display: block;">Create
+                            Profile</a>
+                    </div>
+
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">Pay Per Lead</div>
+                        <h3>Job Engagement</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">When you accept a project</p>
+                        <div class="pricing-price" style="color: var(--accent-orange);">$49<span> /lead</span></div>
+                        <ul class="pricing-features">
+                            <li>Full access to homeowner details</li>
+                            <li>Unlimited project messaging</li>
+                            <li>Secured escrow payments</li>
+                            <li>Milestone tracking and evidence</li>
+                            <li>Dispute resolution support</li>
+                        </ul>
+                        <a href="/registration/" class="btn-primary" style="width: 100%; display: block;">Setup
+                            Billing</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homeowners Content -->
+            <div id="homeowners" class="tab-content" style="margin-top: 4rem;">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h2>Free for Homeowners. Always.</h2>
+                    <p style="color: var(--text-secondary); max-width: 600px; margin: 1rem auto 0;">Post your projects,
+                        review quotes, and secure your money in escrow—all completely free.</p>
+                </div>
+
+                <div class="pricing-grid" style="max-width: 500px; margin: 0 auto;">
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">100% Free</div>
+                        <h3>Homeowner Account</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Everything you need to build</p>
+                        <div class="pricing-price">$0<span> /forever</span></div>
+                        <ul class="pricing-features">
+                            <li>Post unlimited projects</li>
+                            <li>Review verified builder profiles</li>
+                            <li>Free escrow protection</li>
+                            <li>Milestone photo updates</li>
+                            <li>Dedicated project support</li>
+                        </ul>
+                        <a href="/registration/" class="btn-primary" style="width: 100%; display: block;">Post a
+                            Project</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section style="background-color: var(--bg-surface); margin-top: 4rem; padding-bottom: 8rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto; display: grid; gap: 2rem;">
+                <div class="glass-panel" style="padding: 2rem;">
+                    <h4 style="margin-bottom: 0.5rem; font-size: 1.1rem;">When do tradies get charged?</h4>
+                    <p style="color: var(--text-secondary);">Tradies are only charged the lead fee when they actively
+                        accept a job invite and unlock the homeowner's contact information. You will never be charged
+                        just for receiving a lead request.</p>
+                </div>
+                <div class="glass-panel" style="padding: 2rem;">
+                    <h4 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Are there card processing fees?</h4>
+                    <p style="color: var(--text-secondary);">Standard Stripe card processing fees apply to escrow
+                        transactions. This is typically 1.75% + 30¢ for domestic cards, which is clearly outlined before
+                        any payment is made.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="nav-container footer-layout">
+            <div class="logo">
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                TRADIE
+            </div>
+            <div class="footer-links">
+                <a href="/privacy">Privacy</a>
+                <a href="/">Terms</a>
+                <a href="mailto:support@tradie.com">Support</a>
+            </div>
+            <p>&copy;
+                <script>document.write(new Date().getFullYear())</script> <span class="brand-name">TRADIE</span>.
+                All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+        <div class="mobile-nav-content">
+            <button class="mobile-close-btn">&times;</button>
+            <nav class="mobile-links">
+                <a href="/">Home</a>
+                <a href="/customers/">Homeowners</a>
+                <a href="/pricing/">Pricing</a>
+                <a href="/resources/">Resources</a>
+            </nav>
+            <div class="mobile-actions" style="display: flex; flex-direction: column; gap: 1rem;">
+                <a href="/registration/" class="btn-solid-white" style="justify-content: center;">Join Network</a>
+                <a href="/registration/" class="nav-link-subtle" style="text-align: center;">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Logic
+        const mobileBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav-overlay');
+        const closeBtn = document.querySelector('.mobile-close-btn');
+
+        if (mobileBtn && mobileNav && closeBtn) {
+            mobileBtn.addEventListener('click', () => {
+                mobileNav.classList.add('active');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+
+            mobileNav.addEventListener('click', (e) => {
+                if (e.target === mobileNav) {
+                    mobileNav.classList.remove('active');
+                }
+            });
+        }
+    </script>
+    <script>
+        // Preloader Logic - minimum 1500ms display
+        const preloaderStart = Date.now();
+        const preloader = document.getElementById("preloader");
+        window.addEventListener("load", () => {
+            const elapsed = Date.now() - preloaderStart;
+            const remaining = Math.max(0, 1500 - elapsed);
+            setTimeout(() => {
+                if (preloader) preloader.classList.add("preloader-hidden");
+            }, remaining);
+        });
+    </script>
+</body>
+
+</html>

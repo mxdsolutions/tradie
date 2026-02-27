@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | BasePro</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../assets/logo_icon.png">
     <style>
         .privacy-body {
             text-align: left;
@@ -28,10 +29,14 @@
 </head>
 
 <body>
+    <!-- Preloader to prevent FOUT -->
+    <div id="preloader">
+        <img class="logo-icon preloader-logo" src="/assets/logo_icon.png" alt="TRADIE">
+    </div>
     <header>
         <div class="nav-container">
             <a href="../" class="logo">
-                <div class="logo-icon">B</div>
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
                 BasePro
             </a>
             <a href="../" class="btn-secondary" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Home</a>
@@ -66,6 +71,18 @@
     <footer>
         <p>&copy; 2026 BasePro by Calibre Media.</p>
     </footer>
+    <script>
+        // Preloader Logic - minimum 1500ms display
+        const preloaderStart = Date.now();
+        const preloader = document.getElementById("preloader");
+        window.addEventListener("load", () => {
+            const elapsed = Date.now() - preloaderStart;
+            const remaining = Math.max(0, 1500 - elapsed);
+            setTimeout(() => {
+                if (preloader) preloader.classList.add("preloader-hidden");
+            }, remaining);
+        });
+    </script>
 </body>
 
 </html>

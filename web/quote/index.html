@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Request a Quote - TRADIE">
+    <title>TRADIE | Request a Quote</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../assets/logo_icon.png">
+    <style>
+        /* Specific Styles for Quote Wizard */
+        body {
+            background-color: #f8fafc;
+            /* Premium off-white background */
+        }
+
+        .quote-wizard-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        /* Override global dark form inputs for this light card */
+        .wizard-card .form-group label {
+            color: var(--text-muted);
+        }
+
+        .wizard-card .form-group input {
+            background: #ffffff;
+            border: 2px solid rgba(0, 0, 0, 0.08);
+            color: var(--bg-deep);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .wizard-card .form-group input:focus {
+            border-color: var(--accent-orange);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+        }
+
+        .wizard-card .form-group input::placeholder {
+            color: #cbd5e1;
+        }
+
+        .wizard-card {
+            width: 100%;
+            max-width: 600px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            background: #ffffff;
+            /* Solid White Card */
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: var(--border-radius-xl);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+            /* Premium soft shadow */
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.05);
+            /* Light gray track */
+            border-radius: 100px;
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--grad-primary);
+            width: 25%;
+            border-radius: 100px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .step {
+            display: none;
+            animation: slideIn 0.4s ease forwards;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .step h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--bg-deep);
+            /* Dark text on white */
+        }
+
+        .step p.subtitle {
+            color: var(--text-muted);
+            /* Darker gray for light mode */
+            margin-bottom: 2.5rem;
+        }
+
+        /* Choice Pills Selection */
+        .choice-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (min-width: 480px) {
+            .choice-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .choice-pill {
+            background: #ffffff;
+            border: 2px solid rgba(0, 0, 0, 0.08);
+            padding: 1.25rem;
+            border-radius: 16px;
+            color: var(--bg-deep);
+            /* Dark text */
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .choice-pill:hover {
+            border-color: rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .choice-pill.selected {
+            border-color: var(--accent-orange);
+            background: rgba(249, 115, 22, 0.05);
+            box-shadow: 0 0 0 1px var(--accent-orange);
+        }
+
+        .choice-pill .radio-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            /* Darker border for light mode */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .choice-pill.selected .radio-circle {
+            border-color: var(--accent-orange);
+        }
+
+        .choice-pill.selected .radio-circle::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+        }
+
+        /* Navigation Buttons Map */
+        .wizard-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .btn-back {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .btn-back:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-back:disabled {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .btn-next {
+            padding: 0.875rem 2.5rem;
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+            filter: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Simple Header, Light theme, Centered Logo -->
+    <header id="main-header"
+        style="background: #ffffff; border-bottom: 1px solid rgba(0,0,0,0.05); padding: 1.25rem 0;">
+        <div class="nav-container" style="justify-content: center;">
+            <a href="/" class="logo" style="color: var(--bg-deep);">
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                TRADIE
+            </a>
+        </div>
+    </header>
+
+    <main class="quote-wizard-container">
+        <div class="glass-panel wizard-card">
+
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+
+            <form id="quoteWizardForm"
+                onsubmit="event.preventDefault(); alert('Testing Prototype! User successfully sent lead.'); window.location.href='/tradie/';">
+
+                <!-- STEP 1: Job Type -->
+                <div class="step active" id="step1">
+                    <h2>What type of work?</h2>
+                    <p class="subtitle">Select the service that best matches your needs.</p>
+
+                    <div class="choice-grid" id="typeChoices">
+                        <div class="choice-pill" onclick="selectChoice('typeChoices', this)">
+                            <div class="radio-circle"></div>
+                            Installation
+                        </div>
+                        <div class="choice-pill" onclick="selectChoice('typeChoices', this)">
+                            <div class="radio-circle"></div>
+                            Repair / Maintenance
+                        </div>
+                        <div class="choice-pill" onclick="selectChoice('typeChoices', this)">
+                            <div class="radio-circle"></div>
+                            Inspection
+                        </div>
+                        <div class="choice-pill" onclick="selectChoice('typeChoices', this)">
+                            <div class="radio-circle"></div>
+                            Emergency Callout
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Urgency -->
+                <div class="step" id="step2">
+                    <h2>How soon do you need it?</h2>
+                    <p class="subtitle">This helps tradies schedule your job accurately.</p>
+
+                    <div class="choice-grid" id="timingChoices">
+                        <div class="choice-pill" onclick="selectChoice('timingChoices', this)">
+                            <div class="radio-circle"></div>
+                            Emergency (ASAP)
+                        </div>
+                        <div class="choice-pill" onclick="selectChoice('timingChoices', this)">
+                            <div class="radio-circle"></div>
+                            Within a few days
+                        </div>
+                        <div class="choice-pill" onclick="selectChoice('timingChoices', this)">
+                            <div class="radio-circle"></div>
+                            Within a week
+                        </div>
+                        <div class="choice-pill" onclick="selectChoice('timingChoices', this)">
+                            <div class="radio-circle"></div>
+                            Flexible
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Location -->
+                <div class="step" id="step3">
+                    <h2>Where is the job?</h2>
+                    <p class="subtitle">Enter the postcode where the work will take place.</p>
+
+                    <div class="form-group" style="max-width: 300px; margin: 0 auto 2.5rem;">
+                        <input type="text" id="postcodeInput" placeholder="e.g. 2000" maxlength="4"
+                            style="text-align: center; font-size: 1.5rem; letter-spacing: 4px;"
+                            oninput="validateInput()">
+                    </div>
+                </div>
+
+                <!-- STEP 4: Capture & Submit -->
+                <div class="step" id="step4">
+                    <h2>Almost done!</h2>
+                    <p class="subtitle">Create an account to securely send this request and chat with the tradie.</p>
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="nameInput" placeholder="John Doe" oninput="validateInput()">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="emailInput" placeholder="john@example.com" oninput="validateInput()">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard-actions">
+                    <button type="button" class="btn-back" id="btnBack" onclick="changeStep(-1)" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" style="width: 16px; height: 16px;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        </svg>
+                        Back
+                    </button>
+
+                    <button type="button" class="btn-primary btn-next" id="btnNext" onclick="changeStep(1)" disabled>
+                        Next
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        // Track state
+        const state = {
+            step1: false, // Type selected
+            step2: false, // Timing selected
+            step3: false, // Postcode filled
+            step4: false  // Name/Email filled
+        };
+
+        function updateUI() {
+            // Update Progress Bar
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+
+            // Hide all steps, show current
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step${currentStep}`).classList.add('active');
+
+            // Button visibility
+            document.getElementById('btnBack').disabled = currentStep === 1;
+
+            const btnNext = document.getElementById('btnNext');
+
+            // Validate Next Button
+            btnNext.disabled = !state[`step${currentStep}`];
+
+            if (currentStep === totalSteps) {
+                btnNext.innerText = "Submit Request";
+                btnNext.setAttribute('onclick', "document.getElementById('quoteWizardForm').onsubmit()");
+            } else {
+                btnNext.innerText = "Next";
+                btnNext.setAttribute('onclick', "changeStep(1)");
+            }
+        }
+
+        function changeStep(direction) {
+            currentStep += direction;
+            if (currentStep < 1) currentStep = 1;
+            if (currentStep > totalSteps) currentStep = totalSteps;
+            updateUI();
+        }
+
+        function selectChoice(groupId, element) {
+            // Deselect others in group
+            const group = document.getElementById(groupId);
+            group.querySelectorAll('.choice-pill').forEach(el => el.classList.remove('selected'));
+
+            // Select this one
+            element.classList.add('selected');
+
+            // Update state
+            if (groupId === 'typeChoices') state.step1 = true;
+            if (groupId === 'timingChoices') state.step2 = true;
+
+            updateUI();
+
+            // Auto-advance after small delay for cool UX
+            setTimeout(() => {
+                changeStep(1);
+            }, 300);
+        }
+
+        function validateInput() {
+            if (currentStep === 3) {
+                const postcode = document.getElementById('postcodeInput').value;
+                state.step3 = postcode.length >= 4; // Basic validation
+            }
+            if (currentStep === 4) {
+                const name = document.getElementById('nameInput').value;
+                const email = document.getElementById('emailInput').value;
+                state.step4 = name.length > 1 && email.includes('@');
+            }
+            updateUI();
+        }
+
+        // Initialize UI
+        updateUI();
+    </script>
+
+</body>
+
+</html>

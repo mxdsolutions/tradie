@@ -1,6 +1,7 @@
 import { View, Alert, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
+import { useUser } from '../../context/UserContext';
 import { Typography } from '../../components/ui/Typography';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
@@ -10,6 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 
 export default function SignIn() {
     const router = useRouter();
+    const { setUserMode } = useUser();
     const insets = useSafeAreaInsets();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -43,7 +45,7 @@ export default function SignIn() {
 
         try {
             setLoading(true);
-            const { error } = await supabase.auth.signInWithPassword({
+            const { data: authData, error } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
@@ -62,7 +64,23 @@ export default function SignIn() {
                 }
                 throw error;
             }
-            // Redirect is handled by UserContext auth state change listener
+
+            // Redirect based on user's persistent role
+            if (authData?.user) {
+                const { data: profile } = await supabase
+                    .from('users')
+                    .select('role')
+                    .eq('id', authData.user.id)
+                    .single();
+
+                if (profile?.role) {
+                    await setUserMode(profile.role);
+                    router.replace(profile.role === 'tradie' ? '/(tradie)' : '/(homeowner)');
+                } else {
+                    // Fallback redirect
+                    router.replace('/(homeowner)');
+                }
+            }
         } catch (error: any) {
             // Only show alert if it wasn't the email not confirmed error (which is handled above)
             if (!error.message.includes('Email not confirmed')) {

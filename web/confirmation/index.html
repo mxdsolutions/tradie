@@ -7,13 +7,18 @@
     <title>Email Confirmed - BasePro</title>
     <link rel="stylesheet" href="../style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <link rel="icon" type="image/png" href="../assets/logo_icon.png">
 </head>
 
 <body>
+    <!-- Preloader to prevent FOUT -->
+    <div id="preloader">
+        <img class="logo-icon preloader-logo" src="/assets/logo_icon.png" alt="TRADIE">
+    </div>
     <header>
         <div class="nav-container">
             <a href="../" class="logo">
-                <div class="logo-icon">B</div>
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
                 BasePro
             </a>
         </div>
@@ -75,7 +80,7 @@
         async function check() {
             try {
                 const { data: { session }, error } = await supabase.auth.getSession();
-                
+
                 verifying.style.display = 'none';
 
                 if (session) {
@@ -103,6 +108,18 @@
                 errorState.style.display = 'none';
                 successState.style.display = 'block';
             }
+        });
+    </script>
+    <script>
+        // Preloader Logic - minimum 1500ms display
+        const preloaderStart = Date.now();
+        const preloader = document.getElementById("preloader");
+        window.addEventListener("load", () => {
+            const elapsed = Date.now() - preloaderStart;
+            const remaining = Math.max(0, 1500 - elapsed);
+            setTimeout(() => {
+                if (preloader) preloader.classList.add("preloader-hidden");
+            }, remaining);
         });
     </script>
 </body>

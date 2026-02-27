@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { supabase } from '../../lib/supabase';
 import { Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { TRADE_CATEGORIES, AUSTRALIAN_STATES } from '../../lib/constants';
 
 export default function Onboarding() {
     const [step, setStep] = useState(1);
@@ -29,7 +30,8 @@ export default function Onboarding() {
 
     // Role Specific State
     const [trade, setTrade] = useState('');
-    const [license, setLicense] = useState('');
+    const [licenseState, setLicenseState] = useState('VIC');
+    const [licenseValues, setLicenseValues] = useState<Record<string, string>>({});
 
     // Animation refs
     const progressAnim = useRef(new Animated.Value(33)).current;
@@ -73,9 +75,17 @@ export default function Onboarding() {
     };
 
     const handleDetailsComplete = () => {
-        if (role === 'tradie' && (!trade || !license)) {
-            Alert.alert('Please fill in all fields');
-            return;
+        if (role === 'tradie') {
+            if (!trade) {
+                Alert.alert('Please select a trade');
+                return;
+            }
+            const required = TRADE_CATEGORIES.find(t => t.id === trade)?.requiredLicenses || [];
+            const missing = required.some(req => !licenseValues[req]);
+            if (missing) {
+                Alert.alert('Please fill in all required licenses');
+                return;
+            }
         }
         setStep(3);
     };
@@ -129,11 +139,17 @@ export default function Onboarding() {
                 });
                 if (profileError) throw profileError;
 
-                const { error: licenseError } = await supabase.from('tradie_licenses').insert({
-                    user_id: user.id,
-                    license_number: license
-                });
-                if (licenseError) throw licenseError;
+                const required = TRADE_CATEGORIES.find(t => t.id === trade)?.requiredLicenses || [];
+                if (required.length > 0) {
+                    const lics = required.map(req => ({
+                        user_id: user.id,
+                        license_number: licenseValues[req],
+                        license_type: req,
+                        state: licenseState
+                    }));
+                    const { error: licenseError } = await supabase.from('tradie_licenses').insert(lics);
+                    if (licenseError) throw licenseError;
+                }
             }
 
             await setUserMode(role!);
@@ -212,31 +228,90 @@ export default function Onboarding() {
                 <Animated.View
                     style={{ opacity: slideOpacity, transform: [{ translateX: slideTranslateX }], flex: 1 }}
                 >
-                    <View className="gap-6">
-                        <Input
-                            label="License Number"
-                            placeholder="e.g. 12345678"
-                            value={license}
-                            onChangeText={setLicense}
-                            className="bg-slate-100"
-                        />
-                        <Input
-                            label="Trade"
-                            placeholder="e.g. Electrician"
-                            value={trade}
-                            onChangeText={setTrade}
-                            className="bg-slate-100"
-                        />
-                    </View>
+                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
+                        <Typography variant="h2" className="text-2xl mb-4 text-slate-900">Select your trade</Typography>
+                        <View className="flex-row flex-wrap gap-2.5 mb-8">
+                            {TRADE_CATEGORIES.map((item) => (
+                                <TouchableOpacity
+                                    key={item.id}
+                                    onPress={() => {
+                                        setTrade(item.id);
+                                        setLicenseValues({});
+                                    }}
+                                    className={cn(
+                                        "w-[31%] bg-white p-3.5 rounded-2xl border items-center justify-center h-28",
+                                        trade === item.id
+                                            ? "border-primary bg-primary/5"
+                                            : "border-slate-100"
+                                    )}
+                                >
+                                    <View className={cn(
+                                        "w-11 h-11 rounded-full items-center justify-center mb-2.5",
+                                        trade === item.id ? "bg-primary" : "bg-slate-100"
+                                    )}>
+                                        {/* @ts-ignore */}
+                                        <item.icon size={22} color={trade === item.id ? "white" : "#64748B"} />
+                                    </View>
+                                    <Typography variant="caption" className={cn(
+                                        "text-[11px] font-semibold text-center",
+                                        trade === item.id ? "text-primary" : "text-slate-600"
+                                    )}>{item.id}</Typography>
+                                    {trade === item.id && (
+                                        <View className="absolute top-2.5 right-2.5 bg-primary rounded-full p-0.5">
+                                            {/* @ts-ignore */}
+                                            <CheckIcon size={10} color="white" />
+                                        </View>
+                                    )}
+                                </TouchableOpacity>
+                            ))}
+                        </View>
 
-                    <View className="mt-auto mb-10">
-                        <Button
-                            label="Next Step"
-                            onPress={handleDetailsComplete}
-                            size="lg"
-                            icon={<ArrowRightIcon size={20} color="white" />}
-                        />
-                    </View>
+                        {trade && (TRADE_CATEGORIES.find(t => t.id === trade)?.requiredLicenses?.length || 0) > 0 && (
+                            <View className="gap-6 mb-6">
+                                <Typography variant="h3" className="text-lg">License Details</Typography>
+
+                                <View>
+                                    <Typography variant="label" className="mb-2">License State</Typography>
+                                    <View className="flex-row flex-wrap gap-2">
+                                        {AUSTRALIAN_STATES.map((state) => (
+                                            <TouchableOpacity
+                                                key={state}
+                                                onPress={() => setLicenseState(state)}
+                                                className={cn(
+                                                    "px-4 py-2 border rounded-full",
+                                                    licenseState === state ? "bg-primary border-primary" : "bg-white border-slate-200"
+                                                )}
+                                            >
+                                                <Typography variant="body" className={cn(
+                                                    "font-medium",
+                                                    licenseState === state ? "text-white" : "text-slate-600"
+                                                )}>{state}</Typography>
+                                            </TouchableOpacity>
+                                        ))}
+                                    </View>
+                                </View>
+
+                                {TRADE_CATEGORIES.find(t => t.id === trade)?.requiredLicenses?.map(req => (
+                                    <Input
+                                        key={req}
+                                        label={req}
+                                        placeholder={`Enter ${req} number`}
+                                        value={licenseValues[req] || ''}
+                                        onChangeText={(val) => setLicenseValues(prev => ({ ...prev, [req]: val }))}
+                                        className="bg-slate-100"
+                                    />
+                                ))}
+                            </View>
+                        )}
+                        <View className="mt-4 mb-10">
+                            <Button
+                                label="Next Step"
+                                onPress={handleDetailsComplete}
+                                size="lg"
+                                icon={<ArrowRightIcon size={20} color="white" />}
+                            />
+                        </View>
+                    </ScrollView>
                 </Animated.View>
             )}
 

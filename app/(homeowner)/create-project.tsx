@@ -28,20 +28,7 @@ import { cn } from '../../lib/utils';
 
 // --- Constants ---
 
-const TRADE_CATEGORIES = [
-    { id: 'Plumbing', icon: WrenchScrewdriverIcon },
-    { id: 'Electrical', icon: BoltIcon },
-    { id: 'Carpentry', icon: HomeModernIcon },
-    { id: 'Painting', icon: PaintBrushIcon },
-    { id: 'Landscaping', icon: SparklesIcon },
-    { id: 'Tiling', icon: BuildingStorefrontIcon },
-    { id: 'Roofing', icon: HomeModernIcon },
-    { id: 'Fencing', icon: BuildingStorefrontIcon },
-    { id: 'Concreting', icon: WrenchScrewdriverIcon },
-    { id: 'Demolition', icon: ExclamationTriangleIcon },
-    { id: 'Cleaning', icon: SparklesIcon },
-    { id: 'General', icon: WrenchScrewdriverIcon },
-];
+import { TRADE_CATEGORIES } from '../../lib/constants';
 
 const BUDGET_RANGES = [
     { id: 'under_500', label: '$0 – $500' },
