@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore and find the best verified tradies in your area.">
+    <title>TRADIE | Find Tradies</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../assets/logo_icon.png">
+</head>
+
+<body>
+    <!-- Preloader to prevent FOUT -->
+    <div id="preloader">
+        <img class="logo-icon preloader-logo" src="/assets/logo_icon.png" alt="TRADIE">
+    </div>
+
+    <header id="main-header" class="scrolled"> <!-- Always scrolled on subpages -->
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                TRADIE
+            </a>
+            <nav class="desktop-nav">
+                <a href="/">Home</a>
+                <a href="/customers/">Homeowners</a>
+                <a href="/tradies/" class="text-orange" style="font-weight: 700;">Find Tradies</a>
+                <a href="/pricing/">Pricing</a>
+                <a href="/resources/">Resources</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="/registration/" class="nav-link-subtle">Log In</a>
+                <a href="/registration/" class="btn-solid-white">Join Network <span class="arrow">→</span></a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="resources-page">
+        <section class="page-header" style="padding-top: 6rem; padding-bottom: 2rem;">
+            <h1>Find <span class="text-orange">Expert</span> Tradies.</h1>
+            <p>Direct access to Australia's most trusted, verified construction and trade specialists.</p>
+        </section>
+
+        <!-- Search & Filter Bar -->
+        <section style="padding-top: 0; padding-bottom: 3rem;">
+            <div class="email-capture-form">
+                <div class="input-wrapper" style="width: 350px;">
+                    <span class="input-icon" style="display: block; left: 1.25rem;">🔍</span>
+                    <input type="text" placeholder="Search by trade or location..." style="padding-left: 3rem;">
+                </div>
+                <button class="btn-solid-white">Find My Tradie</button>
+            </div>
+        </section>
+
+        <section>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <h2 style="font-size: 2rem; margin: 0;">Verified Specialists</h2>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <span class="service-pill"
+                        style="cursor: pointer; background: var(--accent-orange); color: #000;">All</span>
+                    <span class="service-pill" style="cursor: pointer;">Builders</span>
+                    <span class="service-pill" style="cursor: pointer;">Electricians</span>
+                    <span class="service-pill" style="cursor: pointer;">Plumbers</span>
+                    <span class="service-pill" style="cursor: pointer;">Carpenters</span>
+                </div>
+            </div>
+
+            <!-- Tradies Grid -->
+            <div class="articles-grid">
+
+                <!-- Tradie Card 1 -->
+                <article class="glass-panel article-card">
+                    <div class="article-thumb" style="height: 180px;">
+                        <img src="https://i.pravatar.cc/300?img=60" alt="Apex Electricians"
+                            style="width: 100%; height: 100%; object-fit: cover; opacity: 1;">
+                    </div>
+                    <div class="article-content">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div class="article-tag" style="color: var(--accent-orange); margin: 0;">Electrical</div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; font-weight: 700;">
+                                <span style="color: #ffd700;">★</span> 4.9 (124)
+                            </div>
+                        </div>
+                        <h3 style="margin-bottom: 0.5rem;">Apex Electricians</h3>
+                        <p style="font-size: 0.85rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                            <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                📍 Sydney, NSW
+                            </span>
+                            Specializing in residential rewiring, smart home integration, and switchboard upgrades.
+                        </p>
+                        <a href="/tradie/" class="article-link">View Profile <span>→</span></a>
+                    </div>
+                </article>
+
+                <!-- Tradie Card 2 -->
+                <article class="glass-panel article-card">
+                    <div class="article-thumb" style="height: 180px;">
+                        <img src="https://i.pravatar.cc/300?img=11" alt="Blue Coast Plumbing"
+                            style="width: 100%; height: 100%; object-fit: cover; opacity: 1;">
+                    </div>
+                    <div class="article-content">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div class="article-tag" style="color: var(--accent-blue); margin: 0;">Plumbing</div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; font-weight: 700;">
+                                <span style="color: #ffd700;">★</span> 4.8 (89)
+                            </div>
+                        </div>
+                        <h3 style="margin-bottom: 0.5rem;">Blue Coast Plumbing</h3>
+                        <p style="font-size: 0.85rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                            <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                📍 Gold Coast, QLD
+                            </span>
+                            Expert plumbing solutions for new builds, renovations, and emergency repairs.
+                        </p>
+                        <a href="/tradie/" class="article-link">View Profile <span>→</span></a>
+                    </div>
+                </article>
+
+                <!-- Tradie Card 3 -->
+                <article class="glass-panel article-card">
+                    <div class="article-thumb" style="height: 180px;">
+                        <img src="https://i.pravatar.cc/300?img=33" alt="Structure Builders"
+                            style="width: 100%; height: 100%; object-fit: cover; opacity: 1;">
+                    </div>
+                    <div class="article-content">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div class="article-tag" style="color: var(--accent-green); margin: 0;">Construction</div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; font-weight: 700;">
+                                <span style="color: #ffd700;">★</span> 5.0 (52)
+                            </div>
+                        </div>
+                        <h3 style="margin-bottom: 0.5rem;">Structure Builders</h3>
+                        <p style="font-size: 0.85rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                            <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                📍 Melbourne, VIC
+                            </span>
+                            High-end residential builders specializing in luxury renovations and extensions.
+                        </p>
+                        <a href="/tradie/" class="article-link">View Profile <span>→</span></a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="nav-container footer-layout">
+            <div class="logo">
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                TRADIE
+            </div>
+            <div class="footer-links">
+                <a href="/privacy">Privacy</a>
+                <a href="/">Terms</a>
+                <a href="mailto:support@tradie.com">Support</a>
+            </div>
+            <p>&copy;
+                <script>document.write(new Date().getFullYear())</script> <span class="brand-name">TRADIE</span>.
+                All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+        <div class="mobile-nav-content">
+            <button class="mobile-close-btn">&times;</button>
+            <nav class="mobile-links">
+                <a href="/">Home</a>
+                <a href="/customers/">Homeowners</a>
+                <a href="/tradies/">Find Tradies</a>
+                <a href="/pricing/">Pricing</a>
+                <a href="/resources/">Resources</a>
+            </nav>
+            <div class="mobile-actions" style="display: flex; flex-direction: column; gap: 1rem;">
+                <a href="/registration/" class="btn-solid-white" style="justify-content: center;">Join Network</a>
+                <a href="/registration/" class="nav-link-subtle" style="text-align: center;">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Logic
+        const mobileBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav-overlay');
+        const closeBtn = document.querySelector('.mobile-close-btn');
+
+        if (mobileBtn && mobileNav && closeBtn) {
+            mobileBtn.addEventListener('click', () => {
+                mobileNav.classList.add('active');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+
+            mobileNav.addEventListener('click', (e) => {
+                if (e.target === mobileNav) {
+                    mobileNav.classList.remove('active');
+                }
+            });
+        }
+    </script>
+    <script>
+        // Preloader Logic - minimum 1500ms display
+        const preloaderStart = Date.now();
+        const preloader = document.getElementById("preloader");
+        window.addEventListener("load", () => {
+            const elapsed = Date.now() - preloaderStart;
+            const remaining = Math.max(0, 1500 - elapsed);
+            setTimeout(() => {
+                if (preloader) preloader.classList.add("preloader-hidden");
+            }, remaining);
+        });
+    </script>
+</body>
+
+</html>
