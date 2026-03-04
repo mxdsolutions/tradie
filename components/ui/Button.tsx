@@ -27,7 +27,7 @@ export function Button({
     const baseStyles = 'flex-row items-center justify-center rounded-full';
 
     const variants = {
-        primary: 'bg-accent active:bg-blue-700',
+        primary: 'bg-accent active:opacity-90',
         secondary: 'bg-transparent border border-slate-200 active:bg-slate-50',
         ghost: 'bg-transparent active:bg-slate-50',
         danger: 'bg-status-error active:bg-red-600',
@@ -65,7 +65,7 @@ export function Button({
             {...props}
         >
             {loading ? (
-                <ActivityIndicator color={variant === 'secondary' || variant === 'ghost' ? '#2563EB' : 'white'} />
+                <ActivityIndicator color={variant === 'secondary' || variant === 'ghost' ? '#ff751f' : 'white'} />
             ) : (
                 <>
                     {icon && <Text className="mr-2">{icon}</Text>}

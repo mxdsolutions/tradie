@@ -1,4 +1,5 @@
-import { View, ImageBackground, Animated } from 'react-native';
+import { View, ImageBackground, Animated, StyleSheet } from 'react-native';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Typography } from '../components/ui/Typography';
@@ -6,7 +7,6 @@ import { Button } from '../components/ui/Button';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUser } from '../context/UserContext';
 import { useEffect, useRef } from 'react';
-import { LinearGradient } from 'expo-linear-gradient';
 
 export default function LandingScreen() {
     const router = useRouter();
@@ -65,14 +65,11 @@ export default function LandingScreen() {
             <StatusBar style="light" />
 
             <ImageBackground
-                source={require('../assets/tradie_hero.jpg')}
+                source={require('../assets/brick_bg.jpg')}
                 className="flex-1"
                 resizeMode="cover"
             >
-                <LinearGradient
-                    colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.85)']}
-                    style={{ flex: 1, paddingHorizontal: 32, paddingTop: insets.top, paddingBottom: insets.bottom + 20, justifyContent: 'space-between' }}
-                >
+                <View style={{ flex: 1, paddingHorizontal: 32, paddingTop: insets.top, paddingBottom: insets.bottom + 20, justifyContent: 'space-between' }}>
                     {/* Header */}
                     <View className="items-center mt-12">
                         <Animated.View
@@ -82,10 +79,12 @@ export default function LandingScreen() {
                                 alignItems: 'center',
                             }}
                         >
-                            <View className="w-20 h-20 bg-white/20 rounded-3xl items-center justify-center mb-6 backdrop-blur-md border border-white/30 transform rotate-3 shadow-lg shadow-black/20">
-                                <Typography variant="h1" className="text-4xl text-white font-black">B</Typography>
-                            </View>
-                            <Typography variant="h2" className="text-white text-4xl font-bold tracking-widest uppercase opacity-90 shadow-sm">BasePro</Typography>
+                            <Image
+                                source={require('../assets/logo_icon.png')}
+                                style={{ width: 80, height: 80, marginBottom: 24 }}
+                                contentFit="contain"
+                            />
+                            <Typography variant="h1" className="text-white text-5xl font-bebas tracking-widest uppercase">TRADIE</Typography>
                         </Animated.View>
                     </View>
 
@@ -98,14 +97,15 @@ export default function LandingScreen() {
                                 width: '100%',
                             }}
                         >
-                            <View className="mb-4">
-                                <Typography variant="h1" className="text-white text-[52px] font-bold leading-[1.05] tracking-tight mb-4 shadow-sm">
-                                    Build with{'\n'}
-                                    <Typography variant="h1" className="text-primary-400 font-extrabold text-[52px]">Confidence.</Typography>
+                            <View className="mb-8 items-center">
+                                <Typography variant="h1" className="text-white text-[52px] font-bebas uppercase leading-none tracking-tight shadow-sm text-center">
+                                    BUILD WITH
                                 </Typography>
-                                <Typography variant="body" className="text-slate-200 text-xl leading-8 font-medium pr-8 opacity-90 shadow-sm">
-                                    The trusted platform making building simpler for homeowners and tradies.
-                                </Typography>
+                                <View className="bg-accent px-6 pt-3 pb-1 mt-1 -rotate-2">
+                                    <Typography variant="h1" className="text-[#0F172A] text-[52px] font-bebas uppercase leading-none tracking-widest text-center">
+                                        CONFIDENCE
+                                    </Typography>
+                                </View>
                             </View>
 
                             <View className="space-y-4">
@@ -126,7 +126,7 @@ export default function LandingScreen() {
                             </View>
                         </Animated.View>
                     </View>
-                </LinearGradient>
+                </View>
             </ImageBackground>
         </View>
     );

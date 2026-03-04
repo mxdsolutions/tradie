@@ -1,4 +1,6 @@
 import { View, TouchableOpacity, Animated } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import { safeHaptics } from '../../../lib/haptics';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { withLayoutContext, useRouter } from 'expo-router';
 import { BriefcaseIcon, WalletIcon, UserIcon, ChatBubbleLeftRightIcon, PlusIcon } from 'react-native-heroicons/outline';
@@ -52,12 +54,17 @@ export default function TradieTabsLayout() {
                     tabBarIconStyle: { height: 24, width: 24 },
                     swipeEnabled: true,
                 }}
+                screenListeners={{
+                    tabPress: () => {
+                        safeHaptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    },
+                }}
             >
                 <MaterialTopTabs.Screen
                     name="index"
                     options={{
                         title: 'Home',
-                        tabBarIcon: ({ color }) => (
+                        tabBarIcon: ({ color }: { color: string }) => (
                             // @ts-ignore
                             <BriefcaseIcon size={24} color={color} />
                         ),
@@ -68,7 +75,7 @@ export default function TradieTabsLayout() {
                     name="wallet"
                     options={{
                         title: 'Wallet',
-                        tabBarIcon: ({ color }) => (
+                        tabBarIcon: ({ color }: { color: string }) => (
                             // @ts-ignore
                             <WalletIcon size={24} color={color} />
                         ),
@@ -78,7 +85,7 @@ export default function TradieTabsLayout() {
                     name="messages"
                     options={{
                         title: 'Messages',
-                        tabBarIcon: ({ color }) => (
+                        tabBarIcon: ({ color }: { color: string }) => (
                             // @ts-ignore
                             <ChatBubbleLeftRightIcon size={24} color={color} />
                         ),
@@ -88,7 +95,7 @@ export default function TradieTabsLayout() {
                     name="account"
                     options={{
                         title: 'Account',
-                        tabBarIcon: ({ color }) => (
+                        tabBarIcon: ({ color }: { color: string }) => (
                             // @ts-ignore
                             <UserIcon size={24} color={color} />
                         ),
@@ -108,7 +115,10 @@ export default function TradieTabsLayout() {
                 <TouchableOpacity
                     onPressIn={handlePressIn}
                     onPressOut={handlePressOut}
-                    onPress={() => router.push('/(tradie)/create-job')}
+                    onPress={() => {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                        router.push('/(tradie)/create-job');
+                    }}
                     activeOpacity={1}
                     style={{
                         width: 60,

@@ -1,7 +1,9 @@
 import { View, TouchableOpacity, Animated } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import { safeHaptics } from '../../../lib/haptics';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { withLayoutContext, useRouter } from 'expo-router';
-import { HomeIcon, MagnifyingGlassIcon, UserIcon, ChatBubbleLeftRightIcon, PlusIcon } from 'react-native-heroicons/outline';
+import { HomeIcon, BriefcaseIcon, UserIcon, ChatBubbleLeftRightIcon, PlusIcon } from 'react-native-heroicons/outline';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRef } from 'react';
 
@@ -52,24 +54,29 @@ export default function HomeownerLayout() {
                     tabBarIconStyle: { height: 24, width: 24 },
                     swipeEnabled: true,
                 }}
+                screenListeners={{
+                    tabPress: () => {
+                        safeHaptics.selectionAsync();
+                    },
+                }}
             >
                 <MaterialTopTabs.Screen
                     name="index"
                     options={{
                         title: 'Home',
-                        tabBarIcon: ({ color }) => (
+                        tabBarIcon: ({ color }: { color: string }) => (
                             // @ts-ignore
                             <HomeIcon size={24} color={color} />
                         ),
                     }}
                 />
                 <MaterialTopTabs.Screen
-                    name="find"
+                    name="projects"
                     options={{
-                        title: 'Find',
-                        tabBarIcon: ({ color }) => (
+                        title: 'Projects',
+                        tabBarIcon: ({ color }: { color: string }) => (
                             // @ts-ignore
-                            <MagnifyingGlassIcon size={24} color={color} />
+                            <BriefcaseIcon size={24} color={color} />
                         ),
                     }}
                 />
@@ -77,7 +84,7 @@ export default function HomeownerLayout() {
                     name="messages"
                     options={{
                         title: 'Messages',
-                        tabBarIcon: ({ color }) => (
+                        tabBarIcon: ({ color }: { color: string }) => (
                             // @ts-ignore
                             <ChatBubbleLeftRightIcon size={24} color={color} />
                         ),
@@ -87,7 +94,7 @@ export default function HomeownerLayout() {
                     name="account"
                     options={{
                         title: 'Account',
-                        tabBarIcon: ({ color }) => (
+                        tabBarIcon: ({ color }: { color: string }) => (
                             // @ts-ignore
                             <UserIcon size={24} color={color} />
                         ),
@@ -100,23 +107,26 @@ export default function HomeownerLayout() {
                 style={{
                     position: 'absolute',
                     right: 20,
-                    bottom: tabBarHeight + 16,
+                    bottom: tabBarHeight + 32,
                     transform: [{ scale: scaleAnim }],
                 }}
             >
                 <TouchableOpacity
                     onPressIn={handlePressIn}
                     onPressOut={handlePressOut}
-                    onPress={() => router.push('/(homeowner)/create-project')}
+                    onPress={() => {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                        router.push('/(homeowner)/create-project');
+                    }}
                     activeOpacity={1}
                     style={{
                         width: 60,
                         height: 60,
                         borderRadius: 30,
-                        backgroundColor: '#2563EB',
+                        backgroundColor: '#ff751f',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        shadowColor: '#2563EB',
+                        shadowColor: '#ff751f',
                         shadowOffset: { width: 0, height: 4 },
                         shadowOpacity: 0.35,
                         shadowRadius: 8,

@@ -1,15 +1,15 @@
 import { View, ScrollView, TouchableOpacity, Image, Modal, Switch, TextInput, Animated, Dimensions, PanResponder, ActivityIndicator, RefreshControl } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { MagnifyingGlassIcon, FunnelIcon, StarIcon, MapPinIcon, XMarkIcon } from 'react-native-heroicons/outline';
+import { MagnifyingGlassIcon, FunnelIcon, StarIcon, MapPinIcon, XMarkIcon, ArrowLeftIcon } from 'react-native-heroicons/outline';
 import { StarIcon as StarIconSolid } from 'react-native-heroicons/solid'; // For rating, usually solid
-import { Card } from '../../../components/ui/Card';
+import { Card } from '../../components/ui/Card';
 import { useRouter } from 'expo-router';
-import { Badge } from '../../../components/ui/Badge';
-import { Typography } from '../../../components/ui/Typography';
-import { Input } from '../../../components/ui/Input';
+import { Badge } from '../../components/ui/Badge';
+import { Typography } from '../../components/ui/Typography';
+import { Input } from '../../components/ui/Input';
 import { useState, useRef, useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { supabase } from '../../../lib/supabase';
+import { supabase } from '../../lib/supabase';
 
 const CATEGORIES = [
     { id: '1', name: 'Electrician', icon: 'Zap' },
@@ -135,7 +135,16 @@ export default function FindScreen() {
                 className="bg-primary px-6 pb-6 pt-6 border-b border-white/10 z-10 shadow-medium"
                 style={{ paddingTop: insets.top }}
             >
-                <Typography variant="h1" className="mb-6 mt-2 text-3xl text-white">Find an Expert</Typography>
+                <View className="flex-row items-center mb-6 mt-2">
+                    <TouchableOpacity
+                        onPress={() => router.back()}
+                        className="mr-3 w-10 h-10 items-center justify-center -ml-2 rounded-full active:bg-white/10"
+                    >
+                        {/* @ts-ignore */}
+                        <ArrowLeftIcon size={24} color="white" />
+                    </TouchableOpacity>
+                    <Typography variant="h1" className="text-3xl text-white">Find a Tradie</Typography>
+                </View>
 
                 <View className="flex-row items-center space-x-2 mb-2 gap-2">
                     <View className="flex-1 flex-row items-center bg-white/10 rounded-2xl px-4 py-3 border border-white/10">
@@ -192,7 +201,7 @@ export default function FindScreen() {
                         {/* Image Section - Updated to grey with initials */}
                         <View className="w-32 bg-slate-200 items-center justify-center">
                             <Typography variant="h2" className="text-slate-400 font-bold">
-                                {tradie.name.split(' ').map(n => n[0]).join('')}
+                                {tradie.name.split(' ').map((n: string) => n[0]).join('')}
                             </Typography>
                         </View>
 

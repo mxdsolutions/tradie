@@ -1,4 +1,5 @@
 import { View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -10,13 +11,13 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useUser } from '../../context/UserContext';
 
-const FILTERS = ['All', 'Open', 'Planning', 'In Progress', 'Completed'];
+const FILTERS = ['Open', 'Planning', 'In Progress', 'Completed'];
 
 export default function MyProjectsScreen() {
     const router = useRouter();
     const insets = useSafeAreaInsets();
     const { user } = useUser();
-    const [activeFilter, setActiveFilter] = useState('All');
+    const [activeFilter, setActiveFilter] = useState('Open');
 
     const [projects, setProjects] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -45,7 +46,7 @@ export default function MyProjectsScreen() {
     };
 
     const filteredProjects = projects.filter(project =>
-        activeFilter === 'All' ? true : project.status === activeFilter
+        project.status === activeFilter
     );
 
     return (
@@ -57,15 +58,16 @@ export default function MyProjectsScreen() {
                 className="bg-primary px-6 pb-6 pt-2 border-b border-white/10 z-10 shadow-medium"
                 style={{ paddingTop: insets.top }}
             >
-                <View className="flex-row items-center mb-6">
+                <View className="flex-row items-center justify-between mb-6">
                     <TouchableOpacity
                         onPress={() => router.back()}
-                        className="mr-3 w-10 h-10 items-center justify-center -ml-2 rounded-full active:bg-white/10"
+                        className="w-10 h-10 items-center justify-center -ml-2 rounded-full active:bg-white/10"
                     >
                         {/* @ts-ignore */}
                         <ArrowLeftIcon size={24} color="white" />
                     </TouchableOpacity>
-                    <Typography variant="h1" className="text-3xl text-white">My Projects</Typography>
+                    <Typography variant="h1" className="text-3xl text-white text-center flex-1">My Projects</Typography>
+                    <View className="w-10" />
                 </View>
 
                 {/* Filters */}
@@ -74,21 +76,24 @@ export default function MyProjectsScreen() {
                     showsHorizontalScrollIndicator={false}
                     className="flex-grow-0"
                 >
-                    {FILTERS.map((filter) => (
+                    {FILTERS.map((status) => (
                         <TouchableOpacity
-                            key={filter}
-                            onPress={() => setActiveFilter(filter)}
-                            className={`px-4 py-2 rounded-full mr-2 border ${activeFilter === filter
-                                ? 'bg-white border-white'
-                                : 'bg-white/10 border-white/10'
+                            key={status}
+                            onPress={() => {
+                                setActiveFilter(status);
+                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                            }}
+                            className={`px-5 py-2.5 rounded-full border ${activeFilter === status
+                                ? 'bg-accent border-accent'
+                                : 'bg-white border-slate-200'
                                 }`}
                         >
                             <Typography
-                                variant="caption"
-                                className={`font-semibold ${activeFilter === filter ? 'text-primary' : 'text-white'
+                                variant="body"
+                                className={`font-roboto-bold text-lg ${activeFilter === status ? 'text-white' : 'text-slate-600'
                                     }`}
                             >
-                                {filter}
+                                {status}
                             </Typography>
                         </TouchableOpacity>
                     ))}

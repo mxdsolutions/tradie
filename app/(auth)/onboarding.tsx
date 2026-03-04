@@ -1,4 +1,5 @@
 import { View, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Animated } from 'react-native';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useState, useRef, useEffect } from 'react';
 import { useUser } from '../../context/UserContext';
@@ -166,12 +167,22 @@ export default function Onboarding() {
 
     return (
         <View
-            className="flex-1 bg-background px-6"
+            className="flex-1 bg-white px-6"
             style={{ paddingTop: insets.top + 20 }}
         >
             <StatusBar style="dark" />
+
+            {/* Logo */}
+            <View className="items-center mb-8">
+                <Image
+                    source={require('../../assets/logo_icon.png')}
+                    style={{ width: 60, height: 60 }}
+                    contentFit="contain"
+                />
+            </View>
+
             {/* Progress Bar */}
-            <View className="flex-row h-1.5 bg-slate-100 rounded-full mb-10 overflow-hidden">
+            <View className="flex-row h-1.5 bg-slate-100 rounded-full mb-8 overflow-hidden">
                 <Animated.View
                     style={{
                         width: progressAnim.interpolate({

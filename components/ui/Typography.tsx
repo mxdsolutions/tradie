@@ -13,12 +13,12 @@ export function Typography({ variant = 'body', className, ...props }: Typography
     const baseStyles = 'text-text-primary';
 
     const variants = {
-        h1: 'text-4xl font-bold tracking-tighter text-primary',
-        h2: 'text-2xl font-bold tracking-tight text-primary',
-        h3: 'text-xl font-semibold tracking-tight text-primary',
-        body: 'text-base text-text-secondary leading-relaxed',
-        label: 'text-sm font-medium uppercase tracking-wider text-text-tertiary',
-        caption: 'text-xs text-text-tertiary',
+        h1: 'font-bebas text-5xl text-slate-900',
+        h2: 'font-bebas text-3xl text-slate-900',
+        h3: 'font-bebas text-2xl text-slate-900',
+        body: 'font-roboto text-base text-slate-700',
+        label: 'font-roboto-medium text-sm text-slate-500 uppercase tracking-wider',
+        caption: 'font-roboto text-sm text-slate-500',
     };
 
     return (

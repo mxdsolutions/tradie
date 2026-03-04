@@ -133,9 +133,8 @@ export default function AccountContent() {
                 </View>
             )}
 
-            {/* Menu */}
+            {/* Menu Items */}
             <View className="px-6">
-                <Typography variant="label" className="text-slate-400 mb-3 ml-2">Settings</Typography>
                 <View className="bg-white rounded-2xl overflow-hidden border border-slate-100">
                     {/* @ts-ignore */}
                     <MenuItem icon={UserIcon} label="Edit Profile" onPress={() => router.push('/edit-profile')} />

@@ -1,4 +1,5 @@
-import { View, Alert, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Alert, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { useUser } from '../../context/UserContext';
@@ -94,7 +95,7 @@ export default function SignIn() {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            className="flex-1 bg-background"
+            className="flex-1 bg-white"
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View
@@ -104,10 +105,12 @@ export default function SignIn() {
                     <StatusBar style="dark" />
 
                     {/* Header Section */}
-                    <View className="items-center mb-16">
-                        <View className="w-20 h-20 bg-primary/10 rounded-3xl items-center justify-center mb-6 transform rotate-3">
-                            <Typography variant="h1" className="text-4xl text-primary">B</Typography>
-                        </View>
+                    <View className="items-center mb-16 mt-12">
+                        <Image
+                            source={require('../../assets/logo_icon.png')}
+                            style={{ width: 80, height: 80, marginBottom: 24 }}
+                            contentFit="contain"
+                        />
                         <Typography variant="h1" className="mb-3 text-4xl tracking-tight text-slate-900">Welcome Back</Typography>
                         <Typography variant="body" className="text-center text-slate-500 text-lg">Sign in to continue building</Typography>
                     </View>
@@ -131,9 +134,11 @@ export default function SignIn() {
                                     onChangeText={setPassword}
                                     secureTextEntry
                                 />
-                                <Typography variant="caption" className="text-right mt-2 text-primary font-medium">
-                                    Forgot Password?
-                                </Typography>
+                                <TouchableOpacity onPress={handleForgotPassword} disabled={resetLoading}>
+                                    <Typography variant="caption" className="text-right mt-2 text-primary font-medium">
+                                        {resetLoading ? 'Sending...' : 'Forgot Password?'}
+                                    </Typography>
+                                </TouchableOpacity>
                             </View>
                         </View>
 

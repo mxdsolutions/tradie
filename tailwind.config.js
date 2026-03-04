@@ -6,12 +6,12 @@ module.exports = {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: "#0F172A", // Midnight
-                    light: "#334155", // Charcoal
+                    DEFAULT: "#000000", // Black
+                    light: "#1a1a1a", // Dark surface
                 },
                 accent: {
-                    DEFAULT: "#2563EB", // Electric Blue
-                    light: "#EFF6FF", // Soft Blue
+                    DEFAULT: "#ff751f", // TRADIE Orange
+                    light: "#fff0e6", // Soft Orange
                 },
                 background: {
                     DEFAULT: "#F8FAFC", // Wash
@@ -43,7 +43,11 @@ module.exports = {
                 '2xl': '0 0 0 rgba(0, 0, 0, 0)',
                 'soft': '0 0 0 rgba(0, 0, 0, 0)',
                 'medium': '0 0 0 rgba(0, 0, 0, 0)',
-            }
+            },
+            fontFamily: {
+                bebas: ["BebasNeue_400Regular"],
+                roboto: ["Roboto_400Regular", "Roboto_500Medium", "Roboto_700Bold"],
+            },
         },
     },
     plugins: [],

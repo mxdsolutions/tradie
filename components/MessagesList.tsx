@@ -2,7 +2,7 @@ import { View, ScrollView, TouchableOpacity, TextInput, ActivityIndicator, Refre
 import { useRouter } from 'expo-router';
 import { Typography } from './ui/Typography';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import { MagnifyingGlassIcon, ChatBubbleLeftRightIcon } from 'react-native-heroicons/outline';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useUser } from '../context/UserContext';
@@ -212,12 +212,14 @@ export default function MessagesList() {
                         ))}
 
                         {filteredMessages.length === 0 && (
-                            <View className="items-center justify-center py-20 opacity-50">
-                                {/* @ts-ignore */}
-                                <MagnifyingGlassIcon size={48} color="#64748B" />
-                                <Typography variant="h3" className="mt-4 text-center">No messages yet</Typography>
-                                <Typography variant="body" className="text-center mt-1 text-slate-500">
-                                    Start a conversation with a tradie to see it here.
+                            <View className="flex-1 items-center justify-center px-8">
+                                <View className="w-24 h-24 rounded-full bg-slate-50 items-center justify-center mb-6">
+                                    {/* @ts-ignore */}
+                                    <ChatBubbleLeftRightIcon size={48} color="#94A3B8" />
+                                </View>
+                                <Typography variant="h2" className="text-center mb-3">No messages yet</Typography>
+                                <Typography variant="body" className="text-slate-500 text-center text-lg leading-7">
+                                    Conversations with your Project's Tradies are shown here.
                                 </Typography>
                             </View>
                         )}

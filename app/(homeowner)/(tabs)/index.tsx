@@ -1,4 +1,7 @@
-import { View, ScrollView, TouchableOpacity, Image, RefreshControl, Animated, TextInput, ActivityIndicator } from 'react-native';
+import { View, ScrollView, TouchableOpacity, RefreshControl, Animated, TextInput, ActivityIndicator, ImageBackground, StyleSheet } from 'react-native';
+import { Image } from 'expo-image';
+import * as Haptics from 'expo-haptics';
+import { safeHaptics } from '../../../lib/haptics';
 import { useEffect, useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useRouter } from 'expo-router';
@@ -6,10 +9,11 @@ import { useUser } from '../../../context/UserContext';
 import { Card } from '../../../components/ui/Card';
 import { Badge } from '../../../components/ui/Badge';
 import { Typography } from '../../../components/ui/Typography';
-import { BellIcon, PlusIcon, MagnifyingGlassIcon, ArrowRightIcon, UserIcon, MapPinIcon } from 'react-native-heroicons/outline';
+import { PlusIcon, MagnifyingGlassIcon, ArrowRightIcon, UserIcon, MapPinIcon, ChevronRightIcon } from 'react-native-heroicons/outline';
 import { StarIcon } from 'react-native-heroicons/solid';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { supabase } from '../../../lib/supabase';
+import { ProjectCard } from '../../../components/ProjectCard';
 import { WrenchScrewdriverIcon, DocumentTextIcon, CheckCircleIcon } from 'react-native-heroicons/outline';
 
 const IconMap: Record<string, any> = {
@@ -17,6 +21,13 @@ const IconMap: Record<string, any> = {
     FileText: DocumentTextIcon,
     CheckCircle: CheckCircleIcon,
 };
+
+const serviceTypes = [
+    { id: 'elec', label: 'Electricians', image: require('../../../assets/service_electrician_1772537565099.png') },
+    { id: 'plum', label: 'Plumbers', image: require('../../../assets/service_plumber_1772537578068.png') },
+    { id: 'build', label: 'Builders', image: require('../../../assets/service_builder_177253791577.png') },
+    { id: 'carp', label: 'Carpenters', image: require('../../../assets/service_carpenter_1772537605210.png') },
+];
 
 export default function HomeownerDashboard() {
     const { userMode, user } = useUser();
@@ -29,14 +40,81 @@ export default function HomeownerDashboard() {
     const [tradies, setTradies] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
-    // Estimate threshold for "Active Projects" trigger
-    const headerHeight = insets.top + (70 + 72);
-    const stickyTrigger = headerHeight;
+    const presetNeeds = [
+        { id: '1', label: 'Plumbing' },
+        { id: '2', label: 'Electrical' },
+        { id: '3', label: 'Cleaning' },
+        { id: '4', label: 'Carpentry' },
+        { id: '5', label: 'Painting' },
+        { id: '6', label: 'Gardening' },
+    ];
+
+    // ── Scroll Animation System ──
+    // All animations are synchronized to the same scrollDistance for a unified feel.
+    // Multi-keyframe interpolations avoid independent "snap" points.
+    const scrollDistance = 120;
+
+    // Header shell height — shrinks smoothly with an ease-out feel via 3 keyframes
+    const headerHeight = scrollY.interpolate({
+        inputRange: [0, scrollDistance * 0.5, scrollDistance],
+        outputRange: [insets.top + 178, insets.top + 125, insets.top + 82],
+        extrapolate: 'clamp',
+    });
+
+    // Logo row — fades out in the first 35% of scroll (quick but smooth)
+    const fadeOpacity = scrollY.interpolate({
+        inputRange: [0, scrollDistance * 0.35],
+        outputRange: [1, 0],
+        extrapolate: 'clamp',
+    });
+
+    // Search bar container moves up to fill the space vacated by the logo + label
+    const searchSectionTranslateY = scrollY.interpolate({
+        inputRange: [0, scrollDistance * 0.4, scrollDistance],
+        outputRange: [0, -24, -54],
+        extrapolate: 'clamp',
+    });
+
+    // "I want to…" label — fades out in the first 40%
+    const labelOpacity = scrollY.interpolate({
+        inputRange: [0, scrollDistance * 0.4],
+        outputRange: [1, 0],
+        extrapolate: 'clamp',
+    });
+
+    // Label container height collapses across the full scroll for a gradual close
+    const labelHeight = scrollY.interpolate({
+        inputRange: [0, scrollDistance * 0.6, scrollDistance],
+        outputRange: [32, 12, 0],
+        extrapolate: 'clamp',
+    });
+
+    // Inner header top padding shrinks to reclaim vertical space
+    const headerInnerPaddingTop = scrollY.interpolate({
+        inputRange: [0, scrollDistance],
+        outputRange: [16, 6],
+        extrapolate: 'clamp',
+    });
+
+    // Go button width stays constant (kept for future animation hooks)
+    const goButtonWidth = scrollY.interpolate({
+        inputRange: [0, scrollDistance],
+        outputRange: [56, 56],
+        extrapolate: 'clamp',
+    });
 
     // Auto-typing placeholder logic
     const [placeholderText, setPlaceholderText] = useState('');
     const phrases = ['renovate my bathroom', 'build a new deck', 'install a new kitchen'];
+
+    const costGuides = [
+        { id: '1', title: 'How much does a new kitchen cost?', estimatedPrice: '$15k - $30k', image: require('../../../assets/service_carpenter_1772537605210.png') },
+        { id: '2', title: 'Average cost of a bathroom renovation', estimatedPrice: '$10k - $20k', image: require('../../../assets/service_plumber_1772537578068.png') },
+        { id: '3', title: 'What to budget for a new deck', estimatedPrice: '$5k - $15k', image: require('../../../assets/service_builder_177253791577.png') },
+        { id: '4', title: 'House painting cost guide', estimatedPrice: '$3k - $8k', image: require('../../../assets/service_electrician_1772537565099.png') },
+    ];
 
     useEffect(() => {
         let currentPhraseIndex = 0;
@@ -129,182 +207,180 @@ export default function HomeownerDashboard() {
     return (
         <View className="flex-1 bg-background">
             <StatusBar style="light" />
-            {/* Sticky/Persistent Header */}
-            <View
-                className="bg-primary border-b border-white/10 z-50 px-6 pb-8 shadow-medium"
-                style={{ paddingTop: insets.top + 12 }}
-            >
-                <View className="flex-row justify-between items-center mb-8">
-                    <View>
-                        <Typography variant="label" className="text-white/60 mb-0.5">Welcome Back</Typography>
-                        <Typography variant="h1" className="text-2xl text-white">
-                            {user?.user_metadata?.first_name || user?.user_metadata?.full_name?.split(' ')[0] || 'Homeowner'}
-                        </Typography>
-                    </View>
-                    <View className="flex-row items-center">
-                        <TouchableOpacity
-                            className="w-10 h-10 items-center justify-center"
-                            onPress={() => router.push('/notifications')}
-                        >
-                            {/* @ts-ignore */}
-                            <BellIcon size={26} color="white" />
-                            {/* <View className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-primary" /> */}
-                        </TouchableOpacity>
-                    </View>
-                </View>
 
-                {/* Search Input Section */}
-                <View className="flex-row items-center space-x-2 bg-white/10 rounded-2xl p-2 border border-white/20">
-                    <View className="flex-1 px-3">
-                        <Typography variant="caption" className="text-white/60 text-xs mb-0.5 font-medium">I want to...</Typography>
-                        <TextInput
-                            placeholder={placeholderText}
-                            placeholderTextColor="rgba(255,255,255,0.75)"
-                            className="text-white text-base font-semibold p-0 h-6 leading-6"
-                            selectionColor="white"
-                        />
-                    </View>
-                    <TouchableOpacity
-                        className="bg-white px-5 py-3 rounded-xl flex-row items-center"
-                        onPress={() => router.push('/(homeowner)/find')}
+            {/* Header Section */}
+            <Animated.View
+                className="z-50 shadow-medium bg-primary absolute top-0 left-0 right-0 overflow-hidden"
+                style={{
+                    paddingTop: insets.top,
+                    height: headerHeight,
+                }}
+            >
+                <View className="px-6 pt-4">
+                    {/* Header Row (Logo centered) - Fades out */}
+                    <Animated.View
+                        className="flex-row justify-center items-center mb-6"
+                        style={{ opacity: fadeOpacity }}
                     >
-                        <Typography variant="body" className="text-primary font-bold mr-1">Go</Typography>
-                        {/* @ts-ignore */}
-                        <ArrowRightIcon size={16} color="#0F172A" strokeWidth={2.5} />
-                    </TouchableOpacity>
+                        <View className="flex-row items-center">
+                            <Image
+                                source={require('../../../assets/logo_icon.png')}
+                                style={{ width: 30, height: 30, marginRight: 8 }}
+                                contentFit="contain"
+                            />
+                            <Typography variant="h1" className="text-3xl text-white font-bebas tracking-wider uppercase">TRADIE</Typography>
+                        </View>
+                    </Animated.View>
+
+                    {/* Search & Action Section - Moves Up */}
+                    <Animated.View
+                        className="z-10"
+                        style={{
+                            transform: [{ translateY: searchSectionTranslateY }],
+                        }}
+                    >
+                        <Animated.View style={{ height: labelHeight, opacity: labelOpacity, overflow: 'hidden' }}>
+                            <Typography variant="body" className="font-roboto-bold text-[22px] text-white/90 ml-1">I want to...</Typography>
+                        </Animated.View>
+
+                        <View className="flex-row items-center mb-4">
+                            {/* Search Input Container */}
+                            <View
+                                className="bg-white/10 rounded-2xl border border-white/20 h-16 px-5 justify-center flex-1"
+                            >
+                                <TextInput
+                                    placeholder={placeholderText}
+                                    placeholderTextColor="rgba(255,255,255,0.4)"
+                                    className="text-white text-xl font-roboto font-semibold p-0 h-10"
+                                    selectionColor="white"
+                                    value={searchQuery}
+                                    onChangeText={setSearchQuery}
+                                />
+                            </View>
+
+                            <View style={{ width: 10 }} />
+
+                            {/* Go Button - Magnifying Glass */}
+                            <Animated.View
+                                style={{
+                                    width: goButtonWidth,
+                                }}
+                            >
+                                <TouchableOpacity
+                                    className="bg-accent h-16 rounded-2xl items-center justify-center shadow-lg px-4"
+                                    onPress={() => {
+                                        safeHaptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                                        router.push('/(homeowner)/find');
+                                    }}
+                                >
+                                    {/* @ts-ignore */}
+                                    <MagnifyingGlassIcon size={28} color="white" strokeWidth={3} />
+                                </TouchableOpacity>
+                            </Animated.View>
+                        </View>
+                    </Animated.View>
                 </View>
-            </View>
+            </Animated.View>
 
             <Animated.ScrollView
                 className="flex-1"
                 showsVerticalScrollIndicator={false}
-                stickyHeaderIndices={[1]} // index 1 is ActiveProjectsHeader
+                contentContainerStyle={{ paddingTop: insets.top + 178, paddingBottom: 100 }}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                    { useNativeDriver: true }
+                    { useNativeDriver: false } // Required for layout measurements in JS, but doesn't cause jank if we keep layout static!
                 )}
                 scrollEventThrottle={16}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#2563EB" />
                 }
             >
-                {/* 0. Tradies Near You */}
-                <View className="pt-8 pb-2 bg-background">
-                    <View className="px-6 mb-4">
-                        <Typography variant="h3">Tradies Near You</Typography>
+                {/* Welcome Message Removed */}
+                <View className="pt-6" />
+
+                {/* 0. Trade Services */}
+                <View className="pb-8 bg-background">
+                    <View className="px-6 mb-6 flex-row justify-between items-center">
+                        <Typography variant="h2" className="text-3xl">Find a local</Typography>
+                        <TouchableOpacity
+                            onPress={() => router.push('/(homeowner)/find')}
+                            className="flex-row items-center py-1.5 px-3 bg-slate-50 rounded-full"
+                        >
+                            <Typography variant="body" className="font-roboto-bold text-accent text-lg mr-1">View All</Typography>
+                            {/* @ts-ignore */}
+                            <ChevronRightIcon size={20} color="#ff751f" strokeWidth={2.5} />
+                        </TouchableOpacity>
                     </View>
 
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ paddingHorizontal: 24 }}
+                        contentContainerStyle={{ paddingHorizontal: 24, gap: 12 }}
                         className="flex-grow-0"
                     >
-                        {tradies.map((tradie) => (
+                        {serviceTypes.map((service) => (
                             <TouchableOpacity
-                                key={tradie.id}
-                                className="mr-4 w-40 bg-white p-3 rounded-2xl border border-slate-100 shadow-sm"
-                                onPress={() => router.push(`/(homeowner)/tradie-profile/${tradie.id}`)}
+                                key={service.id}
+                                className="items-start"
+                                onPress={() => {
+                                    safeHaptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                    setSearchQuery(service.label);
+                                }}
                             >
-                                <View className="w-12 h-12 rounded-full bg-slate-200 mb-3 items-center justify-center">
-                                    <Typography variant="h3" className="text-lg text-slate-400 font-bold">{tradie.name.charAt(0)}</Typography>
-                                </View>
-                                <Typography variant="body" className="font-semibold text-slate-900 mb-0.5 line-clamp-1" numberOfLines={1}>{tradie.name}</Typography>
-                                <Typography variant="caption" className="text-slate-500 text-xs mb-2">{tradie.specialty}</Typography>
-
-                                <View className="flex-row items-center justify-between">
-                                    <View className="flex-row items-center bg-amber-50 px-1.5 py-0.5 rounded-md">
-                                        {/* @ts-ignore */}
-                                        <StarIcon size={10} color="#F59E0B" style={{ marginRight: 2 }} />
-                                        <Typography variant="caption" className="text-amber-700 font-bold text-[10px]">{tradie.rating}</Typography>
-                                    </View>
-                                    <Typography variant="caption" className="text-slate-400 text-[10px]">{tradie.distance}</Typography>
-                                </View>
+                                <Image
+                                    source={service.image}
+                                    style={{ width: 140, height: 140, borderRadius: 24 }}
+                                    contentFit="cover"
+                                />
+                                <Typography variant="h3" className="mt-3 font-robot font-bold text-slate-800 text-xl tracking-tight">{service.label}</Typography>
                             </TouchableOpacity>
                         ))}
-                        {tradies.length === 0 && !loading && (
-                            <Typography variant="body" className="text-slate-500 italic">No tradies found nearby.</Typography>
-                        )}
                     </ScrollView>
                 </View>
 
-                {/* 1. Active Projects Sticky Header */}
-                <View className="px-6 py-4 bg-background z-20 flex-row justify-between items-center" style={{ marginTop: 0 }}>
-                    <Typography variant="h3">Active Projects</Typography>
-                    {projects.length > 0 && (
-                        <TouchableOpacity onPress={() => router.push('/(homeowner)/projects')}>
-                            <Typography variant="body" className="text-accent text-sm font-semibold">View All</Typography>
+                {/* 1. Cost Guides */}
+                <View className="pb-24 bg-background">
+                    <View className="px-6 mb-6 flex-row justify-between items-center">
+                        <Typography variant="h2" className="text-3xl">Cost Guides</Typography>
+                        <TouchableOpacity
+                            onPress={() => {
+                                safeHaptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                router.push('/(homeowner)/cost-guides');
+                            }}
+                            className="flex-row items-center py-1.5 px-3 bg-slate-50 rounded-full"
+                        >
+                            <Typography variant="body" className="font-roboto-bold text-accent text-lg mr-1">View All</Typography>
+                            {/* @ts-ignore */}
+                            <ChevronRightIcon size={20} color="#ff751f" strokeWidth={2.5} />
                         </TouchableOpacity>
-                    )}
-                </View>
+                    </View>
 
-                {/* 2. Projects List */}
-                <View className="px-6 pt-2 pb-24">
-                    {loading ? (
-                        <ActivityIndicator size="small" color="#2563EB" />
-                    ) : projects.length === 0 ? (
-                        <View className="bg-white p-8 rounded-3xl border border-slate-100 items-center justify-center shadow-sm">
-                            <View className="w-16 h-16 bg-blue-50 rounded-full items-center justify-center mb-4">
-                                {/* @ts-ignore */}
-                                <WrenchScrewdriverIcon size={32} color="#2563EB" />
-                            </View>
-                            <Typography variant="h3" className="text-center mb-2">No projects yet</Typography>
-                            <Typography variant="body" className="text-center text-slate-500 mb-6">Start your first renovation or build project today.</Typography>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ paddingHorizontal: 24, gap: 12 }}
+                        className="flex-grow-0"
+                    >
+                        {costGuides.map((guide) => (
                             <TouchableOpacity
-                                className="bg-primary px-6 py-3 rounded-xl flex-row items-center"
-                                onPress={() => router.push('/(homeowner)/create-project')}
+                                key={guide.id}
+                                className="items-start"
+                                onPress={() => safeHaptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
                             >
-                                <PlusIcon size={20} color="white" />
-                                <Typography variant="body" className="text-white font-bold ml-2">Create Project</Typography>
+                                <Image
+                                    source={guide.image}
+                                    style={{ width: 160, height: 160, borderRadius: 24 }}
+                                    contentFit="cover"
+                                />
+                                <Typography variant="h3" className="mt-3 font-robot font-bold text-slate-800 text-lg tracking-tight w-40" numberOfLines={2}>{guide.title}</Typography>
+                                <Typography variant="body" className="text-slate-500 font-bold mt-1">{guide.estimatedPrice}</Typography>
                             </TouchableOpacity>
-                        </View>
-                    ) : (
-                        <View className="space-y-2">
-                            {projects.map((project) => (
-                                <TouchableOpacity
-                                    key={project.id}
-                                    activeOpacity={0.9}
-                                    onPress={() => router.push(`/(homeowner)/project/${project.id}`)}
-                                >
-                                    <Card
-                                        variant="default"
-                                        className="w-full p-5 border border-slate-100 bg-white shadow-sm rounded-3xl"
-                                    >
-                                        <View className="flex-row justify-between items-start mb-4">
-                                            <View className="w-10 h-10 rounded-full bg-blue-50 items-center justify-center">
-                                                {/* @ts-ignore */}
-                                                <WrenchScrewdriverIcon size={20} color="#2563EB" />
-                                            </View>
-                                            <Badge
-                                                label={project.status || 'Planning'}
-                                                variant={project.status === 'Completed' ? 'emerald' : project.status === 'In Progress' ? 'blue' : project.status === 'Open' ? 'success' : 'amber'}
-                                                className="scale-90 origin-top-right"
-                                            />
-                                        </View>
-
-                                        <Typography variant="h3" className="mb-1 text-lg">{project.title}</Typography>
-                                        <Typography variant="caption" className="text-slate-500 mb-4">{project.type}</Typography>
-
-                                        <View className="space-y-1">
-                                            <View className="flex-row justify-between text-xs mb-1">
-                                                <Typography variant="caption" className="text-slate-500 font-medium">{project.progress || 0}% Complete</Typography>
-                                                {/* <Typography variant="caption" className="text-slate-500 font-medium">{project.date}</Typography> */}
-                                            </View>
-                                            <View className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                                <View
-                                                    className="h-full bg-accent rounded-full"
-                                                    style={{ width: `${project.progress || 0}%` }}
-                                                />
-                                            </View>
-                                        </View>
-                                    </Card>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-                    )}
+                        ))}
+                    </ScrollView>
                 </View>
             </Animated.ScrollView>
         </View>
     );
 }
+
 
