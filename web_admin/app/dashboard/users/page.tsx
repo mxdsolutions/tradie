@@ -81,51 +81,14 @@ export default function UsersPage() {
 
     const fetchUsers = async () => {
         setLoading(true);
-        const mockUsers: AppUser[] = [
-            {
-                id: "mock-admin-1",
-                email: "admin@tradie.com",
-                created_at: new Date().toISOString(),
-                last_sign_in_at: new Date().toISOString(),
-                user_metadata: {
-                    first_name: "Admin",
-                    last_name: "User",
-                    user_type: "admin"
-                }
-            },
-            {
-                id: "mock-tradie-1",
-                email: "tradie@tradie.com",
-                created_at: new Date().toISOString(),
-                last_sign_in_at: new Date().toISOString(),
-                user_metadata: {
-                    first_name: "Tony",
-                    last_name: "Tradie",
-                    user_type: "tradie"
-                }
-            },
-            {
-                id: "mock-homeowner-1",
-                email: "homeowner@tradie.com",
-                created_at: new Date().toISOString(),
-                last_sign_in_at: new Date().toISOString(),
-                user_metadata: {
-                    first_name: "Harry",
-                    last_name: "Homeowner",
-                    user_type: "homeowner"
-                }
-            }
-        ];
-
         try {
             const res = await fetch("/api/users");
             if (!res.ok) throw new Error("Failed to fetch users");
             const data = await res.json();
-
-            setUsers([...mockUsers, ...(data.users || [])] as AppUser[]);
-        } catch {
-            setUsers(mockUsers);
-            toast.error("Could not load users. Showing mock data instead.");
+            setUsers((data.users || []) as AppUser[]);
+        } catch (err) {
+            console.error(err);
+            toast.error("Could not load users. Please check your Supabase connection.");
         } finally {
             setLoading(false);
         }

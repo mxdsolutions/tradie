@@ -1,7 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { DashboardPage, DashboardHeader } from "@/components/dashboard/DashboardPage";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,8 +9,63 @@ import {
     UserCircleIcon,
     ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
+import { Loader2 as Loader2Icon } from "lucide-react";
+import { toast } from "sonner";
 
 export default function SettingsPage() {
+    const [user, setUser] = useState<{
+        id: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+    } | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const res = await fetch("/api/profile");
+                if (!res.ok) throw new Error("Failed to fetch profile");
+                const data = await res.json();
+                setUser(data.user);
+            } catch (err) {
+                console.error(err);
+                toast.error("Failed to load profile settings");
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProfile();
+    }, []);
+
+    const handleSave = async () => {
+        if (!user) return;
+        setSaving(true);
+        try {
+            const res = await fetch("/api/profile", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(user)
+            });
+            if (!res.ok) throw new Error("Failed to update profile");
+            toast.success("Profile updated successfully");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to save changes");
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) {
+        return (
+            <DashboardPage className="max-w-4xl flex items-center justify-center min-h-[400px]">
+                <Loader2Icon className="w-6 h-6 animate-spin text-muted-foreground" />
+            </DashboardPage>
+        );
+    }
+
     return (
         <DashboardPage className="max-w-4xl">
             <DashboardHeader
@@ -31,20 +86,39 @@ export default function SettingsPage() {
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5">
                                 <label className="text-sm font-medium">First name</label>
-                                <Input defaultValue="Dylan" className="rounded-xl" />
+                                <Input 
+                                    value={user?.firstName || ""} 
+                                    onChange={(e) => setUser(u => u ? {...u, firstName: e.target.value} : null)}
+                                    className="rounded-xl" 
+                                />
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-sm font-medium">Last name</label>
-                                <Input defaultValue="J." className="rounded-xl" />
+                                <Input 
+                                    value={user?.lastName || ""} 
+                                    onChange={(e) => setUser(u => u ? {...u, lastName: e.target.value} : null)}
+                                    className="rounded-xl" 
+                                />
                             </div>
                         </div>
                         <div className="space-y-1.5">
                             <label className="text-sm font-medium">Email</label>
-                            <Input defaultValue="dylan@example.com" type="email" className="rounded-xl" />
+                            <Input 
+                                value={user?.email || ""} 
+                                onChange={(e) => setUser(u => u ? {...u, email: e.target.value} : null)}
+                                type="email" 
+                                className="rounded-xl" 
+                            />
                         </div>
 
                         <div className="flex justify-end pt-2">
-                            <Button className="rounded-full px-6">Save changes</Button>
+                            <Button 
+                                onClick={handleSave} 
+                                disabled={saving}
+                                className="rounded-full px-6"
+                            >
+                                {saving ? "Saving..." : "Save changes"}
+                            </Button>
                         </div>
                     </CardContent>
                 </Card>
@@ -60,7 +134,7 @@ export default function SettingsPage() {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm font-medium">Password</p>
-                                <p className="text-xs text-muted-foreground">Last changed 30 days ago</p>
+                                <p className="text-xs text-muted-foreground">Managed via authentication provider</p>
                             </div>
                             <Button variant="outline" className="text-sm rounded-full px-5">Change</Button>
                         </div>

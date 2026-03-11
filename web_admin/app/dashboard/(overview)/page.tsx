@@ -1,17 +1,15 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { DashboardPage, DashboardHeader, DashboardMetrics, DashboardMetric } from "@/components/dashboard/DashboardPage";
+import { DashboardPage, DashboardHeader, DashboardMetrics } from "@/components/dashboard/DashboardPage";
 import {
     tableBase,
     tableHead,
     tableHeadCell,
     tableRow,
     tableCell,
-    tableCellMuted,
-    statLabelClass,
-    statValueClass,
-    cardGap
+    tableCellMuted
 } from "@/lib/design-system";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,77 +22,103 @@ import {
     UserPlusIcon,
     ArrowUpRightIcon
 } from "@heroicons/react/24/outline";
-
-const metrics: DashboardMetric[] = [
-    {
-        label: "Revenue",
-        value: "$45,231.89",
-        change: "+20.1%",
-        trend: "up",
-        icon: CurrencyDollarIcon,
-        color: "text-emerald-500",
-        bg: "bg-emerald-500/10"
-    },
-    {
-        label: "Profit",
-        value: "$12,450.00",
-        change: "+15.3%",
-        trend: "up",
-        icon: BanknotesIcon,
-        color: "text-blue-500",
-        bg: "bg-blue-500/10"
-    },
-    {
-        label: "Active Projects",
-        value: "24",
-        change: "+3",
-        trend: "up",
-        icon: BriefcaseIcon,
-        color: "text-indigo-500",
-        bg: "bg-indigo-500/10"
-    },
-    {
-        label: "Active Jobs",
-        value: "142",
-        change: "-5",
-        trend: "down",
-        icon: WrenchScrewdriverIcon,
-        color: "text-rose-500",
-        bg: "bg-rose-500/10"
-    },
-    {
-        label: "Total Users",
-        value: "2,350",
-        change: "+180",
-        trend: "up",
-        icon: UsersIcon,
-        color: "text-violet-500",
-        bg: "bg-violet-500/10"
-    },
-    {
-        label: "New Users",
-        value: "145",
-        change: "+22%",
-        trend: "up",
-        icon: UserPlusIcon,
-        color: "text-amber-500",
-        bg: "bg-amber-500/10"
-    }
-];
-
-const recentActivity = [
-    { id: "1", user: "Alice Thompson", action: "Purchased Pro License", amount: "$99.00", status: "Success", date: "2 mins ago" },
-    { id: "2", user: "Bob Richards", action: "Subscription Renewal", amount: "$149.00", status: "Success", date: "1 hour ago" },
-    { id: "3", user: "Charlie Davis", action: "Refund Issued", amount: "-$49.00", status: "Processed", date: "3 hours ago" },
-    { id: "4", user: "Diana Prince", action: "New Team Member Invite", amount: "$0.00", status: "Pending", date: "5 hours ago" },
-];
+import { toast } from "sonner";
 
 const fadeInUp = {
     hidden: { y: 12, opacity: 0 },
     show: { y: 0, opacity: 1, transition: { duration: 0.4 } },
 };
 
+type Stats = {
+    totalUsers: number;
+    newUsers: number;
+    activeProjects: number;
+    activeJobs: number;
+    totalRevenue: number;
+};
+
+type Transaction = {
+    id: string;
+    user: string;
+    action: string;
+    amount: string;
+    status: string;
+    date: string;
+};
+
 export default function DashboardOverview() {
+    const [stats, setStats] = useState<Stats | null>(null);
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    const fetchStats = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch("/api/stats");
+            if (!res.ok) throw new Error("Failed to fetch statistics");
+            const data = await res.json();
+            setStats(data.stats);
+            setTransactions(data.recentTransactions || []);
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to load dashboard statistics");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchStats();
+    }, []);
+
+    const metrics = [
+        {
+            label: "Total Revenue",
+            value: stats ? `$${stats.totalRevenue.toLocaleString()}` : "$0",
+            change: "+0%",
+            trend: "up" as const,
+            icon: CurrencyDollarIcon,
+            color: "text-emerald-500",
+            bg: "bg-emerald-500/10"
+        },
+        {
+            label: "Active Projects",
+            value: stats?.activeProjects.toString() || "0",
+            change: "+0",
+            trend: "up" as const,
+            icon: BriefcaseIcon,
+            color: "text-indigo-500",
+            bg: "bg-indigo-500/10"
+        },
+        {
+            label: "Active Jobs",
+            value: stats?.activeJobs.toString() || "0",
+            change: "+0",
+            trend: "up" as const,
+            icon: WrenchScrewdriverIcon,
+            color: "text-rose-500",
+            bg: "bg-rose-500/10"
+        },
+        {
+            label: "Total Users",
+            value: stats?.totalUsers.toLocaleString() || "0",
+            change: "+0",
+            trend: "up" as const,
+            icon: UsersIcon,
+            color: "text-violet-500",
+            bg: "bg-violet-500/10"
+        },
+        {
+            label: "New Users (30d)",
+            value: stats?.newUsers.toString() || "0",
+            change: "+0%",
+            trend: "up" as const,
+            icon: UserPlusIcon,
+            color: "text-amber-500",
+            bg: "bg-amber-500/10"
+        }
+    ];
+
     return (
         <DashboardPage className="space-y-6">
             <DashboardHeader
@@ -104,7 +128,7 @@ export default function DashboardOverview() {
 
             {/* Metrics Grid */}
             <motion.div variants={fadeInUp}>
-                <DashboardMetrics metrics={metrics} />
+                <DashboardMetrics metrics={metrics as any} />
             </motion.div>
 
             {/* Main Section - Chart Placeholder */}
@@ -134,9 +158,9 @@ export default function DashboardOverview() {
             </motion.div>
 
             {/* Bottom Section - Recent Activity */}
-            <motion.div variants={fadeInUp} className="space-y-4">
+            <motion.div variants={fadeInUp} className="space-y-4 pb-12">
                 <div className="flex items-center justify-between px-4 md:px-6 lg:px-11">
-                    <h2 className="text-sm font-bold tracking-tight">Recent Transactions</h2>
+                    <h2 className="text-sm font-bold tracking-tight">Recent Completed Jobs</h2>
                     <button className="text-xs font-semibold text-primary hover:underline flex items-center gap-1">
                         View All <ArrowUpRightIcon className="w-3 h-3" />
                     </button>
@@ -145,37 +169,47 @@ export default function DashboardOverview() {
                     <table className={tableBase + " border-collapse min-w-full"}>
                         <thead className={tableHead}>
                             <tr>
-                                <th className={tableHeadCell + " pl-4 md:pl-6 lg:pl-10 pr-4"}>Customer</th>
+                                <th className={tableHeadCell + " pl-4 md:pl-6 lg:pl-10 pr-4"}>Tradie</th>
                                 <th className={tableHeadCell + " px-4"}>Activity</th>
                                 <th className={tableHeadCell + " px-4"}>Amount</th>
                                 <th className={tableHeadCell + " px-4"}>Status</th>
-                                <th className={tableHeadCell + " pl-4 pr-4 md:pr-6 lg:pr-10"}>Time</th>
+                                <th className={tableHeadCell + " pl-4 pr-4 md:pr-6 lg:pr-10"}>Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {recentActivity.map((activity) => (
-                                <tr key={activity.id} className={tableRow}>
-                                    <td className={tableCell + " pl-4 md:pl-6 lg:pl-10 pr-4"}>
-                                        <span className="font-semibold text-sm">{activity.user}</span>
-                                    </td>
-                                    <td className={tableCellMuted + " px-4"}>
-                                        {activity.action}
-                                    </td>
-                                    <td className={tableCell + " px-4"}>
-                                        <span className={`font-bold ${activity.amount.startsWith('-') ? 'text-rose-500' : 'text-foreground'}`}>
-                                            {activity.amount}
-                                        </span>
-                                    </td>
-                                    <td className={tableCell + " px-4"}>
-                                        <Badge variant="outline" className="rounded-full text-[10px] font-medium border-border/50">
-                                            {activity.status}
-                                        </Badge>
-                                    </td>
-                                    <td className={tableCellMuted + " pl-4 pr-4 md:pr-6 lg:pr-10"}>
-                                        {activity.date}
-                                    </td>
+                            {loading ? (
+                                <tr>
+                                    <td colSpan={5} className="text-center py-12 text-sm text-muted-foreground">Loading recent activity...</td>
                                 </tr>
-                            ))}
+                            ) : transactions.length === 0 ? (
+                                <tr>
+                                    <td colSpan={5} className="text-center py-12 text-sm text-muted-foreground">No recent transactions found.</td>
+                                </tr>
+                            ) : (
+                                transactions.map((activity) => (
+                                    <tr key={activity.id} className={tableRow}>
+                                        <td className={tableCell + " pl-4 md:pl-6 lg:pl-10 pr-4"}>
+                                            <span className="font-semibold text-sm">{activity.user}</span>
+                                        </td>
+                                        <td className={tableCellMuted + " px-4"}>
+                                            {activity.action}
+                                        </td>
+                                        <td className={tableCell + " px-4"}>
+                                            <span className={`font-bold ${activity.amount.startsWith('-') ? 'text-rose-500' : 'text-foreground'}`}>
+                                                {activity.amount}
+                                            </span>
+                                        </td>
+                                        <td className={tableCell + " px-4"}>
+                                            <Badge variant="outline" className="rounded-full text-[10px] font-medium border-border/50">
+                                                {activity.status}
+                                            </Badge>
+                                        </td>
+                                        <td className={tableCellMuted + " pl-4 pr-4 md:pr-6 lg:pr-10"}>
+                                            {activity.date}
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
