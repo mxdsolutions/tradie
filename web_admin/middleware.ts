@@ -16,57 +16,56 @@ export async function middleware(request: NextRequest) {
         return response
     }
 
-    const supabase = createServerClient(
-        supabaseUrl,
-        supabaseAnonKey,
-        {
-            cookies: {
-                getAll() {
-                    return request.cookies.getAll()
-                },
-                setAll(cookiesToSet) {
-                    cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
-                    response = NextResponse.next({
-                        request: {
-                            headers: request.headers,
-                        },
-                    })
-                    cookiesToSet.forEach(({ name, value, options }) =>
-                        response.cookies.set(name, value, options)
-                    )
-                },
-            },
-        }
-    )
-
-    let user = null
     try {
-        const { data } = await supabase.auth.getUser()
-        user = data?.user
+        const supabase = createServerClient(
+            supabaseUrl,
+            supabaseAnonKey,
+            {
+                cookies: {
+                    getAll() {
+                        return request.cookies.getAll()
+                    },
+                    setAll(cookiesToSet) {
+                        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
+                        response = NextResponse.next({
+                            request: {
+                                headers: request.headers,
+                            },
+                        })
+                        cookiesToSet.forEach(({ name, value, options }) =>
+                            response.cookies.set(name, value, options)
+                        )
+                    },
+                },
+            }
+        )
+
+        const { data, error } = await supabase.auth.getClaims()
+        const isAuthenticated = !error && !!data?.claims?.sub
+
+        const isDashboardOrOnboarding =
+            request.nextUrl.pathname.startsWith('/dashboard') ||
+            request.nextUrl.pathname.startsWith('/onboarding')
+
+        if (!isAuthenticated && isDashboardOrOnboarding) {
+            const url = request.nextUrl.clone()
+            url.pathname = '/login'
+            return NextResponse.redirect(url)
+        }
+
+        const isAuthRoute =
+            request.nextUrl.pathname.startsWith('/login') ||
+            request.nextUrl.pathname.startsWith('/signup') ||
+            request.nextUrl.pathname.startsWith('/forgot-password') ||
+            request.nextUrl.pathname.startsWith('/reset-password')
+
+        if (isAuthenticated && isAuthRoute) {
+            const url = request.nextUrl.clone()
+            url.pathname = '/dashboard'
+            return NextResponse.redirect(url)
+        }
     } catch (e) {
-        console.error('Middleware: Error getting user', e)
-    }
-
-    const isDashboardOrOnboarding = 
-        request.nextUrl.pathname.startsWith('/dashboard') || 
-        request.nextUrl.pathname.startsWith('/onboarding')
-
-    if (!user && isDashboardOrOnboarding) {
-        const url = request.nextUrl.clone()
-        url.pathname = '/login'
-        return NextResponse.redirect(url)
-    }
-
-    const isAuthRoute = 
-        request.nextUrl.pathname.startsWith('/login') || 
-        request.nextUrl.pathname.startsWith('/signup') || 
-        request.nextUrl.pathname.startsWith('/forgot-password') || 
-        request.nextUrl.pathname.startsWith('/reset-password')
-
-    if (user && isAuthRoute) {
-        const url = request.nextUrl.clone()
-        url.pathname = '/dashboard'
-        return NextResponse.redirect(url)
+        console.error('Middleware error:', e)
     }
 
     return response

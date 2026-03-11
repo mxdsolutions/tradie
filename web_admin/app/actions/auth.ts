@@ -4,12 +4,19 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { loginSchema, signupSchema } from "@/lib/validation";
+
 export async function signIn(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  if (!email || !password) {
-    return { error: "Email and password are required" };
+  // Use validation schema
+  const validation = loginSchema.safeParse({ email, password });
+  if (!validation.success) {
+    return { 
+      success: false, 
+      error: validation.error.issues[0].message 
+    };
   }
 
   try {
@@ -21,10 +28,12 @@ export async function signIn(formData: FormData) {
     });
 
     if (error) {
-      return { error: error.message };
+      return { success: false, error: error.message };
     }
   } catch (err: any) {
-    return { error: "An unexpected error occurred." };
+    // next.js redirect throws a special error that should not be caught
+    if (err.digest?.startsWith('NEXT_REDIRECT') || err.message?.includes('NEXT_REDIRECT')) throw err;
+    return { success: false, error: "An unexpected error occurred." };
   }
 
   revalidatePath("/", "layout");
@@ -37,7 +46,16 @@ export async function signUp(formData: FormData) {
   const fullName = formData.get("full_name") as string;
 
   if (!email || !password || !fullName) {
-    return { error: "All fields are required" };
+    return { success: false, error: "All fields are required" };
+  }
+
+  // Use validation schema
+  const validation = signupSchema.safeParse({ email, password });
+  if (!validation.success) {
+    return { 
+      success: false, 
+      error: validation.error.issues[0].message 
+    };
   }
 
   // Basic parsing for first/last name
@@ -57,18 +75,17 @@ export async function signUp(formData: FormData) {
           last_name: lastName,
           full_name: fullName,
         },
-        // Remove emailRedirectTo or set it to your app's callback route
         emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/callback`,
       },
     });
 
     if (error) {
-      return { error: error.message };
+      return { success: false, error: error.message };
     }
     
-    return { success: "Check your email to confirm your account" }
+    return { success: true, message: "Check your email to confirm your account" }
   } catch (err: any) {
-    return { error: "An unexpected error occurred." };
+    return { success: false, error: "An unexpected error occurred." };
   }
 }
 

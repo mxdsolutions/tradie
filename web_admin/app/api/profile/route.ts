@@ -1,35 +1,28 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+import { onboardingSchema } from "@/lib/validation";
 
 export async function GET() {
     try {
-        const supabase = createClient(supabaseUrl, supabaseKey);
-        
-        // In a real app, we'd get the user ID from the session/cookie
-        // For now, we'll fetch the first admin user or a fixed test user if needed
-        // Ideally we'd have middleware setting a header with the user ID
-        
-        const { data: { users }, error: authError } = await supabase.auth.admin.listUsers();
-        if (authError || !users.length) throw new Error("Could not find any users");
+        const supabase = await createClient();
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-        const testUser = users[0];
+        if (authError || !user) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
         
         const { data: profile, error: profileError } = await supabase
             .from("profiles")
             .select("*")
-            .eq("id", testUser.id)
+            .eq("id", user.id)
             .single();
 
         if (profileError) throw profileError;
 
         return NextResponse.json({
             user: {
-                id: testUser.id,
-                email: testUser.email,
+                id: user.id,
+                email: user.email,
                 firstName: profile.full_name?.split(' ')[0] || "",
                 lastName: profile.full_name?.split(' ').slice(1).join(' ') || "",
                 role: profile.role
@@ -43,21 +36,38 @@ export async function GET() {
 
 export async function PATCH(req: Request) {
     try {
-        const body = await req.json();
-        const { id, firstName, lastName, email } = body;
+        const supabase = await createClient();
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-        const supabase = createClient(supabaseUrl, supabaseKey);
+        if (authError || !user) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const body = await req.json();
+        
+        // Use centralized validation
+        const validation = onboardingSchema.safeParse({
+            first_name: body.firstName,
+            last_name: body.lastName
+        });
+
+        if (!validation.success) {
+            return NextResponse.json({ 
+                error: "Validation failed", 
+                details: validation.error.flatten().fieldErrors 
+            }, { status: 400 });
+        }
+
+        const { first_name, last_name } = validation.data;
 
         const { error: updateError } = await supabase
             .from("profiles")
             .update({
-                full_name: `${firstName} ${lastName}`.trim(),
+                full_name: `${first_name} ${last_name}`.trim(),
             })
-            .eq("id", id);
+            .eq("id", user.id); // Secure: only update own profile
 
         if (updateError) throw updateError;
-
-        // Note: updating email would require auth update if implemented
 
         return NextResponse.json({ success: true });
     } catch (error: any) {

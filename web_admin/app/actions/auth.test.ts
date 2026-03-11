@@ -7,6 +7,10 @@ vi.mock('next/navigation', () => ({
     redirect: vi.fn(),
 }));
 
+vi.mock('next/cache', () => ({
+    revalidatePath: vi.fn(),
+}));
+
 // Mock Supabase
 const mockSignInWithPassword = vi.fn();
 const mockSignUp = vi.fn();
@@ -56,6 +60,7 @@ describe('Auth Actions', () => {
             const formData = new FormData();
             formData.append('email', 'test@example.com');
             formData.append('password', '123');
+            formData.append('full_name', 'Test User');
 
             const result = await signUp(formData);
             expect(result).toEqual({ success: false, error: 'Password must be at least 6 characters' });
