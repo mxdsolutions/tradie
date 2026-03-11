@@ -71,8 +71,8 @@ BEGIN
 
   -- Make the HTTP request to the Edge Function async
   PERFORM net.http_post(
-      url:='https://erfvdiqeslllqqqebjat.supabase.co/functions/v1/send-push-notification',
-      headers:='{"Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyZnZkaXFlc2xsbHFxcWViamF0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDk4ODQ3NiwiZXhwIjoyMDg2NTY0NDc2fQ.itKbQh99tGk5RVRq257MlpUxtZ0UTXQF20jtgbYNcZM"}'::jsonb,
+      url:='https://YOUR_PROJECT_REF.supabase.co/functions/v1/send-push-notification',
+      headers:='{"Content-Type": "application/json", "Authorization": "Bearer YOUR_SERVICE_ROLE_KEY"}'::jsonb,
       body:=payload
   );
 
