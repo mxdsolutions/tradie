@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Open_Sans, Bebas_Neue } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const openSans = Open_Sans({ subsets: ["latin"], variable: "--font-open-sans" });
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${openSans.variable} ${bebasNeue.variable} font-sans min-h-screen flex flex-col`}>
         {children}
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );

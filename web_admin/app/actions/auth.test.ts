@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { signIn, signUp } from './auth';
+import { signIn, signUp, resetPassword } from './auth';
 import { redirect } from 'next/navigation';
 
 // Mock Next.js navigation
@@ -14,11 +14,13 @@ vi.mock('next/cache', () => ({
 // Mock Supabase
 const mockSignInWithPassword = vi.fn();
 const mockSignUp = vi.fn();
+const mockResetPasswordForEmail = vi.fn();
 vi.mock('@/lib/supabase/server', () => ({
     createClient: vi.fn(() => Promise.resolve({
         auth: {
             signInWithPassword: mockSignInWithPassword,
             signUp: mockSignUp,
+            resetPasswordForEmail: mockResetPasswordForEmail,
         },
     })),
 }));
@@ -64,6 +66,21 @@ describe('Auth Actions', () => {
 
             const result = await signUp(formData);
             expect(result).toEqual({ success: false, error: 'Password must be at least 6 characters' });
+        });
+    });
+
+    describe('resetPassword', () => {
+        it('should include correct redirectTo URL', async () => {
+            mockResetPasswordForEmail.mockResolvedValue({ data: {}, error: null });
+
+            const formData = new FormData();
+            formData.append('email', 'test@example.com');
+
+            await resetPassword(formData);
+
+            expect(mockResetPasswordForEmail).toHaveBeenCalledWith('test@example.com', {
+                redirectTo: expect.stringContaining('auth/callback?next=/reset-password'),
+            });
         });
     });
 });

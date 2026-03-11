@@ -2,6 +2,7 @@
 
 import { createAdminClient } from "@/lib/supabase/server";
 import { forgotPasswordSchema } from "@/lib/validation";
+import { getURL } from "@/lib/utils";
 
 export async function inviteUser(
     email: string,
@@ -23,7 +24,7 @@ export async function inviteUser(
                 last_name: lastName,
                 user_type: role,
             },
-            redirectTo: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/onboarding`,
+            redirectTo: `${getURL()}onboarding`,
         });
 
         if (error) {

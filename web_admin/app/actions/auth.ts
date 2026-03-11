@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { loginSchema, signupSchema } from "@/lib/validation";
+import { getURL } from "@/lib/utils";
 
 export async function signIn(formData: FormData) {
   const email = formData.get("email") as string;
@@ -75,7 +76,7 @@ export async function signUp(formData: FormData) {
           last_name: lastName,
           full_name: fullName,
         },
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/callback`,
+        emailRedirectTo: `${getURL()}auth/callback`,
       },
     });
 
@@ -102,7 +103,7 @@ export async function signInWithMagicLink(formData: FormData) {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/callback`,
+        emailRedirectTo: `${getURL()}auth/callback`,
       },
     });
 
@@ -127,7 +128,7 @@ export async function resetPassword(formData: FormData) {
     const supabase = await createClient();
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/callback?next=/reset-password`,
+      redirectTo: `${getURL()}auth/callback?next=/reset-password`,
     });
 
     if (error) {
