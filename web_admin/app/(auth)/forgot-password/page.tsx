@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
-import { resetPassword } from "@/app/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 
 export default function ForgotPasswordPage() {
     const [email, setEmail] = useState("");
@@ -13,15 +13,17 @@ export default function ForgotPasswordPage() {
         e.preventDefault();
         setIsLoading(true);
 
-        const formData = new FormData();
-        formData.append("email", email);
-
         try {
-            const result = await resetPassword(formData);
-            if (result?.error) {
-                toast.error(result.error);
-            } else if (result?.success) {
-                toast.success(result.success);
+            // MUST use browser client so Supabase stores the PKCE code_verifier
+            // locally before sending the email — server actions cannot do this.
+            const supabase = createClient();
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
+            });
+            if (error) {
+                toast.error(error.message);
+            } else {
+                toast.success("Password reset instructions sent to your email.");
             }
         } catch (err: any) {
             toast.error("An error occurred. Please try again.");

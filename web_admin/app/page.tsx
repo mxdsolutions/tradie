@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Wrench, FileCheck, Users } from "lucide-react";
-import { signIn, resetPassword } from "@/app/actions/auth";
+import { signIn } from "@/app/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 
 function AuthContent() {
@@ -42,11 +43,15 @@ function AuthContent() {
 
     setIsLoading(true);
     try {
-      const formData = new FormData();
-      formData.append("email", email);
-      const result = await resetPassword(formData);
-      if (result?.error) {
-        toast.error(result.error);
+      // MUST use browser client so Supabase stores the PKCE code_verifier
+      // in the browser session before sending the email. Server Actions
+      // cannot store the verifier, causing exchangeCodeForSession to fail.
+      const supabase = createClient();
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
+      });
+      if (error) {
+        toast.error(error.message);
       } else {
         toast.success("Password reset email sent! Please check your inbox.");
       }
