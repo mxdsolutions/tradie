@@ -17,6 +17,28 @@ export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [resetLoading, setResetLoading] = useState(false);
+
+    const handleForgotPassword = async () => {
+        if (!email) {
+            Alert.alert('Email Required', 'Please enter your email address first so we know where to send the reset instructions.');
+            return;
+        }
+
+        try {
+            setResetLoading(true);
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: 'https://tradieapp.netlify.app/reset-password/',
+            });
+
+            if (error) throw error;
+            Alert.alert('Reset Email Sent', 'Password reset instructions have been sent to your email.');
+        } catch (error: any) {
+            Alert.alert('Error', error.message);
+        } finally {
+            setResetLoading(false);
+        }
+    };
 
     const resendConfirmationEmail = async () => {
         try {
@@ -25,7 +47,7 @@ export default function SignIn() {
                 type: 'signup',
                 email: email,
                 options: {
-                    emailRedirectTo: 'https://basepro.netlify.app/confirmation/'
+                    emailRedirectTo: 'https://tradieapp.netlify.app/confirmation/'
                 }
             });
 
