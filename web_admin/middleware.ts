@@ -49,12 +49,12 @@ export async function middleware(request: NextRequest) {
 
         if (!isAuthenticated && isDashboardOrOnboarding) {
             const url = request.nextUrl.clone()
-            url.pathname = '/login'
+            url.pathname = '/'
             return NextResponse.redirect(url)
         }
 
         const isAuthRoute =
-            request.nextUrl.pathname.startsWith('/login') ||
+            request.nextUrl.pathname === '/' ||
             request.nextUrl.pathname.startsWith('/signup') ||
             request.nextUrl.pathname.startsWith('/forgot-password')
             // Note: /reset-password is intentionally excluded — after PKCE code exchange the
