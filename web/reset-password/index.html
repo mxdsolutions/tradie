@@ -55,9 +55,14 @@
     </main>
 
     <script>
-        const supabaseUrl = 'YOUR_SUPABASE_URL';
-        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseUrl = 'https://erfvdiqeslllqqqebjat.supabase.co';
+        const supabaseKey = 'sb_publishable_Jmj6eJxzWXO0pjJ84jU6bQ_qmu4DpH5';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey, {
+            auth: {
+                detectSessionInUrl: true,
+                flowType: 'pkce',
+            }
+        });
 
         const form = document.getElementById('reset-form');
         const loading = document.getElementById('loading');

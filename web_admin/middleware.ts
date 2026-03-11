@@ -56,8 +56,9 @@ export async function middleware(request: NextRequest) {
         const isAuthRoute =
             request.nextUrl.pathname.startsWith('/login') ||
             request.nextUrl.pathname.startsWith('/signup') ||
-            request.nextUrl.pathname.startsWith('/forgot-password') ||
-            request.nextUrl.pathname.startsWith('/reset-password')
+            request.nextUrl.pathname.startsWith('/forgot-password')
+            // Note: /reset-password is intentionally excluded — after PKCE code exchange the
+            // user is temporarily authenticated as a recovery session and must reach the page.
 
         if (isAuthenticated && isAuthRoute) {
             const url = request.nextUrl.clone()

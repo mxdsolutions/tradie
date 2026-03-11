@@ -1,13 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { updatePassword } from "@/app/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 
 export default function ResetPasswordPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        // Verify the user has a valid recovery session before showing the form
+        const supabase = createClient();
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (!session) {
+                toast.error("Invalid or expired reset link. Please request a new one.");
+                router.replace("/forgot-password");
+            } else {
+                setIsAuthorized(true);
+            }
+        });
+    }, [router]);
 
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,11 +46,20 @@ export default function ResetPasswordPage() {
             }
             // Will throw Next redirect on success
         } catch (err: any) {
+            if (err?.digest?.startsWith('NEXT_REDIRECT')) throw err;
             toast.error("An error occurred updating the password.");
         } finally {
             setIsLoading(false);
         }
     };
+
+    if (!isAuthorized) {
+        return (
+            <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
+                <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
+            </div>
+        );
+    }
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-6">
