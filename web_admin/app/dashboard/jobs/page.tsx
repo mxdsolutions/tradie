@@ -25,14 +25,14 @@ type Job = {
     id: string;
     description: string;
     status: string;
-    cost: number;
+    amount: number;
     project?: {
         title: string;
     };
     tradie?: {
         full_name: string;
     };
-    scheduled_at: string;
+    scheduled_date: string;
 };
 
 export default function JobsPage() {
@@ -117,9 +117,9 @@ export default function JobsPage() {
                                     <td className={tableCell + " pl-4 md:pl-6 lg:pl-10 pr-4"}>
                                         <div className="flex flex-col min-w-0">
                                             <span className="font-semibold text-sm truncate max-w-[200px]">{job.description}</span>
-                                            {job.scheduled_at && (
+                                            {job.scheduled_date && (
                                                 <span className="text-[10px] text-muted-foreground">
-                                                    {new Date(job.scheduled_at).toLocaleDateString()}
+                                                    {new Date(job.scheduled_date).toLocaleDateString()}
                                                 </span>
                                             )}
                                         </div>
@@ -136,7 +136,7 @@ export default function JobsPage() {
                                         </div>
                                     </td>
                                     <td className={tableCell + " px-4 text-right sm:text-left"}>
-                                        <span className="font-bold text-sm">${job.cost.toFixed(2)}</span>
+                                        <span className="font-bold text-sm">${job.amount.toFixed(2)}</span>
                                     </td>
                                     <td className={tableCell + " px-4 hidden sm:table-cell"}>
                                         <div className="flex items-center gap-2">

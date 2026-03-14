@@ -9,17 +9,6 @@ export async function GET() {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check user role (admin only)
-    const { data: profile, error: profileError } = await supabase
-        .from('users')
-        .select('role')
-        .eq('id', user.id)
-        .single();
-
-    if (profileError || profile?.role !== 'admin') {
-        return NextResponse.json({ error: "Forbidden: Admin access required" }, { status: 403 });
-    }
-
     // Use admin client to list all users
     const admin = await createAdminClient();
     const { data, error } = await admin.auth.admin.listUsers({ page: 1, perPage: 100 });

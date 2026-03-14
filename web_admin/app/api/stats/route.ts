@@ -10,14 +10,14 @@ export async function GET() {
 
         // 1. Total Users
         const { count: totalUsers } = await supabase
-            .from("profiles")
+            .from("users")
             .select("*", { count: "exact", head: true });
 
         // 2. New Users (last 30 days)
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
         const { count: newUsers } = await supabase
-            .from("profiles")
+            .from("users")
             .select("*", { count: "exact", head: true })
             .gte("created_at", thirtyDaysAgo.toISOString());
 
@@ -31,29 +31,28 @@ export async function GET() {
         const { count: activeJobs } = await supabase
             .from("jobs")
             .select("*", { count: "exact", head: true })
-            .in("status", ["pending", "assigned", "in_progress"]);
+            .not("status", "in", '("Completed","Cancelled","cancelled","completed")');
 
-        // 5. Total Revenue (sum of completed jobs cost)
+        // 5. Total Revenue (sum of completed jobs amount)
         const { data: completedJobs } = await supabase
             .from("jobs")
-            .select("cost")
-            .eq("status", "completed");
-        
-        const totalRevenue = completedJobs?.reduce((sum, job) => sum + (job.cost || 0), 0) || 0;
+            .select("amount")
+            .in("status", ["completed", "Completed"]);
 
-        // 6. Recent Transactions (last 5 completed jobs)
+        const totalRevenue = completedJobs?.reduce((sum, job) => sum + (job.amount || 0), 0) || 0;
+
+        // 6. Recent activity (last 5 jobs)
         const { data: recentTransactions } = await supabase
             .from("jobs")
             .select(`
                 id,
-                cost,
+                amount,
                 status,
-                completed_at,
+                updated_at,
                 project:projects(title),
-                tradie:profiles(full_name)
+                tradie:users!jobs_tradie_id_fkey(full_name)
             `)
-            .eq("status", "completed")
-            .order("completed_at", { ascending: false })
+            .order("updated_at", { ascending: false })
             .limit(5);
 
         return NextResponse.json({
@@ -67,10 +66,10 @@ export async function GET() {
             recentTransactions: recentTransactions?.map(t => ({
                 id: t.id,
                 user: t.tradie ? (t.tradie as any).full_name : "System",
-                action: `Job completed: ${t.project ? (t.project as any).title : "Untitled Project"}`,
-                amount: `$${(t.cost || 0).toFixed(2)}`,
-                status: "Success",
-                date: t.completed_at ? new Date(t.completed_at).toLocaleDateString() : "Just now"
+                action: `Job: ${t.project ? (t.project as any).title : "Untitled Project"}`,
+                amount: `$${((t.amount as number) || 0).toFixed(2)}`,
+                status: t.status || "Unknown",
+                date: t.updated_at ? new Date(t.updated_at).toLocaleDateString() : "Just now"
             })) || []
         });
     } catch (error: any) {
