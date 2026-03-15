@@ -1,0 +1,78 @@
+{
+  "expo": {
+    "name": "TRADIE",
+    "slug": "tradie-app",
+    "scheme": "tradie-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/app_icon.jpg",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/tradie_splash.gif",
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.calibremedia.tradieapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/app_icon.jpg",
+        "backgroundColor": "#000000"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.calibremedia.tradieapp",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "onesignal-expo-plugin",
+        {
+          "mode": "development",
+          "appId": "f410f769-6cfd-45ce-b76d-5da6db0c1b96"
+        }
+      ],
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ],
+      "expo-font"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "OneSignalNotificationServiceExtension",
+                  "bundleIdentifier": "com.calibremedia.tradieapp.OneSignalNotificationServiceExtension",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.com.calibremedia.tradieapp.onesignal"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "935b82d5-c0a1-424f-aca6-f11172cd0d88"
+      }
+    },
+    "owner": "calibremedia"
+  }
+}
