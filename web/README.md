@@ -20,6 +20,23 @@ This document outlines the standard best practices for code quality, design, and
 *   Ensure meaningful `alt` text is available for all `<img>` tags.
 *   Add `aria-label` to buttons without text (e.g., hamburger icons or pure iconography) for screen-readers.
 
+## Deployment
+
+The web platform is deployed via **Vercel** as a static site.
+
+### Vercel Setup
+- **Framework Preset:** Other (no framework)
+- **Root Directory:** `web`
+- **Build Command:** _(leave blank)_
+- **Output Directory:** _(leave blank / `.`)_
+
+Configuration is managed via [vercel.json](./vercel.json) in this directory. `cleanUrls` is enabled so paths like `/resources/` resolve without the `.html` extension.
+
+### Deploying
+Push to `main` — Vercel auto-deploys on every push to the connected branch.
+
+---
+
 ## Design Best Practices
 
 ### 1. Typography
