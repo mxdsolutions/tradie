@@ -10,12 +10,13 @@
     <link rel="icon" type="image/png" href="../assets/logo_icon.png">
 </head>
 
-<body>
+<body class="light-page">
     <!-- Preloader to prevent FOUT -->
     <div id="preloader">
         <img class="logo-icon preloader-logo" src="/assets/logo_icon.png" alt="TRADIE">
     </div>
-    <header id="main-header" class="scrolled"> <!-- Always scrolled on subpages -->
+
+    <header id="main-header" class="scrolled">
         <div class="nav-container">
             <a href="/" class="logo">
                 <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
@@ -30,9 +31,8 @@
             </nav>
             <div class="nav-actions">
                 <a href="/registration/" class="nav-link-subtle">Log In</a>
-                <a href="/registration/" class="btn-solid-white">Join Network <span class="arrow">→</span></a>
+                <a href="/registration/" class="btn-solid-white">Start Your Project <span class="arrow">→</span></a>
             </div>
-            <!-- Mobile Menu Button -->
             <button class="mobile-menu-btn" aria-label="Toggle Menu">
                 <span></span>
                 <span></span>
@@ -41,121 +41,366 @@
         </div>
     </header>
 
-    <main class="resources-page">
-        <section class="page-header" style="padding-top: 6rem; padding-bottom: 2rem;">
-            <h1>Trade <span class="text-orange">Resources</span> Hub.</h1>
-            <p>Industry-specific guides, templates, and best practices to help you build better and grow faster.</p>
-        </section>
+    <main>
 
-        <!-- Search Bar -->
-        <section style="padding-top: 0; padding-bottom: 3rem;">
-            <div class="email-capture-form">
-                <div class="input-wrapper">
-                    <span class="input-icon">🔍</span>
-                    <input type="text" placeholder="Search resources or trades...">
+        <!-- ── HERO ─────────────────────────────────────────────── -->
+        <section class="res-hero">
+            <div class="res-audience-tabs">
+                <button class="res-audience-tab active" data-audience="homeowner">Homeowner</button>
+                <button class="res-audience-tab" data-audience="tradie">Tradie</button>
+            </div>
+            <div class="res-hero-carousel" role="region" aria-label="Featured images">
+                <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1200&h=400&fit=crop');"></div>
+                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1559027615-cd2628902d4a?w=1200&h=400&fit=crop');"></div>
+                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&h=400&fit=crop');"></div>
+
+                <!-- Homeowner hero content -->
+                <div class="res-hero-inner audience-content" data-audience="homeowner">
+                    <div class="pill-badge" style="margin-bottom: 1.5rem;">
+                        <span class="badge-dot">●</span>
+                        Home Improvement Hub
+                    </div>
+                    <h1>Guides for <span class="text-orange">Homeowners.</span></h1>
+                    <p class="res-hero-sub">Everything you need to plan renovations, understand costs, and hire the right tradie for the job.</p>
+                    <div class="res-search-bar">
+                        <svg class="res-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <input type="text" class="res-search-input" placeholder="Search renovation tips, cost guides…" id="search-homeowner">
+                        <button class="btn-solid-white res-search-btn" data-search="homeowner"><span class="search-btn-text">Search</span><svg class="search-btn-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+                    </div>
+                    <div class="res-stats">
+                        <div class="res-stat"><span class="res-stat-num">50+</span><span class="res-stat-label">Guides</span></div>
+                        <div class="res-stat-divider"></div>
+                        <div class="res-stat"><span class="res-stat-num">12</span><span class="res-stat-label">Categories</span></div>
+                        <div class="res-stat-divider"></div>
+                        <div class="res-stat"><span class="res-stat-num">Free</span><span class="res-stat-label">Always</span></div>
+                    </div>
                 </div>
-                <button class="btn-solid-white">Search</button>
+
+                <!-- Tradie hero content -->
+                <div class="res-hero-inner audience-content" data-audience="tradie" style="display: none;">
+                    <div class="pill-badge" style="margin-bottom: 1.5rem;">
+                        <span class="badge-dot">●</span>
+                        Trade Knowledge Hub
+                    </div>
+                    <h1>Resources for <span class="text-orange">Every Trade.</span></h1>
+                    <p class="res-hero-sub">Industry-specific guides, pricing templates, and business playbooks — built for tradies, by tradies.</p>
+                    <div class="res-search-bar">
+                        <svg class="res-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <input type="text" class="res-search-input" placeholder="Search guides, trades, or topics…" id="search-tradie">
+                        <button class="btn-solid-white res-search-btn" data-search="tradie"><span class="search-btn-text">Search</span><svg class="search-btn-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+                    </div>
+                    <div class="res-stats">
+                        <div class="res-stat"><span class="res-stat-num">80+</span><span class="res-stat-label">Articles</span></div>
+                        <div class="res-stat-divider"></div>
+                        <div class="res-stat"><span class="res-stat-num">6</span><span class="res-stat-label">Trade Sectors</span></div>
+                        <div class="res-stat-divider"></div>
+                        <div class="res-stat"><span class="res-stat-num">Free</span><span class="res-stat-label">Always</span></div>
+                    </div>
+                </div>
+
+                <div class="carousel-controls">
+                    <button class="carousel-dot active" aria-label="Slide 1"></button>
+                    <button class="carousel-dot" aria-label="Slide 2"></button>
+                    <button class="carousel-dot" aria-label="Slide 3"></button>
+                </div>
             </div>
         </section>
 
-        <section>
-            <!-- Categories Grid -->
-            <div class="resources-grid">
-                <!-- Category 1 -->
-                <a href="#" class="glass-panel category-card">
-                    <div class="feature-icon text-orange category-icon">⚡</div>
-                    <div class="category-info">
-                        <h3>Electricians</h3>
-                        <p>12 Articles & Guides</p>
-                    </div>
-                </a>
-
-                <!-- Category 2 -->
-                <a href="#" class="glass-panel category-card">
-                    <div class="feature-icon text-orange category-icon">🚰</div>
-                    <div class="category-info">
-                        <h3>Plumbers</h3>
-                        <p>8 Articles & Guides</p>
-                    </div>
-                </a>
-
-                <!-- Category 3 -->
-                <a href="#" class="glass-panel category-card">
-                    <div class="feature-icon text-orange category-icon">🏗️</div>
-                    <div class="category-info">
-                        <h3>Builders</h3>
-                        <p>24 Articles & Guides</p>
-                    </div>
-                </a>
-
-                <!-- Category 4 -->
-                <a href="#" class="glass-panel category-card">
-                    <div class="feature-icon text-orange category-icon">🏠</div>
-                    <div class="category-info">
-                        <h3>Roofers</h3>
-                        <p>9 Articles & Guides</p>
-                    </div>
-                </a>
-
-                <!-- Category 5 -->
-                <a href="#" class="glass-panel category-card">
-                    <div class="feature-icon text-orange category-icon">🪚</div>
-                    <div class="category-info">
-                        <h3>Carpenters</h3>
-                        <p>15 Articles & Guides</p>
-                    </div>
-                </a>
-
-                <!-- Category 6 -->
-                <a href="#" class="glass-panel category-card">
-                    <div class="feature-icon text-orange category-icon">🧱</div>
-                    <div class="category-info">
-                        <h3>Landscapers & Trades</h3>
-                        <p>11 Articles & Guides</p>
-                    </div>
-                </a>
+        <!-- ── FILTER TABS ────────────────────────────────────────── -->
+        <div class="res-filters-wrap">
+            <!-- Homeowner filters -->
+            <div class="res-filters audience-content" data-audience="homeowner">
+                <button class="res-filter active" data-filter="all">All Topics</button>
+                <button class="res-filter" data-filter="bathroom">Bathroom</button>
+                <button class="res-filter" data-filter="kitchen">Kitchen</button>
+                <button class="res-filter" data-filter="cost-guide">Cost Guide</button>
+                <button class="res-filter" data-filter="hiring">Hiring Tips</button>
+                <button class="res-filter" data-filter="landscaping">Landscaping</button>
+                <button class="res-filter" data-filter="solar">Solar & Energy</button>
             </div>
-
-            <!-- Featured Articles -->
-            <h2 style="margin-bottom: 2.5rem; font-size: 2.5rem;">Latest Articles</h2>
-            <div class="articles-grid">
-
-                <article class="glass-panel article-card">
-                    <div class="article-thumb">
-                        💼
-                    </div>
-                    <div class="article-content">
-                        <div class="article-tag" style="color: var(--accent-orange);">
-                            Business Growth</div>
-                        <h3>How to win 50% more quotes without lowering
-                            your price</h3>
-                        <p>The secret
-                            to high-converting quotes isn't being the cheapest option, it's about building trust from
-                            the first interaction.</p>
-                        <a href="#" class="article-link">Read
-                            More <span>→</span></a>
-                    </div>
-                </article>
-
-                <article class="glass-panel article-card">
-                    <div class="article-thumb">
-                        📱
-                    </div>
-                    <div class="article-content">
-                        <div class="article-tag" style="color: var(--accent-blue);">
-                            Platform Guide</div>
-                        <h3>Mastering the <span class="brand-name">TRADIE</span> app to get paid
-                            instantly</h3>
-                        <p>Learn how to
-                            effectively capture milestone evidence to ensure your escrow payments are released the
-                            moment the job is done.</p>
-                        <a href="#" class="article-link">Read
-                            More <span>→</span></a>
-                    </div>
-                </article>
-
+            <!-- Tradie filters -->
+            <div class="res-filters audience-content" data-audience="tradie" style="display: none;">
+                <button class="res-filter active" data-filter="all">All Topics</button>
+                <button class="res-filter" data-filter="business">Business Growth</button>
+                <button class="res-filter" data-filter="platform">Platform Guide</button>
+                <button class="res-filter" data-filter="electrical">Electrical</button>
+                <button class="res-filter" data-filter="plumbing">Plumbing</button>
+                <button class="res-filter" data-filter="building">Building</button>
+                <button class="res-filter" data-filter="roofing">Roofing</button>
+                <button class="res-filter" data-filter="carpentry">Carpentry</button>
+                <button class="res-filter" data-filter="landscaping">Landscaping</button>
+                <button class="res-filter" data-filter="pricing">Pricing Strategy</button>
+                <button class="res-filter" data-filter="safety">Safety & Legal</button>
             </div>
-        </section>
+        </div>
+
+        <!-- ── SEARCH RESULTS (hidden by default) ──────────────── -->
+        <div class="res-content res-search-results" style="display: none;">
+            <section class="res-section">
+                <div class="res-section-header">
+                    <h2 class="res-section-title">Search Results</h2>
+                    <button class="res-view-all res-clear-search" style="cursor: pointer; background: none; border: none; font: inherit;">Clear Search <span>×</span></button>
+                </div>
+                <div class="res-articles" id="search-results-grid"></div>
+                <p class="res-no-results" style="display: none; text-align: center; color: #6b7280; padding: 3rem 0; font-size: 1.1rem;">No articles found. Try a different search term.</p>
+            </section>
+        </div>
+
+        <div class="res-content res-main-content">
+
+            <!-- ── FEATURED ARTICLE ──────────────────────────────── -->
+            <section class="res-section res-featured-section">
+                <!-- Homeowner featured -->
+                <a href="/resources/article/?slug=bathroom-renovation-cost" class="res-featured-card audience-content" data-audience="homeowner" data-category="bathroom" data-searchable="bathroom renovation cost australia budget gut-job quotes">
+                    <div class="res-featured-card-thumb" style="background-image: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&h=500&fit=crop');">
+                        <span class="res-article-badge">Featured</span>
+                    </div>
+                    <div class="res-featured-card-body">
+                        <div class="res-article-meta">Mar 10, 2025 | TRADIE team</div>
+                        <h3>How much does a bathroom renovation really cost?</h3>
+                        <p>Breaking down the real costs of a bathroom reno in Australia — from budget refreshes to full gut-jobs. Know what to expect before you get quotes.</p>
+                        <span class="res-featured-card-link">Read Article <span>→</span></span>
+                    </div>
+                </a>
+
+                <!-- Tradie featured -->
+                <a href="/resources/article/?slug=win-more-quotes" class="res-featured-card audience-content" data-audience="tradie" data-category="business" data-searchable="win quotes price trust high-converting framework close jobs" style="display: none;">
+                    <div class="res-featured-card-thumb" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&h=500&fit=crop');">
+                        <span class="res-article-badge">Featured</span>
+                    </div>
+                    <div class="res-featured-card-body">
+                        <div class="res-article-meta">Mar 12, 2025 | TRADIE team</div>
+                        <h3>How to win 50% more quotes without lowering your price</h3>
+                        <p>The secret to high-converting quotes isn't being the cheapest option — it's about building trust from the first interaction. Learn the exact framework top-earning tradies use to close more jobs at full rate.</p>
+                        <span class="res-featured-card-link">Read Article <span>→</span></span>
+                    </div>
+                </a>
+            </section>
+
+            <!-- ── BROWSE BY TRADE ───────────────────────────────── -->
+            <section class="res-section res-browse-section">
+                <div class="res-section-header">
+                    <h2 class="res-section-title">Browse by Trade</h2>
+                </div>
+                <div class="res-categories">
+                    <a href="javascript:void(0)" class="res-cat-card glass-panel" data-filter-trigger="electrical">
+                        <div class="res-cat-icon res-thumb-yellow"></div>
+                        <div class="res-cat-info">
+                            <h3>Electricians</h3>
+                            <p>12 guides</p>
+                        </div>
+                        <span class="res-cat-arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" class="res-cat-card glass-panel" data-filter-trigger="plumbing">
+                        <div class="res-cat-icon res-thumb-blue"></div>
+                        <div class="res-cat-info">
+                            <h3>Plumbers</h3>
+                            <p>8 guides</p>
+                        </div>
+                        <span class="res-cat-arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" class="res-cat-card glass-panel" data-filter-trigger="building">
+                        <div class="res-cat-icon res-thumb-earth"></div>
+                        <div class="res-cat-info">
+                            <h3>Builders</h3>
+                            <p>24 guides</p>
+                        </div>
+                        <span class="res-cat-arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" class="res-cat-card glass-panel" data-filter-trigger="roofing">
+                        <div class="res-cat-icon res-thumb-red"></div>
+                        <div class="res-cat-info">
+                            <h3>Roofers</h3>
+                            <p>9 guides</p>
+                        </div>
+                        <span class="res-cat-arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" class="res-cat-card glass-panel" data-filter-trigger="carpentry">
+                        <div class="res-cat-icon res-thumb-wood"></div>
+                        <div class="res-cat-info">
+                            <h3>Carpenters</h3>
+                            <p>15 guides</p>
+                        </div>
+                        <span class="res-cat-arrow">→</span>
+                    </a>
+                    <a href="javascript:void(0)" class="res-cat-card glass-panel" data-filter-trigger="landscaping">
+                        <div class="res-cat-icon res-thumb-green"></div>
+                        <div class="res-cat-info">
+                            <h3>Landscapers</h3>
+                            <p>11 guides</p>
+                        </div>
+                        <span class="res-cat-arrow">→</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ── LATEST ARTICLES ───────────────────────────────── -->
+            <section class="res-section res-articles-section">
+                <div class="res-section-header">
+                    <h2 class="res-section-title">Latest Articles</h2>
+                </div>
+
+                <!-- Homeowner articles -->
+                <div class="res-articles audience-content" data-audience="homeowner">
+                    <a href="/resources/article/?slug=bathroom-renovation-ideas" class="res-article" data-category="bathroom" data-searchable="bathroom renovation ideas value home layout tiles upgrades buyers">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Bathroom</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Mar 12, 2025 | TRADIE team</div>
+                            <h3>Bathroom renovation ideas that add real value to your home</h3>
+                            <p>From layout tricks to tile choices, here are the upgrades that buyers actually notice and pay more for.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=deck-cost-australia" class="res-article" data-category="cost-guide" data-searchable="cost build deck australia timber composite permits labour budget quotes">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Cost Guide</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Mar 8, 2025 | TRADIE team</div>
+                            <h3>How much does it cost to build a deck in Australia?</h3>
+                            <p>Timber vs composite, permits, labour — a full cost breakdown so you know what to budget before getting quotes.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=red-flags-hiring-tradie" class="res-article" data-category="hiring" data-searchable="red flags hiring tradie dodgy quotes licences scams checks">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Hiring Tips</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Mar 5, 2025 | TRADIE team</div>
+                            <h3>5 red flags to watch for when hiring a tradie</h3>
+                            <p>Protect yourself from dodgy quotes, missing licences, and common scams with these simple checks.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=kitchen-renovation-checklist" class="res-article" data-category="kitchen" data-searchable="kitchen renovation checklist plan demo plumbing electrical council approval">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Kitchen</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Feb 28, 2025 | TRADIE team</div>
+                            <h3>Kitchen renovation checklist: what to plan before demo day</h3>
+                            <p>Avoid costly surprises by ticking off plumbing, electrical, and council approval before your reno starts.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=low-maintenance-garden" class="res-article" data-category="landscaping" data-searchable="low-maintenance garden ideas australian backyards native plants irrigation design">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Landscaping</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Feb 20, 2025 | TRADIE team</div>
+                            <h3>Low-maintenance garden ideas for Australian backyards</h3>
+                            <p>Native plants, smart irrigation, and design tips that look great year-round without the weekend upkeep.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=solar-panels-guide" class="res-article" data-category="solar" data-searchable="solar panels payback homeowner guide feed-in tariffs system energy">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Solar & Energy</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Feb 14, 2025 | TRADIE team</div>
+                            <h3>Is solar worth it? A homeowner's guide to panels and payback</h3>
+                            <p>Calculate your break-even point, understand feed-in tariffs, and learn what size system your household needs.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Tradie articles -->
+                <div class="res-articles audience-content" data-audience="tradie" style="display: none;">
+                    <a href="/resources/article/?slug=win-more-quotes" class="res-article" data-category="business" data-searchable="win quotes price trust converting close jobs business growth">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Business Growth</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Mar 12, 2025 | TRADIE team</div>
+                            <h3>How to win 50% more quotes without lowering your price</h3>
+                            <p>The secret to high-converting quotes isn't being cheapest — it's building trust from the first interaction.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=tradie-app-payments" class="res-article" data-category="platform" data-searchable="tradie app paid instantly milestone evidence escrow payments platform">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Platform Guide</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Mar 8, 2025 | TRADIE team</div>
+                            <h3>Mastering the TRADIE app to get paid instantly</h3>
+                            <p>Learn how to capture milestone evidence to ensure your escrow payments are released the moment the job is done.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=electrical-compliance-2025" class="res-article" data-category="electrical" data-searchable="electrical compliance checklist sparky AS/NZS 3000 safety obligations licence">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Electrical</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Mar 5, 2025 | TRADIE team</div>
+                            <h3>Electrical compliance checklist every sparky needs in 2025</h3>
+                            <p>Stay ahead of AS/NZS 3000 updates, safety obligations, and contractor licence requirements for the new year.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=price-labour-rate" class="res-article" data-category="pricing" data-searchable="price labour rate hourly cost overheads profitable formula pricing strategy">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Pricing Strategy</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Feb 28, 2025 | TRADIE team</div>
+                            <h3>How to price your labour rate without underselling yourself</h3>
+                            <p>A step-by-step formula to calculate your true hourly cost, factor in overheads, and set a rate that's profitable.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=public-liability-insurance" class="res-article" data-category="safety" data-searchable="public liability insurance cover requirements policy gaps providers safety legal">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Safety & Legal</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Feb 20, 2025 | TRADIE team</div>
+                            <h3>Public liability insurance — what every tradie must know</h3>
+                            <p>Cover requirements, policy gaps that catch tradies out, and how to compare providers before you sign anything.</p>
+                        </div>
+                    </a>
+                    <a href="/resources/article/?slug=milestone-payments" class="res-article" data-category="building" data-searchable="project milestone payments cash flow builds contract payment schedules building">
+                        <div class="res-article-thumb" style="background-image: url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=400&fit=crop');">
+                            <span class="res-article-badge">Building</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">Feb 14, 2025 | TRADIE team</div>
+                            <h3>Project milestone payments: protect your cash flow on big builds</h3>
+                            <p>Structuring payment schedules in your contract is the single best thing you can do to eliminate cash flow stress on large jobs.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="res-load-more" style="text-align: center; margin-top: 3rem;">
+                    <button class="btn-black-pill" id="load-more-btn">Load More Articles <span>↓</span></button>
+                </div>
+            </section>
+
+            <!-- ── NEWSLETTER CTA ─────────────────────────────────── -->
+            <section class="res-newsletter-light">
+                <div class="res-newsletter-inner">
+                    <div class="res-newsletter-text">
+                        <span class="res-newsletter-label">Weekly Digest</span>
+                        <!-- Homeowner newsletter -->
+                        <div class="audience-content" data-audience="homeowner">
+                            <h2>Stay informed. Renovate smarter.</h2>
+                            <p>Join 10,000+ homeowners getting weekly insights on renovations, cost guides, and tips for hiring the right tradie — straight to their inbox.</p>
+                        </div>
+                        <!-- Tradie newsletter -->
+                        <div class="audience-content" data-audience="tradie" style="display: none;">
+                            <h2>Stay sharp. Trade smarter.</h2>
+                            <p>Join 10,000+ tradies getting weekly insights on pricing, business growth, and platform tips — straight to their inbox.</p>
+                        </div>
+                    </div>
+                    <form class="res-newsletter-form" id="newsletter-form">
+                        <div class="res-newsletter-input-row">
+                            <input type="email" placeholder="your@email.com" class="res-newsletter-email" required>
+                            <button type="submit" class="res-newsletter-btn">Subscribe Free <span>→</span></button>
+                        </div>
+                        <p class="res-newsletter-small">No spam. Unsubscribe any time.</p>
+                        <p class="res-newsletter-success" style="display: none; color: #22c55e; font-size: 0.9rem; font-weight: 600; margin: 0;">Thanks for subscribing! Check your inbox.</p>
+                    </form>
+                </div>
+            </section>
+
+        </div><!-- /.res-content -->
     </main>
 
     <footer>
@@ -165,14 +410,11 @@
                 TRADIE
             </div>
             <div class="footer-links">
-                <a href="/privacy">Privacy</a>
-                <a href="/">Terms</a>
+                <a href="/privacy/">Privacy</a>
+                <a href="/privacy/">Terms</a>
                 <a href="mailto:support@tradie.com">Support</a>
             </div>
-            <p>&copy;
-                <script>document.write(new Date().getFullYear())</script> <span class="brand-name">TRADIE</span>.
-                All rights reserved.
-            </p>
+            <p>&copy; <span id="footer-year"></span> <span class="brand-name">TRADIE</span>. All rights reserved.</p>
         </div>
     </footer>
 
@@ -188,13 +430,28 @@
                 <a href="/resources/">Resources</a>
             </nav>
             <div class="mobile-actions" style="display: flex; flex-direction: column; gap: 1rem;">
-                <a href="/registration/" class="btn-solid-white" style="justify-content: center;">Join Network</a>
+                <a href="/registration/" class="btn-solid-white" style="justify-content: center;">Start Your Project</a>
                 <a href="/registration/" class="nav-link-subtle" style="text-align: center;">Log In</a>
             </div>
         </div>
     </div>
 
     <script>
+        // ── Footer year ──────────────────────────────────────
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        // ── Preloader ────────────────────────────────────────
+        const preloaderStart = Date.now();
+        const preloader = document.getElementById('preloader');
+        window.addEventListener('load', () => {
+            const elapsed = Date.now() - preloaderStart;
+            const remaining = Math.max(0, 1500 - elapsed);
+            setTimeout(() => {
+                if (preloader) preloader.classList.add('preloader-hidden');
+            }, remaining);
+        });
+
+        // ── Header scroll ────────────────────────────────────
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             if (window.scrollY > 50) {
@@ -204,37 +461,228 @@
             }
         });
 
-        // Mobile Menu Logic
+        // ── Mobile menu ──────────────────────────────────────
         const mobileBtn = document.querySelector('.mobile-menu-btn');
         const mobileNav = document.querySelector('.mobile-nav-overlay');
         const closeBtn = document.querySelector('.mobile-close-btn');
-
         if (mobileBtn && mobileNav && closeBtn) {
-            mobileBtn.addEventListener('click', () => {
-                mobileNav.classList.add('active');
-            });
-
-            closeBtn.addEventListener('click', () => {
-                mobileNav.classList.remove('active');
-            });
-
+            mobileBtn.addEventListener('click', () => mobileNav.classList.add('active'));
+            closeBtn.addEventListener('click', () => mobileNav.classList.remove('active'));
             mobileNav.addEventListener('click', (e) => {
-                if (e.target === mobileNav) {
-                    mobileNav.classList.remove('active');
-                }
+                if (e.target === mobileNav) mobileNav.classList.remove('active');
             });
         }
-    </script>
-    <script>
-        // Preloader Logic - minimum 1500ms display
-        const preloaderStart = Date.now();
-        const preloader = document.getElementById("preloader");
-        window.addEventListener("load", () => {
-            const elapsed = Date.now() - preloaderStart;
-            const remaining = Math.max(0, 1500 - elapsed);
-            setTimeout(() => {
-                if (preloader) preloader.classList.add("preloader-hidden");
-            }, remaining);
+
+        // ── State ────────────────────────────────────────────
+        let currentAudience = 'homeowner';
+        let currentFilter = 'all';
+
+        // ── Audience tab switcher ────────────────────────────
+        const audienceTabs = document.querySelectorAll('.res-audience-tab');
+        const audienceContent = document.querySelectorAll('.audience-content');
+
+        audienceTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                currentAudience = tab.dataset.audience;
+                audienceTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                audienceContent.forEach(el => {
+                    el.style.display = el.dataset.audience === currentAudience ? '' : 'none';
+                });
+
+                // Reset filters to "All" when switching audience
+                currentFilter = 'all';
+                document.querySelectorAll('.res-filters[data-audience="' + currentAudience + '"] .res-filter').forEach(f => {
+                    f.classList.toggle('active', f.dataset.filter === 'all');
+                });
+                applyFilter();
+                clearSearch();
+            });
+        });
+
+        // ── Filter tabs ─────────────────────────────────────
+        document.addEventListener('click', (e) => {
+            const filterBtn = e.target.closest('.res-filter');
+            if (!filterBtn) return;
+
+            const filterGroup = filterBtn.closest('.res-filters');
+            filterGroup.querySelectorAll('.res-filter').forEach(b => b.classList.remove('active'));
+            filterBtn.classList.add('active');
+            currentFilter = filterBtn.dataset.filter;
+            applyFilter();
+        });
+
+        // ── Browse by trade → trigger filter ─────────────────
+        document.querySelectorAll('.res-cat-card[data-filter-trigger]').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                const filterValue = card.dataset.filterTrigger;
+
+                // Switch to tradie audience if not already
+                if (currentAudience !== 'tradie') {
+                    document.querySelector('.res-audience-tab[data-audience="tradie"]').click();
+                }
+
+                // Activate matching filter tab
+                const tradieFilters = document.querySelector('.res-filters[data-audience="tradie"]');
+                const matchingFilter = tradieFilters.querySelector('[data-filter="' + filterValue + '"]');
+                if (matchingFilter) {
+                    tradieFilters.querySelectorAll('.res-filter').forEach(b => b.classList.remove('active'));
+                    matchingFilter.classList.add('active');
+                    currentFilter = filterValue;
+                    applyFilter();
+                }
+
+                // Scroll to articles
+                document.querySelector('.res-articles-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        function applyFilter() {
+            const articlesContainer = document.querySelector('.res-articles[data-audience="' + currentAudience + '"]');
+            const articles = articlesContainer.querySelectorAll('.res-article');
+            let visibleCount = 0;
+
+            articles.forEach(article => {
+                const category = article.dataset.category;
+                const show = currentFilter === 'all' || category === currentFilter;
+                article.style.display = show ? '' : 'none';
+                if (show) visibleCount++;
+            });
+
+            // Also filter featured card
+            const featuredCards = document.querySelectorAll('.res-featured-card[data-audience="' + currentAudience + '"]');
+            featuredCards.forEach(card => {
+                const category = card.dataset.category;
+                const show = currentFilter === 'all' || category === currentFilter;
+                card.style.display = show ? '' : 'none';
+            });
+
+            // Show/hide browse section only on "all"
+            const browseSection = document.querySelector('.res-browse-section');
+            if (browseSection) {
+                browseSection.style.display = currentFilter === 'all' ? '' : 'none';
+            }
+        }
+
+        // ── Search ──────────────────────────────────────────
+        function performSearch() {
+            const inputId = currentAudience === 'homeowner' ? 'search-homeowner' : 'search-tradie';
+            const query = document.getElementById(inputId).value.trim().toLowerCase();
+
+            if (!query) {
+                clearSearch();
+                return;
+            }
+
+            const terms = query.split(/\s+/);
+            const articlesContainer = document.querySelector('.res-articles[data-audience="' + currentAudience + '"]');
+            const articles = articlesContainer.querySelectorAll('.res-article');
+            const searchGrid = document.getElementById('search-results-grid');
+            const noResults = document.querySelector('.res-no-results');
+
+            searchGrid.innerHTML = '';
+            let matchCount = 0;
+
+            articles.forEach(article => {
+                const searchable = (article.dataset.searchable + ' ' + article.querySelector('h3').textContent + ' ' + article.querySelector('p').textContent).toLowerCase();
+                const matches = terms.every(term => searchable.includes(term));
+                if (matches) {
+                    const clone = article.cloneNode(true);
+                    clone.style.display = '';
+                    searchGrid.appendChild(clone);
+                    matchCount++;
+                }
+            });
+
+            // Show search results, hide main content
+            document.querySelector('.res-search-results').style.display = '';
+            document.querySelector('.res-main-content').style.display = 'none';
+            noResults.style.display = matchCount === 0 ? '' : 'none';
+            searchGrid.style.display = matchCount === 0 ? 'none' : '';
+        }
+
+        function clearSearch() {
+            document.querySelector('.res-search-results').style.display = 'none';
+            document.querySelector('.res-main-content').style.display = '';
+            document.querySelectorAll('.res-search-input').forEach(input => input.value = '');
+        }
+
+        // Search button clicks
+        document.querySelectorAll('.res-search-btn').forEach(btn => {
+            btn.addEventListener('click', performSearch);
+        });
+
+        // Search on Enter
+        document.querySelectorAll('.res-search-input').forEach(input => {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch();
+                }
+            });
+        });
+
+        // Clear search button
+        document.querySelector('.res-clear-search').addEventListener('click', clearSearch);
+
+        // ── Load more ───────────────────────────────────────
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        loadMoreBtn.addEventListener('click', () => {
+            // In a real app, this would fetch more articles from an API.
+            // For now, show a feedback state.
+            loadMoreBtn.textContent = 'All articles loaded';
+            loadMoreBtn.disabled = true;
+            loadMoreBtn.style.opacity = '0.5';
+            loadMoreBtn.style.cursor = 'default';
+        });
+
+        // ── Newsletter form ─────────────────────────────────
+        document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const email = form.querySelector('.res-newsletter-email');
+            const inputRow = form.querySelector('.res-newsletter-input-row');
+            const small = form.querySelector('.res-newsletter-small');
+            const success = form.querySelector('.res-newsletter-success');
+
+            // In a real app, POST to your newsletter API here.
+            inputRow.style.display = 'none';
+            small.style.display = 'none';
+            success.style.display = '';
+        });
+
+        // ── Carousel with hover-pause ───────────────────────
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const totalSlides = slides.length;
+        const carousel = document.querySelector('.res-hero-carousel');
+        let carouselPaused = false;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            slides[n].classList.add('active');
+            dots[n].classList.add('active');
+        }
+
+        function nextSlide() {
+            if (carouselPaused) return;
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        const carouselInterval = setInterval(nextSlide, 4000);
+
+        carousel.addEventListener('mouseenter', () => { carouselPaused = true; });
+        carousel.addEventListener('mouseleave', () => { carouselPaused = false; });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
         });
     </script>
 </body>

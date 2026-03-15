@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TRADIE Resources — Expert guides for homeowners and tradies.">
+    <title>TRADIE | Article</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" type="image/png" href="../../assets/logo_icon.png">
+</head>
+
+<body class="light-page">
+    <!-- Preloader -->
+    <div id="preloader">
+        <img class="logo-icon preloader-logo" src="/assets/logo_icon.png" alt="TRADIE">
+    </div>
+
+    <header id="main-header" class="scrolled">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                TRADIE
+            </a>
+            <nav class="desktop-nav">
+                <a href="/">Home</a>
+                <a href="/customers/">Homeowners</a>
+                <a href="/tradies/">Find Tradies</a>
+                <a href="/pricing/">Pricing</a>
+                <a href="/resources/" class="text-orange" style="font-weight: 700;">Resources</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="/registration/" class="nav-link-subtle">Log In</a>
+                <a href="/registration/" class="btn-solid-white">Start Your Project <span class="arrow">→</span></a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Article Hero -->
+        <section class="art-hero" id="article-hero">
+            <a href="/resources/" class="art-breadcrumb">← Back to Resources</a>
+            <div class="art-hero-carousel">
+                <div class="art-hero-img" id="article-hero-img"></div>
+                <div class="art-hero-overlay"></div>
+                <div class="art-hero-content">
+                    <span class="res-article-badge" id="article-badge"></span>
+                    <h1 id="article-title"></h1>
+                    <div class="art-meta">
+                        <span id="article-date"></span>
+                        <span class="art-meta-dot">·</span>
+                        <span id="article-author"></span>
+                        <span class="art-meta-dot">·</span>
+                        <span id="article-read-time"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Body -->
+        <article class="art-body" id="article-body">
+            <!-- Content injected by JS -->
+        </article>
+
+        <!-- End-of-article CTA -->
+        <div class="art-cta" id="article-cta">
+            <div class="art-cta-inner">
+                <h2>Ready to get started?</h2>
+                <p>Find verified, licensed tradies in your area. Compare quotes, check reviews, and book with confidence.</p>
+                <div class="art-cta-actions">
+                    <a href="/registration/" class="btn-solid-white">Start Your Project <span class="arrow">→</span></a>
+                    <a href="/resources/" class="art-cta-link">Browse more guides <span>→</span></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Articles -->
+        <section class="art-related" id="related-section" style="display: none;">
+            <div class="art-related-inner">
+                <h2>Related Articles</h2>
+                <div class="res-articles" id="related-articles"></div>
+            </div>
+        </section>
+
+        <!-- Newsletter CTA -->
+        <section class="art-newsletter">
+            <div class="res-newsletter-light">
+                <div class="res-newsletter-inner">
+                    <div class="res-newsletter-text">
+                        <span class="res-newsletter-label">Weekly Digest</span>
+                        <h2>Get more guides like this.</h2>
+                        <p>Join 10,000+ Australians getting weekly insights on renovations, trades, and smart home improvement — straight to their inbox.</p>
+                    </div>
+                    <form class="res-newsletter-form" id="newsletter-form">
+                        <div class="res-newsletter-input-row">
+                            <input type="email" placeholder="your@email.com" class="res-newsletter-email" required>
+                            <button type="submit" class="res-newsletter-btn">Subscribe Free <span>→</span></button>
+                        </div>
+                        <p class="res-newsletter-small">No spam. Unsubscribe any time.</p>
+                        <p class="res-newsletter-success" style="display: none; color: #22c55e; font-size: 0.9rem; font-weight: 600; margin: 0;">Thanks for subscribing! Check your inbox.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="nav-container footer-layout">
+            <div class="logo">
+                <img class="logo-icon" src="/assets/logo_icon.png" alt="TRADIE">
+                TRADIE
+            </div>
+            <div class="footer-links">
+                <a href="/privacy/">Privacy</a>
+                <a href="/privacy/">Terms</a>
+                <a href="mailto:support@tradie.com">Support</a>
+            </div>
+            <p>&copy; <span id="footer-year"></span> <span class="brand-name">TRADIE</span>. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+        <div class="mobile-nav-content">
+            <button class="mobile-close-btn">&times;</button>
+            <nav class="mobile-links">
+                <a href="/">Home</a>
+                <a href="/customers/">Homeowners</a>
+                <a href="/tradies/">Find Tradies</a>
+                <a href="/pricing/">Pricing</a>
+                <a href="/resources/">Resources</a>
+            </nav>
+            <div class="mobile-actions" style="display: flex; flex-direction: column; gap: 1rem;">
+                <a href="/registration/" class="btn-solid-white" style="justify-content: center;">Start Your Project</a>
+                <a href="/registration/" class="nav-link-subtle" style="text-align: center;">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── Footer year ──
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        // ── Preloader ──
+        const preloaderStart = Date.now();
+        const preloader = document.getElementById('preloader');
+        window.addEventListener('load', () => {
+            const elapsed = Date.now() - preloaderStart;
+            const remaining = Math.max(0, 1500 - elapsed);
+            setTimeout(() => {
+                if (preloader) preloader.classList.add('preloader-hidden');
+            }, remaining);
+        });
+
+        // ── Header scroll ──
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // ── Mobile menu ──
+        const mobileBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav-overlay');
+        const closeBtn = document.querySelector('.mobile-close-btn');
+        if (mobileBtn && mobileNav && closeBtn) {
+            mobileBtn.addEventListener('click', () => mobileNav.classList.add('active'));
+            closeBtn.addEventListener('click', () => mobileNav.classList.remove('active'));
+            mobileNav.addEventListener('click', (e) => {
+                if (e.target === mobileNav) mobileNav.classList.remove('active');
+            });
+        }
+
+        // ── Newsletter form ──
+        document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            form.querySelector('.res-newsletter-input-row').style.display = 'none';
+            form.querySelector('.res-newsletter-small').style.display = 'none';
+            form.querySelector('.res-newsletter-success').style.display = '';
+        });
+
+        // ── Article Data ──
+        const articles = {
+            // ── HOMEOWNER ARTICLES ──
+            'bathroom-renovation-cost': {
+                title: 'How much does a bathroom renovation really cost?',
+                badge: 'Cost Guide',
+                category: 'bathroom',
+                audience: 'homeowner',
+                date: 'Mar 10, 2025',
+                author: 'TRADIE team',
+                readTime: '8 min read',
+                image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">A bathroom renovation is one of the most common — and most rewarding — home improvement projects in Australia. But it's also one of the hardest to budget for. Costs can vary wildly depending on the size of the room, the quality of fixtures, and whether you're doing a cosmetic refresh or a full gut-job.</p>
+
+                    <h2>What's the average cost?</h2>
+                    <p>For a standard Australian bathroom (roughly 5–8 sqm), expect to pay between <strong>$15,000 and $35,000</strong> for a full renovation. A high-end or architecturally complex bathroom can push well past $50,000.</p>
+                    <p>Here's a rough breakdown of where your money goes:</p>
+
+                    <div class="art-table-wrap">
+                        <table class="art-table">
+                            <thead><tr><th>Item</th><th>Budget Range</th><th>Mid-Range</th><th>Premium</th></tr></thead>
+                            <tbody>
+                                <tr><td>Demolition & waste removal</td><td>$1,000–$2,000</td><td>$2,000–$3,000</td><td>$3,000+</td></tr>
+                                <tr><td>Waterproofing</td><td>$800–$1,200</td><td>$1,200–$2,000</td><td>$2,000+</td></tr>
+                                <tr><td>Plumbing</td><td>$2,000–$4,000</td><td>$4,000–$6,000</td><td>$6,000+</td></tr>
+                                <tr><td>Tiling (supply + install)</td><td>$2,500–$4,500</td><td>$4,500–$7,000</td><td>$7,000+</td></tr>
+                                <tr><td>Fixtures & fittings</td><td>$1,500–$3,000</td><td>$3,000–$6,000</td><td>$6,000+</td></tr>
+                                <tr><td>Electrical</td><td>$800–$1,500</td><td>$1,500–$3,000</td><td>$3,000+</td></tr>
+                                <tr><td>Vanity & storage</td><td>$500–$1,500</td><td>$1,500–$3,500</td><td>$3,500+</td></tr>
+                                <tr><td>Labour (tiler, painter, etc.)</td><td>$3,000–$5,000</td><td>$5,000–$8,000</td><td>$8,000+</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>Budget refresh vs. full gut-job</h2>
+                    <p>Not every bathroom reno needs to be a full demolition. If your layout is already functional and the plumbing is in good shape, a <strong>cosmetic refresh</strong> — new tiles, paint, vanity, and fixtures — can cost as little as $8,000–$12,000.</p>
+                    <p>A <strong>full gut-job</strong>, where everything is stripped back to the studs and rebuilt, is where costs escalate. This is typically necessary when:</p>
+                    <ul>
+                        <li>The existing waterproofing has failed</li>
+                        <li>You want to change the layout (move the shower, toilet, or vanity)</li>
+                        <li>Plumbing or electrical is outdated and doesn't meet current code</li>
+                        <li>There's structural damage (rot, mould, termite damage)</li>
+                    </ul>
+
+                    <h2>Hidden costs to watch for</h2>
+                    <p>These are the line items that catch most homeowners off guard:</p>
+                    <ul>
+                        <li><strong>Asbestos removal</strong> — common in pre-1990s homes. Testing alone is $200–$400, removal $1,500+.</li>
+                        <li><strong>Structural changes</strong> — moving a wall or widening a doorway can add $2,000–$5,000.</li>
+                        <li><strong>Council permits</strong> — required in some states for plumbing/structural work. Budget $500–$1,500.</li>
+                        <li><strong>Temporary facilities</strong> — if it's your only bathroom, you may need a portable shower or toilet hire.</li>
+                    </ul>
+
+                    <div class="art-callout">
+                        <strong>Pro tip:</strong> Always add a 10–15% contingency buffer to your renovation budget. Unexpected issues behind walls are more common than you'd think.
+                    </div>
+
+                    <h2>How to get accurate quotes</h2>
+                    <p>The best way to nail down your costs is to get <strong>at least three detailed quotes</strong> from licensed tradies. Make sure each quote breaks down labour, materials, and any allowances separately.</p>
+                    <p>On TRADIE, you can post your project and receive quotes from verified, licensed professionals in your area — with reviews, licence info, and insurance details all visible upfront.</p>
+
+                    <h2>Is it worth it?</h2>
+                    <p>A well-executed bathroom renovation typically adds <strong>60–80% of its cost</strong> back to your property value. In high-demand suburbs, a modern bathroom can be the difference between a quick sale and months on the market.</p>
+                `,
+                related: ['bathroom-renovation-ideas', 'deck-cost-australia', 'kitchen-renovation-checklist']
+            },
+
+            'bathroom-renovation-ideas': {
+                title: 'Bathroom renovation ideas that add real value to your home',
+                badge: 'Bathroom',
+                category: 'bathroom',
+                audience: 'homeowner',
+                date: 'Mar 12, 2025',
+                author: 'TRADIE team',
+                readTime: '6 min read',
+                image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">Not all bathroom upgrades are created equal. Some look great on Instagram but do nothing for resale. Others are subtle changes that buyers notice — and pay more for. Here are the renovation ideas that actually add value.</p>
+
+                    <h2>1. Upgrade to a frameless shower screen</h2>
+                    <p>Frameless glass instantly makes a bathroom feel larger and more modern. It's one of the highest-impact changes you can make for $800–$1,500 installed. Buyers see it as a premium finish.</p>
+
+                    <h2>2. Install a floating vanity</h2>
+                    <p>Wall-hung vanities create the illusion of more floor space and make cleaning easier. Pair with a stone benchtop and undermount basin for a contemporary look that photographs well for listings.</p>
+
+                    <h2>3. Go for large-format tiles</h2>
+                    <p>Larger tiles (600×600mm or bigger) mean fewer grout lines, which creates a cleaner, more spacious feel. They're also easier to maintain long-term. Stick to neutral tones — they appeal to the widest buyer pool.</p>
+
+                    <h2>4. Add a niche in the shower</h2>
+                    <p>A recessed shower niche is a small detail that signals quality craftsmanship. It eliminates the need for ugly shower caddies and costs only $200–$500 to install during a renovation.</p>
+
+                    <h2>5. Upgrade tapware and hardware</h2>
+                    <p>Swapping chrome tapware for matte black or brushed nickel is one of the cheapest ways to modernise a bathroom. Budget $300–$800 for a full set including towel rails, toilet roll holder, and robe hooks.</p>
+
+                    <h2>6. Improve lighting</h2>
+                    <p>Replace a single ceiling light with a combination of downlights and a backlit mirror. Good lighting makes a bathroom feel larger and more inviting. LED mirrors start from $200.</p>
+
+                    <h2>7. Heated towel rail</h2>
+                    <p>A heated towel rail adds a touch of luxury for $300–$600 installed. It's a small upgrade that buyers consistently notice during inspections.</p>
+
+                    <div class="art-callout">
+                        <strong>Bottom line:</strong> Focus on changes that make the bathroom feel bigger, brighter, and easier to clean. Avoid overly personalised design choices — keep it neutral and timeless for maximum resale appeal.
+                    </div>
+                `,
+                related: ['bathroom-renovation-cost', 'kitchen-renovation-checklist', 'red-flags-hiring-tradie']
+            },
+
+            'deck-cost-australia': {
+                title: 'How much does it cost to build a deck in Australia?',
+                badge: 'Cost Guide',
+                category: 'cost-guide',
+                audience: 'homeowner',
+                date: 'Mar 8, 2025',
+                author: 'TRADIE team',
+                readTime: '7 min read',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">A deck is one of the best ways to extend your living space outdoors. But between timber choices, council permits, and labour costs, it can be hard to know what you'll actually pay. Here's the full breakdown.</p>
+
+                    <h2>Average deck costs in Australia</h2>
+                    <p>For a standard 20 sqm timber deck, expect to pay between <strong>$8,000 and $20,000</strong> depending on materials, height, and complexity. Composite decking typically costs 20–40% more than treated pine but requires less maintenance over time.</p>
+
+                    <div class="art-table-wrap">
+                        <table class="art-table">
+                            <thead><tr><th>Material</th><th>Cost per sqm (installed)</th><th>Lifespan</th></tr></thead>
+                            <tbody>
+                                <tr><td>Treated pine</td><td>$180–$300</td><td>15–20 years</td></tr>
+                                <tr><td>Merbau / hardwood</td><td>$350–$550</td><td>25–40 years</td></tr>
+                                <tr><td>Composite</td><td>$400–$650</td><td>25–30 years</td></tr>
+                                <tr><td>Spotted gum</td><td>$450–$700</td><td>30–40 years</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>What affects the price?</h2>
+                    <ul>
+                        <li><strong>Height off ground</strong> — elevated decks need more structural support and may require engineering</li>
+                        <li><strong>Site access</strong> — difficult access (steep blocks, narrow side gates) adds labour cost</li>
+                        <li><strong>Balustrades & stairs</strong> — required for decks over 1m high, adding $150–$400 per lineal metre</li>
+                        <li><strong>Council approval</strong> — most decks over 600mm high need a building permit ($500–$2,000)</li>
+                        <li><strong>Demolition</strong> — removing an old deck adds $500–$2,000</li>
+                    </ul>
+
+                    <h2>Timber vs. composite</h2>
+                    <p>Timber looks and feels natural but requires annual oiling and periodic sanding. Composite boards are low-maintenance and won't splinter, but they can feel warmer underfoot in direct sun and cost more upfront.</p>
+                    <p>For most Australian backyards, <strong>merbau hardwood</strong> offers the best balance of durability, appearance, and cost. If you want zero maintenance, go composite.</p>
+
+                    <h2>Do I need council approval?</h2>
+                    <p>In most states, a deck over <strong>600mm above ground level</strong> requires a building permit. Some councils also have setback requirements and height limits. Always check with your local council before starting — building without approval can result in fines and orders to demolish.</p>
+
+                    <div class="art-callout">
+                        <strong>Pro tip:</strong> Get your builder to handle the permit application. Most experienced deck builders include this in their quote and know exactly what your council requires.
+                    </div>
+
+                    <h2>How to get the best price</h2>
+                    <p>Get at least three quotes, and make sure each one includes materials, labour, site prep, permits, and cleanup. On TRADIE, you can compare verified deck builders in your area with transparent pricing and real reviews.</p>
+                `,
+                related: ['bathroom-renovation-cost', 'low-maintenance-garden', 'red-flags-hiring-tradie']
+            },
+
+            'red-flags-hiring-tradie': {
+                title: '5 red flags to watch for when hiring a tradie',
+                badge: 'Hiring Tips',
+                category: 'hiring',
+                audience: 'homeowner',
+                date: 'Mar 5, 2025',
+                author: 'TRADIE team',
+                readTime: '5 min read',
+                image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">Hiring the wrong tradie can cost you thousands — and months of stress. Here are five warning signs to look out for before you hand over a deposit.</p>
+
+                    <h2>1. No licence or ABN</h2>
+                    <p>Every tradie doing regulated work (plumbing, electrical, building, gas) must hold a valid state licence. If they can't provide a licence number, walk away. You can verify licences through your state's fair trading or building authority website.</p>
+                    <p>Similarly, any tradie operating as a business should have an ABN. No ABN usually means no insurance, no accountability, and no warranty.</p>
+
+                    <h2>2. Cash-only, no written quote</h2>
+                    <p>A verbal quote and a handshake is not a contract. Reputable tradies provide written quotes that break down labour, materials, timelines, and payment terms. If someone insists on cash-only with no paperwork, that's a major red flag.</p>
+
+                    <h2>3. Demanding full payment upfront</h2>
+                    <p>It's normal to pay a deposit (typically 10–20% of the total job), but no legitimate tradie should ask for full payment before work begins. A standard payment structure is:</p>
+                    <ul>
+                        <li>10–20% deposit on acceptance</li>
+                        <li>Progress payments at agreed milestones</li>
+                        <li>Final payment on completion and sign-off</li>
+                    </ul>
+
+                    <h2>4. No insurance</h2>
+                    <p>At minimum, a tradie should carry <strong>public liability insurance</strong> (typically $5–$20 million). For building work, they should also have <strong>home warranty insurance</strong> (also called domestic building insurance). Ask to see their certificate of currency — don't just take their word for it.</p>
+
+                    <h2>5. Pressure to start immediately</h2>
+                    <p>Good tradies are busy. If someone is available to start tomorrow and is pressuring you to commit, that's often a sign they're struggling for work — usually for a reason. Take your time, check reviews, and don't be rushed into a decision.</p>
+
+                    <div class="art-callout">
+                        <strong>Use TRADIE to hire with confidence.</strong> Every tradie on our platform is licence-verified, insured, and reviewed by real customers. You can compare quotes, check credentials, and pay securely through milestone-based escrow.
+                    </div>
+                `,
+                related: ['bathroom-renovation-cost', 'kitchen-renovation-checklist', 'solar-panels-guide']
+            },
+
+            'kitchen-renovation-checklist': {
+                title: 'Kitchen renovation checklist: what to plan before demo day',
+                badge: 'Kitchen',
+                category: 'kitchen',
+                audience: 'homeowner',
+                date: 'Feb 28, 2025',
+                author: 'TRADIE team',
+                readTime: '7 min read',
+                image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">A kitchen renovation is one of the biggest investments you'll make in your home. Getting the planning right before demolition day saves you time, money, and a lot of headaches. Here's your complete pre-reno checklist.</p>
+
+                    <h2>1. Set a realistic budget</h2>
+                    <p>The average kitchen renovation in Australia costs between <strong>$20,000 and $50,000</strong>. High-end kitchens with custom cabinetry and stone benchtops can exceed $80,000. Include a 15% contingency for surprises behind the walls.</p>
+
+                    <h2>2. Finalise your layout</h2>
+                    <p>Changing the position of your sink, stove, or fridge affects plumbing, gas, and electrical — all of which add cost. Decide your layout early and stick to it. The classic work triangle (sink, stove, fridge) is still the gold standard for kitchen efficiency.</p>
+
+                    <h2>3. Check council requirements</h2>
+                    <p>Most cosmetic kitchen renovations don't need council approval. However, if you're knocking out walls, changing the footprint, or moving gas/plumbing, you may need a building permit. Check with your local council before finalising plans.</p>
+
+                    <h2>4. Order materials early</h2>
+                    <p>Benchtops, cabinetry, and appliances can have lead times of 4–8 weeks. Order these as early as possible to avoid delays. Confirm delivery dates with your builder so everything arrives when it's needed.</p>
+
+                    <h2>5. Plan your temporary kitchen</h2>
+                    <p>You'll likely be without a kitchen for 3–6 weeks. Set up a temporary space with a microwave, kettle, bar fridge, and portable cooktop. Trust us — you'll want somewhere to make coffee on day one.</p>
+
+                    <h2>6. Book your trades</h2>
+                    <p>A typical kitchen reno requires a builder, plumber, electrician, tiler, and sometimes a gas fitter. Book all trades well in advance — good tradies are often booked 4–8 weeks out. On TRADIE, you can find and book all the trades you need in one place.</p>
+
+                    <h2>7. Protect your home</h2>
+                    <p>Kitchen demolition creates an enormous amount of dust. Seal off adjacent rooms with plastic sheeting, cover floors with drop cloths, and discuss dust management with your builder before work begins.</p>
+
+                    <div class="art-callout">
+                        <strong>Download checklist:</strong> We're working on a printable PDF version of this checklist. Subscribe to our newsletter to be the first to get it.
+                    </div>
+                `,
+                related: ['bathroom-renovation-cost', 'deck-cost-australia', 'red-flags-hiring-tradie']
+            },
+
+            'low-maintenance-garden': {
+                title: 'Low-maintenance garden ideas for Australian backyards',
+                badge: 'Landscaping',
+                category: 'landscaping',
+                audience: 'homeowner',
+                date: 'Feb 20, 2025',
+                author: 'TRADIE team',
+                readTime: '6 min read',
+                image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">A beautiful backyard shouldn't mean spending every weekend on upkeep. With the right plants, smart irrigation, and clever design, you can have a garden that looks great year-round with minimal effort.</p>
+
+                    <h2>Choose native plants</h2>
+                    <p>Australian native plants are adapted to local conditions, meaning they need less water, less fertiliser, and less fuss. Great low-maintenance natives include:</p>
+                    <ul>
+                        <li><strong>Lomandra</strong> — tough, grass-like clumps that handle sun, shade, and drought</li>
+                        <li><strong>Westringia</strong> — an Australian alternative to box hedging</li>
+                        <li><strong>Grevillea</strong> — stunning flowers that attract native birds</li>
+                        <li><strong>Dianella</strong> — strappy leaves with blue berries, great for borders</li>
+                        <li><strong>Kangaroo Paw</strong> — sculptural flowers in vibrant colours</li>
+                    </ul>
+
+                    <h2>Install drip irrigation</h2>
+                    <p>A drip irrigation system delivers water directly to plant roots, reducing waste by up to 60% compared to sprinklers. Most systems can be automated with a $50–$100 timer, so you never need to think about watering.</p>
+
+                    <h2>Use mulch generously</h2>
+                    <p>A 75–100mm layer of organic mulch suppresses weeds, retains moisture, and improves soil health. Budget $50–$80 per cubic metre delivered. Refresh annually for best results.</p>
+
+                    <h2>Create defined zones</h2>
+                    <p>Separate your garden into functional zones — entertaining, kids' play, planting beds, and lawn. This makes maintenance easier because you can focus on one area at a time rather than tackling the whole yard.</p>
+
+                    <h2>Consider artificial turf for small lawns</h2>
+                    <p>If you have a small courtyard or play area, quality artificial turf ($60–$120 per sqm installed) eliminates mowing, watering, and fertilising entirely. Modern products look and feel surprisingly realistic.</p>
+
+                    <div class="art-callout">
+                        <strong>Need a landscaper?</strong> On TRADIE, you can compare quotes from verified landscapers in your area. Post your project and receive responses within 24 hours.
+                    </div>
+                `,
+                related: ['deck-cost-australia', 'solar-panels-guide', 'bathroom-renovation-ideas']
+            },
+
+            'solar-panels-guide': {
+                title: "Is solar worth it? A homeowner's guide to panels and payback",
+                badge: 'Solar & Energy',
+                category: 'solar',
+                audience: 'homeowner',
+                date: 'Feb 14, 2025',
+                author: 'TRADIE team',
+                readTime: '8 min read',
+                image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">With electricity prices continuing to rise, solar panels are more attractive than ever. But is it actually worth the investment for your home? Here's how to calculate your payback period and choose the right system.</p>
+
+                    <h2>How much does solar cost?</h2>
+                    <p>After government rebates (STCs), a quality solar system typically costs:</p>
+                    <div class="art-table-wrap">
+                        <table class="art-table">
+                            <thead><tr><th>System Size</th><th>Cost (after rebate)</th><th>Best For</th></tr></thead>
+                            <tbody>
+                                <tr><td>5 kW</td><td>$3,500–$5,500</td><td>1–2 person household</td></tr>
+                                <tr><td>6.6 kW</td><td>$4,500–$7,000</td><td>Average family</td></tr>
+                                <tr><td>10 kW</td><td>$7,000–$11,000</td><td>Large household / home office</td></tr>
+                                <tr><td>13 kW</td><td>$9,000–$14,000</td><td>Large household + EV charging</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>What's the payback period?</h2>
+                    <p>Most Australian households see a payback period of <strong>3–5 years</strong>. After that, you're essentially generating free electricity. The exact timeline depends on:</p>
+                    <ul>
+                        <li>Your electricity usage patterns (daytime vs. evening)</li>
+                        <li>Your feed-in tariff rate</li>
+                        <li>The size and orientation of your system</li>
+                        <li>Your location and average sunlight hours</li>
+                    </ul>
+
+                    <h2>Feed-in tariffs explained</h2>
+                    <p>When your panels generate more electricity than you use, the excess is exported to the grid. Your retailer pays you a <strong>feed-in tariff</strong> for each kWh exported — typically 3–12c/kWh depending on your state and retailer.</p>
+                    <p>The key to maximising savings is to <strong>use as much solar power as possible during the day</strong> (run your dishwasher, washing machine, and pool pump during peak generation hours).</p>
+
+                    <h2>Do I need a battery?</h2>
+                    <p>Batteries store excess solar energy for use at night. They cost $8,000–$16,000 and typically add 3–5 years to the payback period. For most households, a battery isn't financially essential yet — but prices are dropping rapidly.</p>
+                    <p>A battery makes the most sense if you use a lot of electricity in the evening or want backup power during outages.</p>
+
+                    <h2>What size system do I need?</h2>
+                    <p>A good rule of thumb: install <strong>1.5 kW of panels for every $500 on your quarterly electricity bill</strong>. So if your bill is $600/quarter, a 6.6 kW system is a solid starting point.</p>
+
+                    <div class="art-callout">
+                        <strong>Find a solar installer on TRADIE.</strong> Compare quotes from CEC-accredited solar installers in your area, check reviews, and book with confidence.
+                    </div>
+                `,
+                related: ['deck-cost-australia', 'low-maintenance-garden', 'bathroom-renovation-cost']
+            },
+
+            // ── TRADIE ARTICLES ──
+            'win-more-quotes': {
+                title: 'How to win 50% more quotes without lowering your price',
+                badge: 'Business Growth',
+                category: 'business',
+                audience: 'tradie',
+                date: 'Mar 12, 2025',
+                author: 'TRADIE team',
+                readTime: '7 min read',
+                image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">The tradies winning the most work aren't the cheapest. They're the ones who build trust before the customer even picks up the phone. Here's the framework top-earning tradies use to close more jobs at their full rate.</p>
+
+                    <h2>1. Respond fast</h2>
+                    <p>Speed matters more than you think. Data from TRADIE shows that the first tradie to respond to a job request is <strong>3x more likely to win the job</strong>. Set up notifications and aim to respond within 30 minutes during business hours.</p>
+
+                    <h2>2. Send a professional quote</h2>
+                    <p>A scribbled note on the back of a business card doesn't cut it. Your quote should include:</p>
+                    <ul>
+                        <li>A clear scope of work — what's included and what's not</li>
+                        <li>An itemised breakdown of labour and materials</li>
+                        <li>A realistic timeline with start and completion dates</li>
+                        <li>Your licence number, ABN, and insurance details</li>
+                        <li>Payment terms and milestone schedule</li>
+                    </ul>
+
+                    <h2>3. Show your work</h2>
+                    <p>Before-and-after photos are worth a thousand words. Include 3–5 examples of similar jobs you've completed. On TRADIE, you can build a portfolio that's automatically attached to every quote you send.</p>
+
+                    <h2>4. Follow up</h2>
+                    <p>Most tradies send a quote and never follow up. A simple message 2–3 days later — "Hi, just checking if you had any questions about the quote" — can increase your close rate by 30%+.</p>
+
+                    <h2>5. Ask for reviews</h2>
+                    <p>90% of homeowners read reviews before hiring a tradie. After every job, ask your customer for a review. Make it easy by sending them a direct link. On TRADIE, this is built into the job completion flow.</p>
+
+                    <div class="art-callout">
+                        <strong>The bottom line:</strong> Winning more quotes isn't about being cheaper — it's about being faster, more professional, and more trustworthy than the competition. These small changes compound over time.
+                    </div>
+                `,
+                related: ['price-labour-rate', 'tradie-app-payments', 'milestone-payments']
+            },
+
+            'tradie-app-payments': {
+                title: 'Mastering the TRADIE app to get paid instantly',
+                badge: 'Platform Guide',
+                category: 'platform',
+                audience: 'tradie',
+                date: 'Mar 8, 2025',
+                author: 'TRADIE team',
+                readTime: '5 min read',
+                image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">Getting paid shouldn't be the hardest part of the job. TRADIE's escrow-based payment system ensures your money is secured before work begins and released the moment you complete each milestone. Here's how to make it work for you.</p>
+
+                    <h2>How escrow payments work</h2>
+                    <p>When a homeowner accepts your quote on TRADIE, the payment is held securely in escrow. This means:</p>
+                    <ul>
+                        <li>The money is committed — the customer can't back out</li>
+                        <li>You know you'll be paid before you start</li>
+                        <li>Funds are released automatically when milestones are completed</li>
+                    </ul>
+
+                    <h2>Setting up milestones</h2>
+                    <p>Break your job into clear milestones when creating your quote. For example, a bathroom renovation might have:</p>
+                    <ul>
+                        <li><strong>Milestone 1:</strong> Demolition and waterproofing (30%)</li>
+                        <li><strong>Milestone 2:</strong> Plumbing rough-in and tiling (40%)</li>
+                        <li><strong>Milestone 3:</strong> Fit-off and completion (30%)</li>
+                    </ul>
+                    <p>Smaller, more frequent milestones mean more regular cash flow.</p>
+
+                    <h2>Capturing milestone evidence</h2>
+                    <p>To release payment for a milestone, submit evidence through the app:</p>
+                    <ul>
+                        <li>Take <strong>clear photos</strong> of completed work from multiple angles</li>
+                        <li>Add a brief <strong>description</strong> of what was completed</li>
+                        <li>Include any <strong>compliance certificates</strong> (electrical, plumbing, etc.)</li>
+                    </ul>
+                    <p>The homeowner has 48 hours to review and approve. If they don't respond, the payment is automatically released.</p>
+
+                    <h2>Getting paid faster</h2>
+                    <p>Once a milestone is approved, funds are transferred to your linked bank account. Standard transfers arrive within <strong>1–2 business days</strong>. Instant transfers (small fee) are available for tradies who need same-day access to their funds.</p>
+
+                    <div class="art-callout">
+                        <strong>Need help?</strong> Our support team is available 7 days a week. Tap the help icon in the app or email support@tradie.com.
+                    </div>
+                `,
+                related: ['win-more-quotes', 'milestone-payments', 'price-labour-rate']
+            },
+
+            'electrical-compliance-2025': {
+                title: 'Electrical compliance checklist every sparky needs in 2025',
+                badge: 'Electrical',
+                category: 'electrical',
+                audience: 'tradie',
+                date: 'Mar 5, 2025',
+                author: 'TRADIE team',
+                readTime: '6 min read',
+                image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">Staying on top of compliance isn't just about avoiding fines — it's about protecting your licence, your customers, and your reputation. Here's what every electrician needs to know heading into 2025.</p>
+
+                    <h2>AS/NZS 3000 (Wiring Rules) updates</h2>
+                    <p>The 2018 amendment remains the current standard, but several state regulators have flagged additional guidance on:</p>
+                    <ul>
+                        <li><strong>RCD protection</strong> — expanded requirements for final sub-circuit protection</li>
+                        <li><strong>Arc fault detection devices (AFDDs)</strong> — recommended (not yet mandatory) for high-risk circuits</li>
+                        <li><strong>EV charging installations</strong> — growing demand means more inspections. Ensure compliance with AS/NZS 3000 Section 4 for dedicated circuits</li>
+                    </ul>
+
+                    <h2>Licence renewal requirements</h2>
+                    <p>Each state has different renewal cycles and CPD (Continuing Professional Development) requirements. Check your state authority:</p>
+                    <ul>
+                        <li><strong>NSW</strong> — Fair Trading, renewal every 1 or 3 years</li>
+                        <li><strong>VIC</strong> — Energy Safe Victoria, renewal every 5 years</li>
+                        <li><strong>QLD</strong> — Electrical Safety Office, renewal every 5 years</li>
+                        <li><strong>WA</strong> — Building and Energy, renewal annually</li>
+                        <li><strong>SA</strong> — Office of the Technical Regulator</li>
+                    </ul>
+
+                    <h2>Certificates of compliance</h2>
+                    <p>You must issue a Certificate of Compliance (or Electrical Safety Certificate) for all prescribed electrical work. Failure to do so can result in fines of <strong>$5,000–$50,000</strong> depending on the state.</p>
+
+                    <h2>Insurance requirements</h2>
+                    <p>At minimum, carry:</p>
+                    <ul>
+                        <li><strong>Public liability</strong> — $10–$20 million recommended</li>
+                        <li><strong>Professional indemnity</strong> — covers claims arising from your advice or design</li>
+                        <li><strong>Tools and equipment</strong> — covers theft, loss, or damage to your gear</li>
+                    </ul>
+
+                    <div class="art-callout">
+                        <strong>Stay current:</strong> Subscribe to your state regulator's newsletter and TRADIE's weekly digest for compliance updates relevant to your trade.
+                    </div>
+                `,
+                related: ['public-liability-insurance', 'price-labour-rate', 'win-more-quotes']
+            },
+
+            'price-labour-rate': {
+                title: 'How to price your labour rate without underselling yourself',
+                badge: 'Pricing Strategy',
+                category: 'pricing',
+                audience: 'tradie',
+                date: 'Feb 28, 2025',
+                author: 'TRADIE team',
+                readTime: '7 min read',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">Most tradies set their hourly rate based on what competitors charge, or what "feels right." But without factoring in your true costs, you could be working hard and barely breaking even. Here's how to calculate a rate that's actually profitable.</p>
+
+                    <h2>Step 1: Calculate your base costs</h2>
+                    <p>Start by adding up everything it costs to run your business for a year:</p>
+                    <ul>
+                        <li>Vehicle costs (fuel, rego, insurance, maintenance)</li>
+                        <li>Tools and equipment (purchase, repair, replacement)</li>
+                        <li>Insurance (public liability, income protection, tools)</li>
+                        <li>Licence fees and CPD training</li>
+                        <li>Phone, software, accounting</li>
+                        <li>Superannuation (11.5% of your target salary)</li>
+                        <li>Marketing and advertising</li>
+                    </ul>
+
+                    <h2>Step 2: Determine your billable hours</h2>
+                    <p>You don't work 40 billable hours a week. Between quoting, travel, admin, and downtime, most tradies bill <strong>25–30 hours per week</strong>. Multiply by 48 weeks (accounting for holidays and sick days) to get your annual billable hours.</p>
+
+                    <h2>Step 3: The formula</h2>
+                    <div class="art-callout" style="text-align: center; font-size: 1.1rem;">
+                        <strong>Hourly Rate = (Target Salary + Annual Overheads + Profit Margin) ÷ Annual Billable Hours</strong>
+                    </div>
+                    <p>For example:</p>
+                    <ul>
+                        <li>Target salary: $100,000</li>
+                        <li>Annual overheads: $35,000</li>
+                        <li>Profit margin (15%): $20,250</li>
+                        <li>Billable hours (28 hrs × 48 weeks): 1,344 hours</li>
+                    </ul>
+                    <p><strong>= ($100,000 + $35,000 + $20,250) ÷ 1,344 = $115.60/hr</strong></p>
+
+                    <h2>Step 4: Add GST</h2>
+                    <p>If you're registered for GST (mandatory if turnover exceeds $75,000), add 10% to your rate. So $115.60 becomes <strong>$127.16/hr incl. GST</strong>.</p>
+
+                    <h2>When to use hourly vs. fixed pricing</h2>
+                    <p><strong>Hourly</strong> works best for maintenance, repairs, and jobs with unpredictable scope. <strong>Fixed pricing</strong> is better for well-defined jobs (bathroom renos, deck builds) — and often preferred by customers because they know the total cost upfront.</p>
+
+                    <div class="art-callout">
+                        <strong>Remember:</strong> Your rate should reflect your skills, experience, and the value you deliver. Don't race to the bottom — customers who choose on price alone are rarely the best customers.
+                    </div>
+                `,
+                related: ['win-more-quotes', 'milestone-payments', 'public-liability-insurance']
+            },
+
+            'public-liability-insurance': {
+                title: 'Public liability insurance — what every tradie must know',
+                badge: 'Safety & Legal',
+                category: 'safety',
+                audience: 'tradie',
+                date: 'Feb 20, 2025',
+                author: 'TRADIE team',
+                readTime: '6 min read',
+                image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">Public liability insurance is the single most important policy for any tradie. If a customer, passer-by, or their property is damaged because of your work, PL insurance covers the claim. Without it, you're personally liable — and that can mean losing everything.</p>
+
+                    <h2>What does it cover?</h2>
+                    <p>Public liability insurance covers third-party claims for:</p>
+                    <ul>
+                        <li><strong>Personal injury</strong> — a customer trips over your tools, a child is injured by unsecured materials</li>
+                        <li><strong>Property damage</strong> — you accidentally damage a customer's property, a pipe bursts, paint spills on carpet</li>
+                        <li><strong>Legal costs</strong> — defending against claims, even if they're unfounded</li>
+                    </ul>
+
+                    <h2>How much cover do I need?</h2>
+                    <p>Most tradies carry <strong>$10–$20 million</strong> in public liability cover. This sounds like a lot, but legal costs alone can run into hundreds of thousands. Many commercial clients and platforms (including TRADIE) require a minimum of $10 million.</p>
+
+                    <h2>How much does it cost?</h2>
+                    <p>Premiums vary based on your trade, turnover, and claims history. As a rough guide:</p>
+                    <div class="art-table-wrap">
+                        <table class="art-table">
+                            <thead><tr><th>Trade</th><th>Annual Premium (approx.)</th></tr></thead>
+                            <tbody>
+                                <tr><td>Electrician</td><td>$600–$1,200</td></tr>
+                                <tr><td>Plumber</td><td>$700–$1,400</td></tr>
+                                <tr><td>Builder (up to $500K turnover)</td><td>$1,200–$3,000</td></tr>
+                                <tr><td>Painter</td><td>$400–$800</td></tr>
+                                <tr><td>Landscaper</td><td>$500–$1,000</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>Common policy gaps</h2>
+                    <p>Watch out for these exclusions that catch tradies out:</p>
+                    <ul>
+                        <li><strong>Faulty workmanship</strong> — most PL policies don't cover the cost of redoing your own work</li>
+                        <li><strong>Asbestos</strong> — many standard policies exclude asbestos-related claims</li>
+                        <li><strong>Working at heights</strong> — some policies have height exclusions (e.g., above 10m)</li>
+                        <li><strong>Subcontractor coverage</strong> — check whether your policy extends to subbies you engage</li>
+                    </ul>
+
+                    <div class="art-callout">
+                        <strong>Pro tip:</strong> Review your policy annually, not just at renewal. If your turnover, team size, or scope of work has changed, your cover may need updating. An underinsured claim can be just as devastating as no insurance at all.
+                    </div>
+                `,
+                related: ['electrical-compliance-2025', 'price-labour-rate', 'win-more-quotes']
+            },
+
+            'milestone-payments': {
+                title: 'Project milestone payments: protect your cash flow on big builds',
+                badge: 'Building',
+                category: 'building',
+                audience: 'tradie',
+                date: 'Feb 14, 2025',
+                author: 'TRADIE team',
+                readTime: '6 min read',
+                image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1400&h=600&fit=crop',
+                content: `
+                    <p class="art-lead">Cash flow is the number one reason trade businesses fail. On large projects, the gap between paying for materials and getting paid by the client can stretch to weeks or months. Milestone-based payment schedules fix this — here's how to set them up properly.</p>
+
+                    <h2>What are milestone payments?</h2>
+                    <p>Instead of billing at the end of a job (or chasing invoices for weeks), you break the project into stages and get paid as each stage is completed. This ensures a steady cash flow and reduces your financial risk on big jobs.</p>
+
+                    <h2>How to structure milestones</h2>
+                    <p>The key is to align milestones with natural breakpoints in the project. Here's a typical structure for a home renovation:</p>
+                    <ul>
+                        <li><strong>Deposit (10–15%)</strong> — on contract signing, before any work begins</li>
+                        <li><strong>Stage 1: Site prep & demolition (15–20%)</strong> — once the site is cleared and ready</li>
+                        <li><strong>Stage 2: Structural / rough-in (25–30%)</strong> — framing, plumbing, electrical rough-in complete</li>
+                        <li><strong>Stage 3: Fit-off & finishes (25–30%)</strong> — fixtures installed, painting done</li>
+                        <li><strong>Final payment (10–15%)</strong> — on practical completion and customer sign-off</li>
+                    </ul>
+
+                    <h2>Getting milestones into your contract</h2>
+                    <p>Every milestone should be clearly defined in your written contract with:</p>
+                    <ul>
+                        <li>A description of the work included in that stage</li>
+                        <li>The payment amount (dollar value, not just percentage)</li>
+                        <li>The expected completion date</li>
+                        <li>What constitutes "completion" (e.g., passing inspection, photo evidence)</li>
+                    </ul>
+
+                    <h2>What if the customer won't agree?</h2>
+                    <p>Some customers are used to paying on completion. Frame milestone payments as <strong>protection for both parties</strong> — they're not paying for unfinished work, and you're not financing their project out of your own pocket. On TRADIE, escrow-based milestones make this the default, so there's no awkward negotiation.</p>
+
+                    <h2>Common mistakes</h2>
+                    <ul>
+                        <li><strong>Front-loading payments</strong> — don't ask for 50% upfront. It erodes trust. Keep the deposit reasonable.</li>
+                        <li><strong>Too few milestones</strong> — on a 3-month project, monthly payments aren't enough. Aim for fortnightly cash flow.</li>
+                        <li><strong>Vague descriptions</strong> — "Stage 2: Plumbing" is too vague. Specify exactly what's included so there's no dispute about when payment is due.</li>
+                    </ul>
+
+                    <div class="art-callout">
+                        <strong>Use TRADIE's built-in milestones.</strong> When you create a quote on TRADIE, milestone payments are built right in. The homeowner's funds are held in escrow and released automatically as you complete each stage.
+                    </div>
+                `,
+                related: ['tradie-app-payments', 'win-more-quotes', 'price-labour-rate']
+            }
+        };
+
+        // ── Render Article ──
+        function renderArticle() {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+            const article = articles[slug];
+
+            if (!article) {
+                document.getElementById('article-body').innerHTML = `
+                    <div style="text-align: center; padding: 4rem 1rem;">
+                        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Article not found</h2>
+                        <p style="color: #6b7280; margin-bottom: 2rem;">The article you're looking for doesn't exist or has been moved.</p>
+                        <a href="/resources/" class="btn-solid-white" style="display: inline-flex;">← Back to Resources</a>
+                    </div>
+                `;
+                document.querySelector('.art-hero').style.display = 'none';
+                document.querySelector('.art-newsletter').style.display = 'none';
+                return;
+            }
+
+            // Update page title & meta
+            document.title = `TRADIE | ${article.title}`;
+            document.querySelector('meta[name="description"]').content = article.title;
+
+            // Hero
+            document.getElementById('article-hero-img').style.backgroundImage = `url('${article.image}')`;
+            document.getElementById('article-badge').textContent = article.badge;
+            document.getElementById('article-title').textContent = article.title;
+            document.getElementById('article-date').textContent = article.date;
+            document.getElementById('article-author').textContent = article.author;
+            document.getElementById('article-read-time').textContent = article.readTime;
+
+            // Body
+            document.getElementById('article-body').innerHTML = article.content;
+
+            // Related articles
+            if (article.related && article.related.length > 0) {
+                const relatedGrid = document.getElementById('related-articles');
+                const relatedSection = document.getElementById('related-section');
+                relatedGrid.innerHTML = '';
+
+                article.related.forEach(relSlug => {
+                    const rel = articles[relSlug];
+                    if (!rel) return;
+
+                    const card = document.createElement('a');
+                    card.href = `/resources/article/?slug=${relSlug}`;
+                    card.className = 'res-article';
+                    card.innerHTML = `
+                        <div class="res-article-thumb" style="background-image: url('${rel.image.replace('w=1400&h=600', 'w=600&h=400')}');">
+                            <span class="res-article-badge">${rel.badge}</span>
+                        </div>
+                        <div class="res-article-body">
+                            <div class="res-article-meta">${rel.date} | ${rel.author}</div>
+                            <h3>${rel.title}</h3>
+                        </div>
+                    `;
+                    relatedGrid.appendChild(card);
+                });
+
+                relatedSection.style.display = '';
+            }
+        }
+
+        renderArticle();
+    </script>
+</body>
+
+</html>
