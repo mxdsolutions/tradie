@@ -1,0 +1,10 @@
+{
+  "name": "@tradie/tailwind-config",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "peerDependencies": {
+    "nativewind": ">=4",
+    "tailwindcss": ">=3"
+  }
+}

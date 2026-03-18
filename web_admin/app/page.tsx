@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -12,9 +13,17 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 
 function AuthContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("error") === "admin_only") {
+      toast.error("Access denied. This portal is for administrators only.");
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +35,8 @@ function AuthContent() {
       const result = await signIn(formData);
       if (result?.error) {
         toast.error(result.error);
+      } else if (result?.success) {
+        router.push("/dashboard");
       }
     } catch (err: any) {
       toast.error(err.message || "An unexpected error occurred");

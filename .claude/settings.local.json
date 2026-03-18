@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(pnpm --version)",
+      "Bash(npm install:*)",
+      "Bash(pnpm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx expo:*)",
+      "WebFetch(domain:hipages.com.au)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(node -e \"const pkg = require\\(''./node_modules/@supabase/supabase-js/package.json''\\); console.log\\(''@supabase/supabase-js:'', pkg.version\\)\")",
+      "Bash(node -e \"const pkg = require\\(''./node_modules/@supabase/ssr/package.json''\\); console.log\\(''@supabase/ssr:'', pkg.version\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8005/)",
+      "Bash(curl -s -X POST http://127.0.0.1:8005/ -H \"Content-Type: text/plain;charset=UTF-8\" -H \"Next-Action: test\" -d '[]' -o /dev/null -w \"%{http_code}\\\\n\" -D -)",
+      "mcp__plugin_supabase_supabase__list_projects",
+      "mcp__plugin_supabase_supabase__list_organizations",
+      "Bash(curl -s http://127.0.0.1:8005/)",
+      "Bash(curl -s -X POST \"https://erfvdiqeslllqqqebjat.supabase.co/auth/v1/token?grant_type=password\" -H \"apikey: sb_publishable_Jmj6eJxzWXO0pjJ84jU6bQ_qmu4DpH5\" -H \"Content-Type: application/json\" -d '{\"\"\"\"email\"\"\"\":\"\"\"\"admin@tradieapp.au\"\"\"\",\"\"\"\"password\"\"\"\":\"\"\"\"mXdSolutions2026\"\"\"\"}')",
+      "Bash(npm run:*)",
+      "mcp__supabase__get_logs",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__execute_sql",
+      "mcp__supabase__apply_migration",
+      "Bash(git status:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}

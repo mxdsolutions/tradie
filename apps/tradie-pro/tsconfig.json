@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@tradie/core": ["../../packages/core/index.ts"],
+      "@tradie/shared-ui": ["../../packages/shared-ui/index.ts"]
+    }
+  }
+}

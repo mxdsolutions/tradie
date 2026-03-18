@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { cn } from "@/lib/utils";
+import { signOut } from "@/app/actions/auth";
 import { AnimatePresence, motion } from "framer-motion";
 
 import {
@@ -89,7 +90,7 @@ export default function DashboardLayout({
                             <p className="text-[11px] text-muted-foreground truncate">dylan@example.com</p>
                         </div>
                     </Link>
-                    <button className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors w-full">
+                    <button onClick={() => signOut()} className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors w-full">
                         <ArrowRightStartOnRectangleIcon className="w-[18px] h-[18px]" />
                         Sign out
                     </button>

@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(eas build:*)",
+      "Bash(eas init:*)",
+      "Bash(pnpm install:*)",
+      "Bash(git -C /Users/dylanj/projects/ventures/TRADIE diff --stat pnpm-lock.yaml)",
+      "Bash(git -C /Users/dylanj/projects/ventures/TRADIE status pnpm-lock.yaml)",
+      "Read(//Users/dylanj/projects/ventures/TRADIE/**)",
+      "Bash(find /Users/dylanj/projects/ventures/TRADIE/node_modules -path */metro-react-native-babel-transformer/src* -name *.js)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(''''version:'''', d.get\\(''''version''''\\)\\); print\\(''''peerDeps:'''', json.dumps\\(d.get\\(''''peerDependencies'''', {}\\), indent=2\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(''''version:'''', d.get\\(''''version''''\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\(''''exports'''', {}\\), indent=2\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:v for k,v in d.items\\(\\) if k in [''''main'''',''''module'''',''''exports'''',''''files'''',''''browser'''']}, indent=2\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(''''tailwindcss version:'''', d.get\\(''''version''''\\)\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(NATIVEWIND_OS=ios node -e \":*)",
+      "Bash(grep -r \"jsxImportSource\\\\|jsxRuntime\\\\|automatic\" /Users/dylanj/projects/ventures/TRADIE/apps/tradie/node_modules/babel-preset-expo/build/ --include=*.js -l)"
+    ],
+    "additionalDirectories": [
+      "/Users/dylanj/projects/ventures/TRADIE/packages/shared-ui"
+    ]
+  }
+}

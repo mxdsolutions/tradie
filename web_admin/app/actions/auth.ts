@@ -29,16 +29,15 @@ export async function signIn(formData: FormData) {
     });
 
     if (error) {
+      console.error("[signIn] Supabase error:", error.message);
       return { success: false, error: error.message };
     }
   } catch (err: any) {
-    // next.js redirect throws a special error that should not be caught
-    if (err.digest?.startsWith('NEXT_REDIRECT') || err.message?.includes('NEXT_REDIRECT')) throw err;
+    console.error("[signIn] Unexpected error:", err);
     return { success: false, error: "An unexpected error occurred." };
   }
 
-  revalidatePath("/", "layout");
-  redirect("/dashboard");
+  return { success: true };
 }
 
 export async function signUp(formData: FormData) {
@@ -161,8 +160,8 @@ export async function updatePassword(formData: FormData) {
   } catch (err: any) {
     return { error: "An unexpected error occurred." };
   }
-  
-  redirect("/dashboard");
+
+  return { success: true };
 }
 
 export async function signOut() {

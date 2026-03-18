@@ -1,0 +1,21 @@
+{
+  "name": "@tradie/shared-ui",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "types": "index.ts",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "nativewind": "*",
+    "clsx": "*",
+    "tailwind-merge": "*",
+    "expo-image": "*",
+    "expo-router": "*",
+    "expo-haptics": "*",
+    "react-native-heroicons": "*",
+    "react-native-safe-area-context": "*",
+    "lucide-react-native": "*",
+    "@supabase/supabase-js": "*",
+    "@react-native-async-storage/async-storage": "*"
+  }
+}

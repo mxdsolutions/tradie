@@ -43,10 +43,10 @@ export default function ResetPasswordPage() {
             const result = await updatePassword(formData);
             if (result?.error) {
                 toast.error(result.error);
+            } else if (result?.success) {
+                router.push("/dashboard");
             }
-            // Will throw Next redirect on success
         } catch (err: any) {
-            if (err?.digest?.startsWith('NEXT_REDIRECT')) throw err;
             toast.error("An error occurred updating the password.");
         } finally {
             setIsLoading(false);

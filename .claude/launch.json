@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "web", "-l", "8003"],
+      "port": 8003
+    },
+    {
+      "name": "web_admin",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "web_admin", "--", "-p", "8005"],
+      "port": 8005
+    }
+  ],
+  "autoVerify": false
+}
